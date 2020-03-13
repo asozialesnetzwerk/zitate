@@ -1,5 +1,51 @@
 <!DOCTYPE html>
 <html lang="de" >
+  <script>function getQuote() {
+  var quoteAuthor = "lol";
+  var quoteText = "lol2";
+	
+  var quotes;
+  var authors;
+  var ratings;
+  var id = "";
+
+	
+  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt')
+      .then((response) => response.text())
+      .then((data) => {
+         authors = data.split('\n');
+  })
+  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt')
+      .then(response => response.text())
+      .then((data) => {
+         qoutes = data.split('\n');
+  })
+
+  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json')
+      .then(response => response.text())
+      .then((data) => {
+         ratings = JSON.parse(data);
+  })
+
+
+  do {
+    var rnd = random() * qoutes.length;
+    id = rnd;
+    quoteText = qoutes[rnd]
+
+    rnd = random() * authors.length;
+    id = id + '-' + rnd;
+    quoteAuthor = authors[rnd]
+
+  } while(ratings.get(id) < 1)
+  
+  
+
+
+  $(".quote-text").text(quoteText);
+  $(".quote-author").text("- " + quoteText);
+  $("#tweet").attr("href", "https://twitter.com/intent/tweet?text=" + encodeURIComponent('"' + quoteText + '"' + ' - ' +  quoteAuthor));
+};</script>
   <head>
     <meta charset="UTF-8">
     <title>Falsche Zitate</title>
