@@ -4,18 +4,18 @@ var getQuote = function() {
   var ratings;
   var id = "";
 
-  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt')
+  fetch("https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt")
       .then(response => response.text())
       .then((data) => {
          authors = data.split('\n');
   })
-  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt')
+  fetch("https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt")
       .then(response => response.text())
       .then((data) => {
          var qoutes = data.split('\n');
   })
 
-  fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json')
+  fetch("https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json")
       .then(response => response.text())
       .then((data) => {
          var ratings = data;
