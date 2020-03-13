@@ -1,9 +1,13 @@
 var getQuote = function() {
+  var quoteAuthor = "lol";
+  var quoteText = "lol2";
+	
   var quotes;
   var authors;
   var ratings;
   var id = "";
 
+	/*
   fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt')
       .then((response) => response.text())
       .then((data) => {
@@ -21,8 +25,6 @@ var getQuote = function() {
          ratings = JSON.parse(data);
   })
 
-  var quoteAuthor;
-  var quoteText;
 
   do {
     var rnd = random() * qoutes.length;
@@ -34,6 +36,8 @@ var getQuote = function() {
     quoteAuthor = authors[rnd]
 
   } while(ratings.get(id) < 1)
+  
+  \*
 
 
   $(".quote-text").text(quoteText);
