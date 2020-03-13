@@ -12,13 +12,13 @@ var getQuote = function() {
   fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt')
       .then(response => response.text())
       .then((data) => {
-         var qoutes = data.split('\n');
+         qoutes = data.split('\n');
   })
 
   fetch('https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json')
       .then(response => response.text())
       .then((data) => {
-         var ratings = JSON.parse(data);
+         ratings = JSON.parse(data);
   })
 
   var quoteAuthor;
