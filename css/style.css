@@ -11,21 +11,21 @@ body {
   width: 30rem;
   height: auto;
   display: block;
-  margin: 5rem auto;
+  margin: 7rem auto;
   text-align: center;
   padding: 4rem;
 }
 
 .quote-text {
   width: 30rem;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   text-align: left;
   margin: 0 0 1rem 0;
   line-height: 2rem;
 }
 
 .quote-author {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   text-align: right;
   margin-bottom: 1rem;
 }
@@ -38,6 +38,7 @@ body {
 
 .buttons a {
   color: white;
+  
 }
 
 .get-quote {
