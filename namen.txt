@@ -25,8 +25,8 @@ Lauren Bacall
 Ingeborg Bachmann
 Francis Bacon
 Josephine Baker
-Honoré de Balzac
-Honoré de Balzac
+HonorÃ© de Balzac
+HonorÃ© de Balzac
 Peter Bamm
 Brigitte Bardot
 Rainer Barzel
@@ -43,16 +43,16 @@ Friedl Beutelrock
 Ambrose Bierce
 Josh Billings
 Willy Birgel
-Otto Fürst von Bismarck
+Otto FÃ¼rst von Bismarck
 Erhard Blanck
 Oskar Blumenthal
 Humphrey Bogart
 Nils Bohr
-Heinrich Böll
+Heinrich BÃ¶ll
 Nicolas Boileau
 Waldemar Bonsels
 Max Born
-Ludwig Börne
+Ludwig BÃ¶rne
 Johannes Brahms
 Willy Brandt
 Wernher von Braun
@@ -63,7 +63,7 @@ Anton Bruckner
 Wieslaw Brudzinski
 Pearl S. Buck
 Edward George Bulwer-Lytton
-Gottfried August Bürger
+Gottfried August BÃ¼rger
 Edmund Burke
 Wilhelm Busch
 Samuel Butler
@@ -87,7 +87,7 @@ Maurice Chevalier
 Jacques Chirac
 Agatha Christie
 Winston Churchill
-Fälschlicherweise oft Churchill in den Mund gelegt.
+FÃ¤lschlicherweise oft Churchill in den Mund gelegt.
 Marcus Tullius Cicero
 Hans Clarin
 Paul Claudel
@@ -102,9 +102,9 @@ Edwin Conklin
 Sean Connery
 Joseph Conrad
 Marie Corelli
-Noël Coward
+NoÃ«l Coward
 Marie Curie
-Salvador Dalí
+Salvador DalÃ­
 Charles Darwin
 Alphonse Daudet
 Max Dauthendey
@@ -113,7 +113,7 @@ Tom DeMarco
 Demokrit
 Demosthenes
 Catherine Deneuve
-René Descartes
+RenÃ© Descartes
 Charles Dickens
 Emily Dickinson
 Denis Diderot
@@ -126,8 +126,8 @@ Sir Arthur Conan Doyle
 Heinz Drache
 Theodore Dreiser
 Peter Drucker
-Albrecht Dürer
-Friedrich Dürrenmatt
+Albrecht DÃ¼rer
+Friedrich DÃ¼rrenmatt
 Eleonora Duse
 Clint Eastwood
 Marie von Ebner-Eschenbach
@@ -168,10 +168,10 @@ Benjamin Franklin
 Sigmund Freud
 Erich Fried
 Egon Friedell
-Friedrich II. der Große
+Friedrich II. der GroÃŸe
 Friedrich II. von Staufen
 Max Frisch
-Gert FrÃ¶be
+Gert FrÃƒÂ¶be
 Erich Fromm
 David Frost
 Robert Lee Frost
@@ -187,7 +187,7 @@ Charles de Gaulle
 Jules Gaultier de Laguionie
 Jean Genet
 Paul Getty
-André Gide
+AndrÃ© Gide
 Niemand
 Jean Giraudoux
 Uschi Glas
@@ -211,7 +211,7 @@ Giovannino Guareschi
 Sir Alec Guinness
 Sascha Guitry
 Hans Habe
-Elfriede Hablé
+Elfriede HablÃ©
 Otto von Habsburg
 Otto Hahn
 Max Halbe
@@ -243,13 +243,13 @@ Dieter Hildebrandt
 Hippokrates
 Alfred Hitchcock
 Rolf Hochhuth
-Friedrich Hölderlin
+Friedrich HÃ¶lderlin
 Hugo von Hoffmannsthal
 Homer
 Herbert Hoover
 Bob Hope
 Horaz
-Attila Hörbiger
+Attila HÃ¶rbiger
 Edgar Watson Howe
 Elbert Hubbard
 Victor Hugo
@@ -258,20 +258,20 @@ Friedensreich Hundertwasser
 Aldous Huxley
 Lee Iacocca
 Henrik Ibsen
-Eugène Ionesco
+EugÃ¨ne Ionesco
 Karl Jaspers
 Thomas Jefferson
 Samuel Johnson
 Janis Joplin
 Joseph Joubert
 Carl Gustav Jung
-Ernst Jünger
+Ernst JÃ¼nger
 Decimus Iunius Juvenal
 Heidi Kabel
 Franz Kafka
 Immanuel Kant
 Garry Kasparov
-Erich Kästner
+Erich KÃ¤stner
 Danny Kaye
 Gottfried Keller
 Thomas von Kempen
@@ -282,7 +282,7 @@ Martin Kessel
 Hermann Kesten
 Charles F. Kettering
 John Maynard Keynes
-Søren Kierkegaard
+SÃ¸ren Kierkegaard
 Martin Luther King
 Klaus Kinkel
 Joseph Rudyard Kipling
@@ -299,8 +299,8 @@ Gerhard Kocher
 Helmut Kohl
 Oskar Kokoschka
 Konfuzius
-Theodor Körner
-André Kostolany
+Theodor KÃ¶rner
+AndrÃ© Kostolany
 Victor de Kowa
 Hans Krailsheimer
 Karl Kraus
@@ -308,9 +308,9 @@ Georg Kreisler
 Ron Kritzfeld
 Hans Kudzus
 Hans-Joachim Kulenkampff
-Jean de La Bruyère
+Jean de La BruyÃ¨re
 Karl Lagerfeld
-Selma Lagerlöf
+Selma LagerlÃ¶f
 Lao-Tse
 Francois Duc de La Rochefoucauld
 Gabriel Laub
@@ -339,13 +339,13 @@ Konrad Lorenz
 Loriot
 Jeannine Luczak
 Rosa Luxemburg
-Niccolò Machiavelli
+NiccolÃ² Machiavelli
 August Macke
 Anna Magnani
 Gustav Mahler
 Norman Mailer
 John Major
-André Malraux
+AndrÃ© Malraux
 Heinrich Mann
 Thomas Mann
 Ludwig Marcuse
@@ -404,7 +404,7 @@ Emil Nolde
 Novalis
 Sir Laurence Olivier
 Aristoteles Onassis
-José Ortega y Gasset
+JosÃ© Ortega y Gasset
 George Orwell
 John James Osborne
 Ovid
@@ -457,7 +457,7 @@ Joachim Ringelnatz
 Willi Ritschard
 Charlie Rivel
 Alexander Roda Roda
-Walter Röhrl
+Walter RÃ¶hrl
 Jules Romains
 Manfred Rommel
 Franklin Delano Roosevelt
@@ -469,15 +469,15 @@ Diana Ross
 Joseph Roth
 Jean-Jaques Rousseau
 Henry Royce
-Friedrich Rückert
-Heinz Rühmann
+Friedrich RÃ¼ckert
+Heinz RÃ¼hmann
 Michael Rumpf
 John Ruskin
 Jane Russell
 Bertrand Russell
 Carl Sagan
 Francoise Sagan
-Antoine de Saint-Exupéry
+Antoine de Saint-ExupÃ©ry
 Yves Saint-Laurent
 Sallust
 George Sand
@@ -495,7 +495,7 @@ Lothar Schmidt
 Werner Schneyder
 Arthur Schnitzler
 Arthur Schopenhauer
-Rupert Schützbach
+Rupert SchÃ¼tzbach
 Alice Schwarzer
 Albert Schweitzer
 Hans Schweizer
@@ -529,7 +529,7 @@ Adalbert Stifter
 Robert Stolz
 Calvin Ellis Stowe
 Bernd Stoy
-Johann Strauß
+Johann StrauÃŸ
 Igor Strawinsky
 Barbra Streisand
 Gaius Suetonius
@@ -549,7 +549,7 @@ Peter Tille
 Leo Tolstoi
 Friedrich Torberg
 Toto
-Thaddäus Troll
+ThaddÃ¤us Troll
 Harry S. Truman
 Anton Tschechow
 Olga Tschechowa
@@ -563,7 +563,7 @@ John Updike
 Leon Uris
 Sir Peter Ustinov
 Karl Valentin
-Paul Valéry
+Paul ValÃ©ry
 Luc de Clapiers Marquis de Vauvenargues
 Vergil
 Esther Vilar
@@ -577,9 +577,9 @@ George Washington
 Karl Julius Weber
 Paul Wegener
 Heidelinde Weis
-Günther Weisenborn
+GÃ¼nther Weisenborn
 Grethe Weiser
-Carl Friedrich von Weizsäcker
+Carl Friedrich von WeizsÃ¤cker
 Raquel Welch
 Orson Welles
 Herbert George Wells
@@ -608,7 +608,7 @@ Carlo Schmid
 Chinesisches Sprichwort
 Jean Anouilh
 Harold Pinter
-Martin WalserÂ 
+Martin WalserÃ‚Â 
 Emmanuel Mounier
 Henry Ford I.
 Rudolf Platte
@@ -647,7 +647,7 @@ E. Matani
 Alexander Hoyer
 Friedrich von Logau
 Schmidseder
-Paul Hörbiger
+Paul HÃ¶rbiger
 Giuseppe Di Stefano
 Steve Jobs
 Oliver Cromwell
@@ -660,7 +660,7 @@ Alice Weidel
 Alexander Gerst
 Alexis Tsipras
 Kim Jong-Un
-Das Känguru
+Das KÃ¤nguru
 Rupert Stadler
 Thomas Alva Edison
 Friedrich Engels
@@ -670,7 +670,7 @@ Der Papst
 Martin Winterkorn
 Martina Voss-Tecklenburg
 Martin Sonneborn
-Beate Zschäpe
+Beate ZschÃ¤pe
 Marc-Uwe Kling
 Gott
 Jesus
@@ -716,7 +716,7 @@ Batman zu Robin
 Axel Springer
 Muammar al-Gaddafi
 Axel Voss
-Lothar Matthäus
+Lothar MatthÃ¤us
 Annegret Kramp-Karrenbauer
 Ursula von der Leyen
 Buddhistische Weisheit
@@ -733,22 +733,22 @@ Ein Student
 Imperator Palpatine
 Stevie Wonder
 Elon Musk
-Das Känguru
+Das KÃ¤nguru
 Kim Kardashian
 Mel Gibson
-Bernd Höcke
+Bernd HÃ¶cke
 Gregor Mendel
 Thorsten Mann
 Meister Yoda
 Ein Zyniker
 Hannibal Lecter
-Claudius Ptolemäus
-Günther Oettinger
+Claudius PtolemÃ¤us
+GÃ¼nther Oettinger
 Ein Anarchist
 Baptist
 Giovanni di Simone
 Diogenes
-Die allgemeinene Relativitätstheorie
+Die allgemeinene RelativitÃ¤tstheorie
 James Bond
 Freddy Krueger
 Marc-Uwe Kling
@@ -762,17 +762,17 @@ Erdogan
 Peter Hartz
 Peta
 Melania Trump
-Ein Sklavenhändler
+Ein SklavenhÃ¤ndler
 Beatrix von Storch
 Ein Patrizier
-Ein Gefängniswärter.
+Ein GefÃ¤ngniswÃ¤rter.
 Das Orakel von Delphi
-Leon Machère
+Leon MachÃ¨re
 Steven Spielberg
 Sheldon Cooper
 Manfred von Richthofen
 Ludwig XIV.
-Uli Hoeneß
+Uli HoeneÃŸ
 Ein Busfahrer
 Ludwig XVI
 Alan Turing
@@ -789,5 +789,7 @@ Mister Green
 Die ZEIT
 CNT Regierungsdelegation
 Der Pinguin
-Laura Müller
+Laura MÃ¼ller
 Christian Lindner
+Greta Thunberg
+Die PARTEI
