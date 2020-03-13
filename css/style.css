@@ -1,0 +1,61 @@
+body {
+  background-color: #212121;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.quote-container {
+  /* fallback background color is browser doesn't support gradient*/
+  background: #26A69A;
+  background-image: linear-gradient(to right, #26A69A, #303F9F);
+  width: 30rem;
+  height: auto;
+  display: block;
+  margin: 5rem auto;
+  text-align: center;
+  padding: 4rem;
+}
+
+.quote-text {
+  width: 30rem;
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0 0 1rem 0;
+  line-height: 2rem;
+}
+
+.quote-author {
+  font-size: 1.25rem;
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: block;
+  margin: auto;
+  letter-spacing: 1rem;
+}
+
+.buttons a {
+  color: white;
+}
+
+.get-quote {
+  margin-top: 3%;
+  cursor: pointer;
+}
+
+.send-tweet {
+  margin-top: 3%;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  color: white;
+}
+
+footer a {
+  text-decoration: none;
+  color: #5f74fa
+}
