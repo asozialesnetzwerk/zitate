@@ -27,7 +27,7 @@ function displayZitat(id) {
     var theQuote = window.q[1][ids[0]];
     var theAuthor = window.q[0][ids[1]];
     var rating = window.r[0][id];
-    if(rating == undefined) rating = "0";
+    if(rating === undefined) rating = "0";
     
     $(".quote-text").text(theQuote);
     $(".quote-author").text("- " + theAuthor);
