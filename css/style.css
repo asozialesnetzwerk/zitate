@@ -30,6 +30,12 @@ body {
   margin-bottom: 1rem;
 }
 
+.quote-rating {
+  font-size: 1.4rem;
+  text-align: left;
+    
+}
+
 .buttons {
   display: block;
   margin: auto;
