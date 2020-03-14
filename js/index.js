@@ -37,9 +37,10 @@ function displayZitat(id) {
 }
 
 function getUrlWithoutParam() {
-    var end = window.location.href.lastIndexOf('.html');
+    var end = window.location.href.lastIndexOf('dex.html');
+    if(end < 0) end = window.location.href.lastIndexOf("/zitate/")
     if(end < 0) end = window.location.href.length;
-    return window.location.href.substring(0, end + 5);
+    return window.location.href.substring(0, end + 8);
 }
 
 function getUrlWithId(value) {
@@ -48,12 +49,11 @@ function getUrlWithId(value) {
     return getUrlWithoutParam() + "?id=" + value + rating;
 }
 
-
 function getUrlWithRating(value) {
     //w; all; rated; n
     var id = getUrlParam("id", "");
     if(!(id === "")) id = "&id=" + id;
-     return getUrlWithoutParam() + "?rating=" + value + id;
+    return getUrlWithoutParam() + "?rating=" + value + id;
 }
 
 function getZitatUrl() {
