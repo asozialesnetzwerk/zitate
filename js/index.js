@@ -5,6 +5,9 @@ var quotes = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/
 window.q = [];
 window.r = [];
 
+$(".quote-text").text("");
+$(".quote-author").text("");
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -49,8 +52,7 @@ function getUrlWithId(value) {
     return getUrlWithoutParam() + "?id=" + value + rating;
 }
 
-function getUrlWithRating(value) {
-    //w; all; rated; n
+function getUrlWithRating(value) {//w; all; rated; n
     var id = getUrlParam("id", "");
     if(!(id === "")) id = "&id=" + id;
     return getUrlWithoutParam() + "?rating=" + value + id;
