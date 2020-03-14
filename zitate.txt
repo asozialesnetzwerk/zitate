@@ -3156,3 +3156,4 @@
 "Der Würfel ist gefallen"
 "Die Meldungen bezüglich meines Ablebens sind stark übertrieben."
 "Der Mut ist wie ein Regenschirm, wenn man ihn braucht, fehlt er einem."
+"Ich werde dafür sorgen, dass die  Preise stabil bleiben."
