@@ -27,7 +27,7 @@ function displayZitat(id) {
     var theQuote = window.q[1][ids[0]];
     var theAuthor = window.q[0][ids[1]];
     var rating = window.r[0][id];
-    //if(rating === undefinded) rating = "0";
+    if(rating == undefined) rating = "0";
     
     $(".quote-text").text(theQuote);
     $(".quote-author").text("- " + theAuthor);
@@ -44,12 +44,12 @@ function createZitat() {
     }
     var end = window.location.href.lastIndexOf('?');
     if(end < 0) end = window.location.href.length;
-    window.location = window.location.href.substring(0, end) + "?id=" + z;
+    window.location = window.location.href.substring(0, end) + "?tag=" + z;
 }
 
 function checkLoad() {
     if (window.q.length == 2 && window.r.length == 1) {
-        var id = getUrlParam("id", "");
+        var id = getUrlParam("tag", "");
         if(id.indexOf('-') < 1) createZitat(); 
         else displayZitat(id);
     } 
