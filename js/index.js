@@ -18,11 +18,15 @@ function getUrlVars() {
 
 function saveAsImg() {
     html2canvas(document.getElementById('quote-important')).then(function(canvas) {
-        document.body.appendChild(canvas);
+        var base64URL = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+        var a = document.createElement("a"); //Create <a>
+        a.href = base64URL; //Image Base64 Goes here
+        a.download = "Zitat.png"; //File name Here
+        a.click(); //Downloaded file
     });
 }
 
-function getUrlParam(parameter, defaultvalue){
+function getUrlParam(parameter, defaultvalue) {
     var urlparameter = defaultvalue;
     if(window.location.href.indexOf(parameter) > -1) urlparameter = getUrlVars()[parameter];
     return urlparameter;
