@@ -101,5 +101,5 @@ $.get(authors, getQuote, 'text');
 $.get(quotes, getQuote, 'text');
 
 $(".rating_param").change(function(){
-    window.location = getUrlWithRating($(this).val());
+    if(!($(this).val() === "")) window.location = getUrlWithRating($(this).val());
 });
