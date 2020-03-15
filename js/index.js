@@ -17,7 +17,7 @@ function getUrlVars() {
 }
 
 function saveAsImg() {
-    html2canvas(document.body).then(function(canvas) {
+    html2canvas(document.getElementById('quote-important')).then(function(canvas) {
         document.body.appendChild(canvas);
     });
 }
