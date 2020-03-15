@@ -99,3 +99,7 @@ var getRating = function (data) {
 $.get(rating, getRating, 'text');
 $.get(authors, getQuote, 'text');
 $.get(quotes, getQuote, 'text');
+
+$(".rating_param").change(function(){
+    window.location = getUrlWithRating($(this).val());
+});
