@@ -23,13 +23,16 @@ div.quote-container:before {
     content:url("");
 }
     
+    
+
+    
 .quote-container {
   background: #000000;
   background-image:url("ZitateBackgroundV1.svg");
   background-repeat: no-repeat;
   background-position: right 10px top 5px;
   width: 50rem;
-  min-height: 320px;
+  min-height: 380px;
   display: block;
   margin: 1rem auto;
   text-align: center;
@@ -38,7 +41,16 @@ div.quote-container:before {
   padding-top: 0rem;
   padding-bottom: 2rem;
 }
+
+ #quote-important {
+     position: relative; z-index: 1;
+    }
+ #top {
+     
+     position: absolute; z-index: -1;
     
+    }
+ 
     
 .quote-text {
   width: 32rem;
@@ -62,16 +74,37 @@ div.quote-container:before {
   margin-bottom: 1rem;
 }
 
-.quote-rating {
-  font-size: 1.4rem;
-  text-align: left;
-}
-
 .buttons {
   margin: auto;
   letter-spacing: 1rem;
   padding: 1rem;
 }
+
+.quote-rating {
+  font-size: 1.4rem;
+  text-align: left;
+}
+
+@media (orientation:landscape) { 
+.buttons {
+    position: absolute; 
+    bottom: 0px; 
+    right: 0px;
+}
+    
+.quote-rating {
+  position: absolute;
+  bottom: 20px;
+}
+    
+.quote-id {
+    position: absolute; 
+    bottom: 0px; 
+    right: 0px;
+}
+}
+
+
 
 .buttons a {
     color: darkred;
