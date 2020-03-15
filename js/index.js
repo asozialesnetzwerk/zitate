@@ -104,4 +104,4 @@ $(".rating_param").change(function(){
     if(!($(this).val() === "" || $(this).val() === getUrlParam("rating", "text"))) window.location = getUrlWithRating($(this).val());
 });
 
-$(".rating_param").val(getUrlParam("rating", ""));
+$(".rating_param").val(getUrlParam("rating", "w"));
