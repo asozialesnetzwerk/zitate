@@ -3157,3 +3157,4 @@
 "Die Meldungen bezüglich meines Ablebens sind stark übertrieben."
 "Der Mut ist wie ein Regenschirm, wenn man ihn braucht, fehlt er einem."
 "Ich werde dafür sorgen, dass die  Preise stabil bleiben."
+"Schlimmer als blind sein, ist nicht sehen wollen."
