@@ -1,9 +1,3 @@
-if (/Mobi|Android/i.test(navigator.userAgent)) {
-    $("<link href='../css/style-mobile.css' rel='stylesheet' type='text/css'/>").appendTo( 'head' );
-} else {
-    $("<link href='../css/style.css' rel='stylesheet' type='text/css'/>").appendTo( 'head' );
-}
-
 var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json";
 var authors = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt";
 var quotes = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt";

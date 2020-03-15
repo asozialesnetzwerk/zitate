@@ -10,13 +10,34 @@ div.quote-container:before {
 
 .quote-container {
   background: #000000;
-  width: 30rem;
+  width: 30em;
   height: auto;
   display: block;
   margin: 7rem auto;
   text-align: center;
   padding: 4rem;
 }
+
+@media only screen and (orientation:landscape) { 
+div.quote-container:before {
+    content:url("");
+}
+
+.quote-container {
+  /* fallback background color is browser doesn't support gradient*/
+  background: #000000;
+  background-image:url("ZitateBackgroundV1.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  width: 45rem;
+  height: auto;
+  display: block;
+  margin: 7rem auto;
+  text-align: center;
+  padding: 4rem;
+}
+}
+
 
 .quote-text {
   width: 30rem;
