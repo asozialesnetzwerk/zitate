@@ -37,9 +37,9 @@ div.quote-container:before {
 }
 
 .buttons {
-  display: block
   margin: auto;
   letter-spacing: 1rem;
+  padding: 1rem;
 }
 
 .buttons a {
