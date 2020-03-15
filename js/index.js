@@ -16,6 +16,12 @@ function getUrlVars() {
     return vars;
 }
 
+function saveAsImg() {
+    html2canvas(document.body).then(function(canvas) {
+        document.body.appendChild(canvas);
+    });
+}
+
 function getUrlParam(parameter, defaultvalue){
     var urlparameter = defaultvalue;
     if(window.location.href.indexOf(parameter) > -1) urlparameter = getUrlVars()[parameter];
@@ -82,6 +88,7 @@ function checkLoad() {
         else {
             displayZitat(id);
             $(".get-quote").attr("href", getZitatUrl()); //adds next zitat to button 
+            saveAsImg();
         }
     } 
 }
