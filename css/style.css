@@ -22,34 +22,37 @@ div.quote-container:before {
 div.quote-container:before {
     content:url("");
 }
-
+    
 .quote-container {
-  /* fallback background color is browser doesn't support gradient*/
   background: #000000;
   background-image:url("ZitateBackgroundV1.svg");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right 10px top 5px;
   width: 45rem;
-  height: auto;
+  min-height: 320px;
   display: block;
-  margin: 7rem auto;
+  margin: 1rem auto;
   text-align: center;
-  padding: 4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0rem;
+  padding-bottom: 2rem;
 }
 }
 
 
 .quote-text {
-  width: 30rem;
+  width: 29rem;
   font-size: 1.9rem;
   text-align: left;
-  margin: 0 0 1rem 0;
-  line-height: 2rem;
+  line-height: 1.8rem;
 }
 
 .quote-author {
   font-size: 1.4rem;
   text-align: right;
+  margin-right: 16rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
