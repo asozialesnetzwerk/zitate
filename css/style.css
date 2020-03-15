@@ -55,23 +55,21 @@ div.quote-container:before {
 .quote-text {
   width: 32rem;
 }
-.quote-author {
-  margin-right: 18rem;
-}
 }
 
 
 .quote-text {
+  margin: 20% 0 0 0;
   font-size: 1.9rem;
   text-align: left;
-  line-height: 1.8rem;
+  line-height: 1.8rem;             
+  text-align: center;
+  transform: translate(0, -50%) 
 }
 
 .quote-author {
   font-size: 1.4rem;
   text-align: right;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .buttons {
