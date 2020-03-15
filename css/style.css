@@ -3,6 +3,7 @@ body {
   color: white;
 }
 
+
 div.quote-container:before {
    content:url("ZitateBackgroundV1.svg");
 }
@@ -15,6 +16,25 @@ div.quote-container:before {
   margin: 7rem auto;
   text-align: center;
   padding: 4rem;
+}
+
+@media (pointer:none), (pointer:coarse) (orientation: landscape) {
+div.quote-container:before {
+}
+    
+.quote-container {
+  /* fallback background color is browser doesn't support gradient*/
+  background: #000000;
+    background-image:url("ZitateBackgroundV1.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+  width: 30rem;
+  height: auto;
+  display: block;
+  margin: 7rem auto;
+  text-align: center;
+  padding: 4rem;
+}
 }
 
 .quote-text {
