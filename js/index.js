@@ -108,6 +108,4 @@ $(document).ready(function() {
   $('select').niceSelect();
 });
 
-$(".rating_param").val(getUrlParam("rating", ""));
-
-
+$(".rating_param").val(getUrlParam("rating", "w"));
