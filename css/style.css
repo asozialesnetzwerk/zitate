@@ -1,13 +1,14 @@
 body {
   background-color: #212121;
-  font-family: "Roboto", sans-serif;
   color: white;
 }
 
+div.quote-container:before {
+   content:url("ZitateBackgroundV1.svg");
+}
+
 .quote-container {
-  /* fallback background color is browser doesn't support gradient*/
-  background: #26A69A;
-  background-image: linear-gradient(to right, #26A69A, #303F9F);
+  background: #000000;
   width: 30rem;
   height: auto;
   display: block;
@@ -33,29 +34,18 @@ body {
 .quote-rating {
   font-size: 1.4rem;
   text-align: left;
-    
 }
 
 .buttons {
-  display: block;
+  display: block
   margin: auto;
   letter-spacing: 1rem;
 }
 
 .buttons a {
-  color: white;
-  
+    color: darkred;
 }
 
-.get-quote {
-  margin-top: 3%;
-  cursor: pointer;
-}
-
-.send-tweet {
-  margin-top: 3%;
-  cursor: pointer;
-}
 
 footer {
   text-align: center;
@@ -64,5 +54,5 @@ footer {
 
 footer a {
   text-decoration: none;
-  color: #5f74fa
+  color: #CD0000
 }
