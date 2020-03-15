@@ -30,7 +30,9 @@ div.quote-container:before {
   background: #000000;
   background-image:url("ZitateBackgroundV1.svg");
   background-repeat: no-repeat;
-  background-position: right 10px top 5px;
+  background-position: right top 5px;
+
+  /*background-position: right 10px top 5px;*/
   width: 50rem;
   min-height: 380px;
   display: block;
