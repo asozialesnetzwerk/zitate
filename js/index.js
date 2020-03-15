@@ -1,6 +1,7 @@
-var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json";
-var authors = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt";
-var quotes = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt";
+var url = ""; //"https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/";
+var rating = url + "bewertung_zitate.json";
+var authors = url + "namen.txt";
+var quotes = url + "zitate.txt";
 
 window.q = [];
 window.r = [];
