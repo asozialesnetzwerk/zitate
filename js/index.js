@@ -110,7 +110,7 @@ $.get(rating, getRating, 'text');
 $.get(authors, getQuote, 'text');
 $.get(quotes, getQuote, 'text');
 
-$(".rating_param").change(function(){
+$(".rating-param").change(function(){
     if(!($(this).val() === "" || $(this).val() === getUrlParam("rating", "text"))) window.location = getUrlWithRating($(this).val());
 });
 
@@ -118,9 +118,8 @@ $(document).ready(function() {
   $('select').niceSelect();
 });
 
-$(".rating_param").val(getUrlParam("rating", "w"));
+$(".rating-param").val(getUrlParam("rating", "w"));
 
-//$(".download").attr("href", window.location.href);
 $(".download").on("click", function() {
 	saveAsImg();
 });
