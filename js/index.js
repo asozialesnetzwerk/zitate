@@ -92,7 +92,6 @@ function checkLoad() {
         else {
             displayZitat(id);
             $(".get-quote").attr("href", getZitatUrl()); //adds next zitat to button 
-            saveAsImg();
         }
     } 
 }
@@ -120,3 +119,8 @@ $(document).ready(function() {
 });
 
 $(".rating_param").val(getUrlParam("rating", "w"));
+
+//$(".download").attr("href", window.location.href);
+$(".download").on("click", function() {
+	saveAsImg();
+});
