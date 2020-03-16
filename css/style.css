@@ -99,6 +99,10 @@ div.quote-container:before {
         bottom: 20px;
     }
     
+    .quote-rating{
+        right: 1px;
+    }
+    
     .rating-image {
         position: absolute; 
         left: 2rem;
