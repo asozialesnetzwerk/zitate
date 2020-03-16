@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html lang="de" >
-  <head>
-    <meta charset="UTF-8">
-    <title>Falsche Zitate Generator</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-  </head>
-  <body>
-    <div id="quote-important" class="quote-container">
-      <div id="bottom">
-          <div class="quote-id"></div>
-          <div class="buttons">
-            <a class="download"><i class="fas fa-chevron-circle-down fa-4x" aria-hidden="true"></i></a>
-            <a class="tweet" href="" target="_blank"><i id ="twitter"class="fab fa-twitter fa-4x" aria-hidden="true"></i></a>
-            <a class="get-quote" href=""><i class="fas fa-chevron-circle-right fa-4x" aria-hidden="true"></i></a>
-          </div>
-      </div>
-      <div id="top">
-          <div class="quote-text">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
-          <div class="quote-author">- Batman zu Robin</div>
-      </div>
-
-      <div onClick="a();" class="quote-rating">
-          <script>
-            function a() {
-                window.open("http://asozialesnetzwerk.github.io/discord");
-            }
-          </script>
-      </div>
-    </div>
-      
-
-
-    <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
-      
-    <select class="rating_param">
-        <option value="w">witzig</option>
-        <option value="n">nicht witzig</option>
-        <option value="rated">rated</option>
-        <option value="all">all</option>
-    </select>
-
-    <script src="js/html2canvas.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script src="js/jquery.nice-select.js"></script>
-    <script  src="js/index.js"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Falsche Zitate Generator</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/nice-select.css">
+    </head>
+    <body>
+        <div id="quote-important" class="quote-container">
+            <div id="bottom">
+                <div class="quote-id"></div>
+                <div class="buttons">
+                    <a class="download"><i class="fas fa-chevron-circle-down fa-4x" aria-hidden="true"></i></a>
+                    <a class="tweet" href="" target="_blank"><i id ="twitter"class="fab fa-twitter fa-4x" aria-hidden="true"></i></a>
+                    <a class="get-quote" href=""><i class="fas fa-chevron-circle-right fa-4x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div id="top">
+                <div class="quote-text">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
+                <div class="quote-author">- Batman zu Robin</div>
+            </div>
+            
+            <div onClick="a();" class="quote-rating">
+                <script>
+                    function a() {
+                        window.open("http://asozialesnetzwerk.github.io/discord");
+                    }
+                </script>
+            </div>
+        </div>
+        
+        <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
+        
+        <select class="rating_param">
+            <option value="w">witzig</option>
+            <option value="n">nicht witzig</option>
+            <option value="rated">rated</option>
+            <option value="all">all</option>
+        </select>
+        
+        <script src="js/html2canvas.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src="js/jquery.nice-select.js"></script>
+        <script  src="js/index.js"></script>
+    </body>
 </html>
