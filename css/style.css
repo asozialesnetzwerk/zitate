@@ -77,9 +77,14 @@ div.quote-container:before {
     padding: 1rem;
 }
 
-.quote-rating {
+.rating-container {
     font-size: 1.4rem;
     text-align: left;
+}
+
+.rating-image {
+    height: 2.2rem;
+    width: auto;
 }
 
 @media (orientation:landscape) { 
@@ -89,9 +94,13 @@ div.quote-container:before {
         right: 0px;
     }
     
-    .quote-rating { 
+    .rating-container { 
         position: absolute;
         bottom: 20px;
+    }
+    
+    .rating-image {
+        position: absolute; 
     }
     
     .quote-id {
