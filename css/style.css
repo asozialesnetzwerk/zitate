@@ -101,6 +101,7 @@ div.quote-container:before {
     
     .rating-image {
         position: absolute; 
+        left: 2rem;
     }
     
     .quote-id {
