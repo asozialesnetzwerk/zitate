@@ -19,47 +19,42 @@ div.quote-container:before {
 }
 
 @media (orientation:landscape) { 
-div.quote-container:before {
-    content:url("");
-}
-    
-    
-
-    
-.quote-container {
-  background: #000000;
-  background-image:url("ZitateBackgroundV1.svg");
-  background-repeat: no-repeat;
-  background-position: right top 5px;
-
-  /*background-position: right 10px top 5px;*/
-  width: 50rem;
-  min-height: 380px;
-  display: block;
-  margin: 1rem auto;
-  text-align: center;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 0rem;
-  padding-bottom: 2rem;
-}
-
- #quote-important {
-     position: relative; z-index: 1;
+    div.quote-container:before {
+        content:url("");
     }
- #top {
-     
-     position: absolute; z-index: -1;
     
+    .quote-container {
+        background: #000000;
+        background-image:url("ZitateBackgroundV1.svg");
+        background-repeat: no-repeat;
+        background-position: right top 5px;
+
+        /*background-position: right 10px top 5px;*/
+        width: 50rem;
+        min-height: 380px;
+        display: block;
+        margin: 1rem auto;
+        text-align: center;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-top: 0rem;
+        padding-bottom: 2rem;
+    }
+
+    #quote-important {
+        position: relative; z-index: 1;
+    }
+    #top {
+        position: absolute; z-index: -1;
     }
  
+    .quote-text {
+        width: 32rem;
+    }
     
-.quote-text {
-  width: 32rem;
-}
-.quote-author {
-  margin-right: 18rem;
-}
+    .quote-author {
+        margin-right: 18rem;
+    }
 }
 
 
@@ -88,22 +83,22 @@ div.quote-container:before {
 }
 
 @media (orientation:landscape) { 
-.buttons {
-    position: absolute; 
-    bottom: 0px; 
-    right: 0px;
-}
+    .buttons {
+        position: absolute; 
+        bottom: 0px; 
+        right: 0px;
+    }
     
-.quote-rating {
-  position: absolute;
-  bottom: 20px;
-}
+    .quote-rating { 
+        position: absolute;
+        bottom: 20px;
+    }
     
-.quote-id {
-    position: absolute; 
-    bottom: 0px; 
-    right: 0px;
-}
+    .quote-id {
+        position: absolute; 
+        bottom: 0px; 
+        right: 0px;
+    }
 }
 
 
