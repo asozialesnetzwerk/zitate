@@ -21,7 +21,7 @@ function saveAsImg() {
         var base64URL = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
         var a = document.createElement("a"); //Create <a>
         a.href = base64URL; //Image Base64 Goes here
-        a.download = "Zitat.png"; //File name Here
+        a.download = "Zitat_("+ $(".quote-id").text() + ")_asozialesnetzwerk.github.io.png"; //File name Here
         a.click(); //Downloaded file
     });
 }
