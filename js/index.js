@@ -1,16 +1,16 @@
-var rating = "bewertung_zitate.json";
-var authors = "namen.txt";
-var quotes = "zitate.txt";
-
-window.q = [];
-window.r = [];
-
 $(".quote-text").text("");
 $(".quote-author").text("");
 
 $(document).ready(function () {
     $('select').niceSelect();
 });
+
+var rating = "bewertung_zitate.json";
+var authors = "namen.txt";
+var quotes = "zitate.txt";
+
+window.q = [];
+window.r = [];
 
 function getUrlVars() {
     var vars = {};
@@ -22,10 +22,9 @@ function getUrlVars() {
 
 function saveAsImg() {
     html2canvas(document.getElementById('quote-important')).then(function (canvas) {
-        var base64URL = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
         var a = document.createElement("a"); //Create <a>
-        a.href = base64URL; //Image Base64 Goes here
-        a.download = "Zitat_(" + $(".quote-id").text() + ")_asozialesnetzwerk.github.io.png"; //File name Here
+        a.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); //Image Base64
+        a.download = "Zitat_(" + $(".quote-id").text() + ")_asozialesnetzwerk.github.io.png"; //File name
         a.click(); //Downloaded file
     });
 }
@@ -54,10 +53,8 @@ function displayZitat(id) {
 }
 
 function getUrlWithoutParam() {
-    var end = window.location.href.lastIndexOf('dex.html');
-    if(end < 0) end = window.location.href.lastIndexOf("/zitate/")
-    if(end < 0) end = window.location.href.length;
-    return window.location.href.substring(0, end + 8);
+    var end = window.location.href.indexOf('?');
+    return window.location.href.substring(0, (end < 0) ? window.location.href.length : end);
 }
 
 function getUrlWithId(value) {
@@ -68,18 +65,17 @@ function getUrlWithId(value) {
 
 function getUrlWithRating(value) {//w; all; rated; n
     var id = getUrlParam("id", "");
-    if (!(id === "")) id = "&id=" + id;
-    return getUrlWithoutParam() + "?rating=" + value + id;
+    return getUrlWithoutParam() + "?id=" + ((id=== "") ? getRandomZitatId() : id) + "&rating=" + value;
 }
 
-function getRandomZitatUrl() {
-    return getUrlWithId(Math.floor(Math.random() * window.q[1].length) + '-' + Math.floor(Math.random() * window.q[0].length));
+function getRandomZitatId() {
+    return Math.floor(Math.random() * window.q[1].length) + '-' + Math.floor(Math.random() * window.q[0].length);
 }
 
 function getZitatUrl() {
     var paramRating = getUrlParam("rating", "w");
     if (paramRating === "all") {
-        return getRandomZitatUrl();
+        return getUrlWithId(getRandomZitatId());
     }
     var keys = Object.keys(window.r[0]);
     var z;
