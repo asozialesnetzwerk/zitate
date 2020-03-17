@@ -608,7 +608,7 @@ Carlo Schmid
 Chinesisches Sprichwort
 Jean Anouilh
 Harold Pinter
-Martin WalserÂ 
+Martin Walser
 Emmanuel Mounier
 Henry Ford I.
 Rudolf Platte
@@ -754,8 +754,8 @@ Freddy Krueger
 Marc-Uwe Kling
 Ein Motivationstrainer
 W. A. Mozart
-Die Bertelsmann Stiftung
-Ein AFD Politiker
+Die Bertelsmann-Stiftung
+Ein AfD-Politiker
 E. T.
 Lord Voldemort
 Erdogan
@@ -791,3 +791,6 @@ CNT Regierungsdelegation
 Der Pinguin
 Laura Müller
 Christian Lindner
+Greta Thunberg
+Die PARTEI
+Ein Stellwerksimulator-Spieler
