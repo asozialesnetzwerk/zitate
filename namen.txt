@@ -811,3 +811,4 @@ Maya-Philosophie
 Bismark
 Friedrich Merz
 Bart Simpson
+Daniel Ek
