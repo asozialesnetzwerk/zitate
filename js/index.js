@@ -55,7 +55,7 @@ function displayZitat(id) {
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
 
-    $(".meta-description").attr("content", theQuote + "\n- " + theAuthor);
+    $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
 
     $(".quote-id").text(id);
     quoteRating.text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
