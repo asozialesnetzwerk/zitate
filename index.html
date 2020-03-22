@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="theme-color" content="#8B0000">
-        <meta property="og:title" content="Generator für falsche Zitate">
         <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
         <script>
             /*document.getElementById("meta-description").removeAttribute("content");*/
@@ -49,5 +48,9 @@
         <script src="js/jquery.nice-select.js"></script>
         <script src="js/svg-inject.js"></script>
         <script src="js/index.js"></script>
+        <script>
+            var meta = '<meta property="og:title" content="neuer content"/>';
+$(meta).insertAfter('title');
+        </script>
     </body>
 </html>
