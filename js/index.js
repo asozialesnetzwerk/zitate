@@ -1,6 +1,3 @@
-var meta = '<meta property="og:title" content="neuer content"/>';
-$(meta).insertAfter('title');
-
 const quoteText = $(".quote-text");
 const quoteAuthor = $(".quote-author");
 const quoteRating = $(".quote-rating");
