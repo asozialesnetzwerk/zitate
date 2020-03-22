@@ -1,20 +1,25 @@
-$(".quote-text").text("");
-$(".quote-author").text("");
+const quoteText = $(".quote-text");
+const quoteAuthor = $(".quote-author");
+const quoteRating = $(".quote-rating");
+const ratingParam = $(".rating-param");
+
+quoteText.text("");
+quoteAuthor.text("");
 
 $(document).ready(function () {
     $('select').niceSelect();
 });
 
-var rating = "bewertung_zitate.json";
-var authors = "namen.txt";
-var quotes = "zitate.txt";
+const rating = "bewertung_zitate.json";
+const authors = "namen.txt";
+const quotes = "zitate.txt";
 
 window.q = [];
 window.r = [];
 
 function getUrlVars() {
     var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
         vars[key] = value;
     });
     return vars;
@@ -22,7 +27,7 @@ function getUrlVars() {
 
 function saveAsImg() {
     html2canvas(document.getElementById('quote-important'), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
-        var a = document.createElement("a"); //Create <a>
+        let a = document.createElement("a"); //Create <a>
         a.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); //Image Base64
         a.download = "Zitat_(" + $(".quote-id").text() + ")_asozialesnetzwerk.github.io.png"; //File name
         a.click(); //Downloaded file
@@ -38,31 +43,34 @@ function getUrlParam(parameter, defaultvalue) {
 }
 
 function displayZitat(id) {
-    var ids = id.split("-");
+    const ids = id.split("-");
     
-    var theQuote = window.q[1][ids[0]];
-    var theAuthor = window.q[0][ids[1]];
-    var ratingUndefined = window.r[0][id] == undefined;
-    var rating = ((ratingUndefined) ? 0 : window.r[0][id]);
+    const theQuote = window.q[1][ids[0]];
+    const theAuthor = window.q[0][ids[1]];
+    const ratingUndefined = window.r[0][id] == undefined;
+    const rating = ((ratingUndefined) ? 0 : window.r[0][id]);
     
-    $(".quote-text").text(theQuote);
-    $(".quote-text").attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
-    $(".quote-author").text("- " + theAuthor);
-    $(".quote-author").attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
+    quoteText.text(theQuote);
+    quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
+    quoteAuthor.text("- " + theAuthor);
+    quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
+
+    $(".meta-description").attr("description", theQuote + "\n- " + theAuthor);
 
     $(".quote-id").text(id);
-    $(".quote-rating").text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
-    $(".quote-rating").append((ratingUndefined) ? '' : '<img class="rating-image" src="css/Stempel' + ((rating < 0) ? 'Nicht' : '') + 'Witzig.svg" onload="SVGInject(this)"/>'); //width="auto" height="42"    onerror="SVGInject.err(this, "image.png")
-    
+    quoteRating.text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
+    quoteRating.append((ratingUndefined) ? '' : '<img class="rating-image" src="css/Stempel' + ((rating < 0) ? 'Nicht' : '') + 'Witzig.svg" onload="SVGInject(this)"/>'); //width="auto" height="42"    onerror="SVGInject.err(this, "image.png")
+
+    const ratingImage = $(".rating-image");
     if (rating < 0) {
-        $(".rating-image").css("bottom","0.008rem");
-        $(".rating-image").css("fill", "#DC143C"); //$(".rating-image").css("filter", "brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%)"); //"-webkit-filter"
+        ratingImage.css("bottom","0.008rem");
+        ratingImage.css("fill", "#DC143C"); //$(".rating-image").css("filter", "brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%)"); //"-webkit-filter"
     } else {
-        $(".rating-image").css("top","0.01rem");
+        ratingImage.css("top","0.01rem");
         if (rating > 0) {
-            $(".rating-image").css("fill", "#228B22"); //$(".rating-image").css("filter", 'brightness(0) invert(1) sepia() saturate(10000%) hue-rotate(30deg) brightness(60%)'); //"-webkit-filter"
+            ratingImage.css("fill", "#228B22"); //$(".rating-image").css("filter", 'brightness(0) invert(1) sepia() saturate(10000%) hue-rotate(30deg) brightness(60%)'); //"-webkit-filter"
         } else {
-            $(".rating-image").css("fill", "#b8b7b6");
+            ratingImage.css("fill", "#b8b7b6");
         }
     }
         
@@ -129,11 +137,11 @@ $.get(rating, getRating, 'text');
 $.get(authors, getQuote, 'text');
 $.get(quotes, getQuote, 'text');
 
-$(".rating-param").val(getUrlParam("rating", "w"));
-if($(".rating-param").val() === null) window.location = getUrlWithRating("w");
+ratingParam.val(getUrlParam("rating", "w"));
+if(ratingParam.val() === null) window.location = getUrlWithRating("w");
 
-$(".rating-param").change(function () {
-    if (!($(this).val() === "" || $(this).val() === getUrlParam("rating", "text"))) window.location = getUrlWithRating($(this).val());
+ratingParam.change(function () {
+    if (!(ratingParam.val() === "" || ratingParam.val() === getUrlParam("rating", "text"))) window.location = getUrlWithRating(ratingParam.val());
 });
 
 $(".download").on("click", function() {
