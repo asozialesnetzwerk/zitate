@@ -5,18 +5,13 @@
         <meta name="theme-color" content="#8B0000">
         <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
         <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
-        <!--
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         <script>
-            /*document.getElementById("meta-description").removeAttribute("content");*/
-            //setAttribute("content", "Hier könnte ein Zitat stehen.");
-            let metaElement = document.createElement("meta");
-            metaElement.name = "description";
-            metaElement["property"] = "og:description";
-            metaElement.content = "Eine Webapp, die falsche Zitate generiert.";
-            document.getElementsByTagName("head")[0].appendChild(metaElement);
-            //document.getElementsByTagName("head")[0].append('<meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">');
+            $('meta[property="og:description"]').remove();
+            $('head').append( "<meta property='og:description' content='2'>" );
         </script>
-        -->
+
         <link rel="icon" href="css/ZitateBackgroundV2.svg">
         <title>Generator für falsche Zitate</title>
         <link rel="stylesheet" href="css/style.css">
@@ -50,16 +45,11 @@
             <option value="rated">rated</option>
             <option value="all">all</option>
         </select>
-        
+
         <script src="js/html2canvas.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-        <script src="js/jquery.nice-select.js"></script>
         <script src="js/svg-inject.js"></script>
+        <script src="js/jquery.nice-select.js"></script>
         <script src="js/index.js"></script>
-        <script>
-            var meta = '<meta property="og:title" content="neuer content"/>';
-$(meta).insertAfter('title');
-        </script>
     </body>
 </html>
