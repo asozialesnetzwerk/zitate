@@ -8,7 +8,12 @@
         <script>
             /*document.getElementById("meta-description").removeAttribute("content");*/
             //setAttribute("content", "Hier könnte ein Zitat stehen.");
-            document.getElementById("meta-id").append('<meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">');
+            let metaElement = document.createElement("meta");
+            metaElement.name = "description";
+            metaElement["property"] = "og:description";
+            metaElement.content = "Eine Webapp, die falsche Zitate generiert.";
+            document.getElementsByTagName("head")[0].appendChild(metaElement);
+            //document.getElementsByTagName("head")[0].append('<meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">');
         </script>
         <link rel="icon" href="css/ZitateBackgroundV2.svg">
         <title>Generator für falsche Zitate</title>
