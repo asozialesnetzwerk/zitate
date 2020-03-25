@@ -808,7 +808,7 @@ Aus "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit"
 Alexander Gauland
 Ein Virus
 Maya-Philosophie
-Bismark
+Otto von Bismarck
 Friedrich Merz
 Bart Simpson
 Daniel Ek
@@ -820,6 +820,7 @@ Wilhelm Conrad Röntgen
 Axel Krapotke
 Der Terminator
 Martin Luther
-Ist von Kurt Tucholsky
+Kurt Tucholsky
 Winston Smith
 Diogenes von Sinope
+Pierre-Joseph Proudhon
