@@ -824,3 +824,4 @@ Kurt Tucholsky
 Winston Smith
 Diogenes von Sinope
 Pierre-Joseph Proudhon
+Mantra des Turing-Testes
