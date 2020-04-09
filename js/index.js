@@ -18,7 +18,7 @@ window.q = [];
 window.r = [];
 
 function getUrlVars() {
-    var vars = {};
+    const vars = {};
     window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
         vars[key] = value;
     });
@@ -45,9 +45,11 @@ function getUrlParam(parameter, defaultvalue) {
 function displayZitat(id) {
     const ids = id.split("-");
     
-    const theQuote = window.q[1][ids[0]];
+    let theQuote = window.q[1][ids[0]] ;
     const theAuthor = window.q[0][ids[1]];
-    const ratingUndefined = window.r[0][id] == undefined;
+    theQuote = "»" + theQuote.substr(1, theQuote.lastIndexOf('"') - 1) + "«";
+
+    const ratingUndefined = window.r[0][id] === undefined;
     const rating = ((ratingUndefined) ? 0 : window.r[0][id]);
     
     quoteText.text(theQuote);
@@ -79,18 +81,18 @@ function displayZitat(id) {
 }
 
 function getUrlWithoutParam() {
-    var end = window.location.href.indexOf('?');
+    const end = window.location.href.indexOf('?');
     return window.location.href.substring(0, (end < 0) ? window.location.href.length : end);
 }
 
 function getUrlWithId(value) {
-    var rating = getUrlParam("rating", "");
+    let rating = getUrlParam("rating", "");
     if (!(rating === "")) rating = "&rating=" + rating;
     return getUrlWithoutParam() + "?id=" + value + rating;
 }
 
 function getUrlWithRating(value) {//w; all; rated; n
-    var id = getUrlParam("id", "");
+    const id = getUrlParam("id", "");
     return getUrlWithoutParam() + "?id=" + ((id=== "") ? getRandomZitatId() : id) + "&rating=" + value;
 }
 
@@ -99,12 +101,12 @@ function getRandomZitatId() {
 }
 
 function getZitatUrl() {
-    var paramRating = getUrlParam("rating", "w");
+    const paramRating = getUrlParam("rating", "w");
     if (paramRating === "all") {
         return getUrlWithId(getRandomZitatId());
     }
-    var keys = Object.keys(window.r[0]);
-    var z;
+    const keys = Object.keys(window.r[0]);
+    let z;
     do {
         z = Math.floor(Math.random() * keys.length);
     } while ((window.r[0][keys[z]] <= 0 && paramRating === "w") || (window.r[0][keys[z]] >= 0 && paramRating === "n") || (window.r[0][keys[z]] === 0 && paramRating === "rated")); //Bis richtiges Zitat gefunden
