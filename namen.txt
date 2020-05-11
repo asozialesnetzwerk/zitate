@@ -851,3 +851,4 @@ August Reinsdorf
 Luigi Galleani
 Andreas Scheuer
 Oury Jalloh
+Jan Hus
