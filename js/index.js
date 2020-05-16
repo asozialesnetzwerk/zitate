@@ -16,15 +16,7 @@ const quotes = "zitate.txt";
 
 window.q = [];
 window.r = [];
-
 var id;
-const app = $.sammy(function() {
-    this.get("#/:id", function() {
-        id = this.params['id'];
-        displayZitat();
-    });
-});
-app.run();
 
 function getUrlVars() {
     const vars = {};
