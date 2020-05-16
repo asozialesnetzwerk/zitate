@@ -6,6 +6,15 @@ const ratingParam = $(".rating-param");
 quoteText.text("");
 quoteAuthor.text("");
 
+var id = "";
+const app = $.sammy(function() {
+    this.get("#/:id", function() {
+        id = this.params['id'];
+        displayZitat();
+    });
+});
+app.run();
+
 $(document).ready(function () {
     $('select').niceSelect();
 });
@@ -29,7 +38,7 @@ function saveAsImg() {
     html2canvas(document.getElementById('quote-important'), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
         let a = document.createElement("a"); //Create <a>
         a.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); //Image Base64
-        a.download = "Zitat_(" + $(".quote-id").text() + ")_asozialesnetzwerk.github.io.png"; //File name
+        a.download = "Zitat_(" + id + ")_asozialesnetzwerk.github.io.png"; //File name
         a.click(); //Downloaded file
     });
 }
@@ -42,7 +51,11 @@ function getUrlParam(parameter, defaultvalue) {
     }
 }
 
-function displayZitat(id) {
+function displayZitat() {
+    if(id === undefined || id === "" || !(window.q.length === 2 && window.r.length === 1)) return;
+    $(".get-quote").attr("href", getZitatUrl());
+
+
     const ids = id.split("-");
     
     let theQuote = window.q[1][ids[0]] ;
@@ -57,8 +70,8 @@ function displayZitat(id) {
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
 
-    //$('meta[property="og:description"]').remove();
-    //$('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
+    $('meta[property="og:description"]').remove();
+    $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
 
     $(".quote-id").text(id);
     quoteRating.text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
@@ -81,19 +94,20 @@ function displayZitat(id) {
 }
 
 function getUrlWithoutParam() {
-    const end = window.location.href.indexOf('?');
-    return window.location.href.substring(0, (end < 0) ? window.location.href.length : end);
+    let url = window.location.href;
+    window.location.href.toLowerCase().replace(/.+\/zitate\//, function (match) {
+        url =  match + "#/";
+    });
+    return url;
 }
 
 function getUrlWithId(value) {
     let rating = getUrlParam("rating", "");
-    if (!(rating === "")) rating = "&rating=" + rating;
-    return getUrlWithoutParam() + "?id=" + value + rating;
+    return getUrlWithoutParam() + value + (rating === "" ? "" : "?rating=" + rating);
 }
 
 function getUrlWithRating(value) {//w; all; rated; n
-    const id = getUrlParam("id", "");
-    return getUrlWithoutParam() + "?id=" + ((id=== "") ? getRandomZitatId() : id) + "&rating=" + value;
+    return getUrlWithoutParam()  + id + (value === "" ? "" : "?rating=" + value);
 }
 
 function getRandomZitatId() {
@@ -116,22 +130,19 @@ function getZitatUrl() {
 
 function checkLoad() {
     if (window.q.length === 2 && window.r.length === 1) {
-        var id = getUrlParam("id", "");
-        if (id.indexOf('-') < 1) id = getUrlParam("tag", "");
-        if (id.indexOf('-') < 1) window.location = getZitatUrl(); 
+        if (id.indexOf('-') < 1) window.location = getZitatUrl();
         else {
-            displayZitat(id);
-            $(".get-quote").attr("href", getZitatUrl()); //adds next zitat to button 
+            start();
         }
     }
 }
 
-var getQuote = function (data) {
+const getQuote = function (data) {
     window.q.push(data.split(/\n/));
     checkLoad();
 };
 
-var getRating = function (data) {
+const getRating = function (data) {
     window.r.push(JSON.parse(data));
     checkLoad();
 };
@@ -144,9 +155,21 @@ ratingParam.val(getUrlParam("rating", "w"));
 if(ratingParam.val() === null) window.location = getUrlWithRating("w");
 
 ratingParam.change(function () {
-    if (!(ratingParam.val() === "" || ratingParam.val() === getUrlParam("rating", "text"))) window.location = getUrlWithRating(ratingParam.val());
+    if (!(ratingParam.val() === "" || ratingParam.val() === getUrlParam("rating", "text"))) {
+        window.location = getUrlWithRating(ratingParam.val());
+    }
 });
 
 $(".download").on("click", function() {
 	saveAsImg();
 });
+
+function start() {
+    if(id === undefined || id === "") {
+        id = getUrlParam("id", "");
+        if(id !== "") {
+            window.location = getUrlWithId(id);
+        }
+    }
+    displayZitat();
+}
