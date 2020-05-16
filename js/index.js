@@ -6,15 +6,6 @@ const ratingParam = $(".rating-param");
 quoteText.text("");
 quoteAuthor.text("");
 
-var id = "";
-const app = $.sammy(function() {
-    this.get("#/:id", function() {
-        id = this.params['id'];
-        displayZitat();
-    });
-});
-app.run();
-
 $(document).ready(function () {
     $('select').niceSelect();
 });
@@ -25,6 +16,15 @@ const quotes = "zitate.txt";
 
 window.q = [];
 window.r = [];
+
+var id;
+const app = $.sammy(function() {
+    this.get("#/:id", function() {
+        id = this.params['id'];
+        displayZitat();
+    });
+});
+app.run();
 
 function getUrlVars() {
     const vars = {};
@@ -128,11 +128,21 @@ function getZitatUrl() {
     return getUrlWithId(keys[z]);
 }
 
+function checkId() {
+    if(id === undefined || id === "") {
+        id = getUrlParam("id", "");
+        if(id !== "") {
+            window.location = getUrlWithId(id);
+        }
+    }
+}
+
 function checkLoad() {
     if (window.q.length === 2 && window.r.length === 1) {
+        checkId();
         if (id.indexOf('-') < 1) window.location = getZitatUrl();
         else {
-            start();
+            displayZitat();
         }
     }
 }
@@ -163,13 +173,3 @@ ratingParam.change(function () {
 $(".download").on("click", function() {
 	saveAsImg();
 });
-
-function start() {
-    if(id === undefined || id === "") {
-        id = getUrlParam("id", "");
-        if(id !== "") {
-            window.location = getUrlWithId(id);
-        }
-    }
-    displayZitat();
-}
