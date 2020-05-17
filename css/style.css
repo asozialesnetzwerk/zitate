@@ -55,6 +55,11 @@ div.quote-container:before {
     .quote-author {
         margin-right: 18rem;
     }
+
+    .rating-image {
+        display: inline-block;
+        position: page;
+    }
 }
 
 
@@ -80,11 +85,31 @@ div.quote-container:before {
 .rating-container {
     font-size: 1.4rem;
     text-align: left;
+    align-items: start;
 }
 
 .rating-image {
     height: 2.2rem;
     width: auto;
+}
+
+.rating-text {
+    display: inline-block;
+}
+
+.nicht-witzig {
+    bottom: 0.008rem;
+    /*fill: #DC143C;*/
+    filter: brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%);
+}
+
+.witzig {
+    /*fill: #228B22; */
+    filter: brightness(0) invert(1) sepia(100) saturate(10000%) hue-rotate(30deg) brightness(60%);
+}
+
+.invisible {
+    opacity: 0;
 }
 
 @media (orientation:landscape) { 
@@ -104,6 +129,7 @@ div.quote-container:before {
     }
     
     .rating-image {
+        display: inline;
         position: absolute; 
         left: 2rem;
     }
@@ -112,6 +138,20 @@ div.quote-container:before {
         position: absolute; 
         bottom: 0px; 
         right: 0px;
+    }
+
+    .witzig {
+        transform: translateY(-0.1rem);
+    }
+}
+
+@media (orientation: portrait) {
+    .nicht-witzig {
+        transform: translateX(-5rem) translateY(0.5rem);
+    }
+
+    .witzig {
+        transform: translateY(0.75rem);
     }
 }
 

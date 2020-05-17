@@ -1,10 +1,13 @@
 const quoteText = $(".quote-text");
 const quoteAuthor = $(".quote-author");
-const quoteRating = $(".quote-rating");
 const ratingParam = $(".rating-param");
 const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
 const tweetButton = $(".tweet");
+
+const quoteRating = $(".rating-text");
+const witzig = $(".witzig");
+const nichtWitzig = $(".nicht-witzig");
 
 quoteText.text("");
 quoteAuthor.text("");
@@ -19,7 +22,7 @@ const quotes = "zitate.txt";
 
 window.q = [];
 window.r = [];
-var id;
+let id;
 const app = $.sammy(function() {
     this.get("#/:id", function() {
         id = this.params["id"];
@@ -65,6 +68,18 @@ function getUrlParam(parameter, defaultvalue) {
     }
 }
 
+function changeVisibility(element, visible) {
+    const isInvisible = element.hasClass("invisible");
+    if(visible === !isInvisible) {
+        return;
+    }
+    if(visible && isInvisible) {
+        element.removeClass("invisible");
+    } else if (!visible && !isInvisible) {
+        element.addClass("invisible");
+    }
+}
+
 let oldRating;
 function displayZitat() {
     if(!hasLoaded() || !checkId()) return;
@@ -91,19 +106,15 @@ function displayZitat() {
     if(rating !== oldRating) {
         quoteRating.text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
         if(!ratingUndefined) {
-            quoteRating.append('<img class="rating-image" src="css/Stempel' + ((rating < 0) ? 'Nicht' : '') + 'Witzig.svg" onload="SVGInject(this)"/>'); //width="auto" height="42"    onerror="SVGInject.err(this, "image.png")
-
-            const ratingImage = $(".rating-image");
             if (rating < 0) {
-                ratingImage.css("bottom", "0.008rem");
-                ratingImage.css("fill", "#DC143C"); //$(".rating-image").css("filter", "brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%)"); //"-webkit-filter"
+                changeVisibility(witzig, false);
+                changeVisibility(nichtWitzig, true);
+            } else if (rating === 0) {
+                changeVisibility(witzig, false);
+                changeVisibility(nichtWitzig, false);
             } else {
-                ratingImage.css("top", "0.01rem");
-                if (rating > 0) {
-                    ratingImage.css("fill", "#228B22"); //$(".rating-image").css("filter", 'brightness(0) invert(1) sepia() saturate(10000%) hue-rotate(30deg) brightness(60%)'); //"-webkit-filter"
-                } else {
-                    ratingImage.css("fill", "#b8b7b6");
-                }
+                changeVisibility(witzig, true);
+                changeVisibility(nichtWitzig, false);
             }
         }
     }

@@ -7,12 +7,6 @@
         <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
 
         <script src='js/jquery.js'></script>
-        <!--
-        <script>
-            //$('meta[property="og:description"]').remove();
-            $('head').append( "<meta property='og:description' content='2'>" );
-        </script>
-        -->
 
         <link rel="icon" href="css/ZitateBackgroundV2.svg">
         <title>Generator für falsche Zitate</title>
@@ -35,7 +29,11 @@
             </div>
             
             <div onClick='window.open("http://asozialesnetzwerk.github.io/discord");' class="rating-container">
-                <div class="quote-rating">—</div>
+                <div class="quote-rating">
+                    <div class="rating-text"></div>
+                    <img class="rating-image witzig" src="css/StempelWitzig.svg"/>
+                    <img class="rating-image nicht-witzig" src="css/StempelNichtWitzig.svg"/>
+                </div>
             </div>
         </div>
         
@@ -50,7 +48,6 @@
 
         <script src="js/html2canvas.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
-        <script src="js/svg-inject.js"></script>
         <script src="js/jquery.nice-select.js"></script>
         <script src="js/sammy.js"></script>
         <script src="js/index.js"></script>
