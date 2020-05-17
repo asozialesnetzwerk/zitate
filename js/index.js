@@ -17,6 +17,25 @@ const quotes = "zitate.txt";
 window.q = [];
 window.r = [];
 var id;
+const app = $.sammy(function() {
+    this.get("#/:id", function() {
+        id = this.params["id"];
+        displayZitat();
+    });
+
+    this.get("/", function () {
+        window.location = getZitatUrl();
+    });
+
+    this.get("/#", function () {
+        window.location = getZitatUrl();
+    });
+});
+app.run();
+
+function hasLoaded() {
+    return window.q.length === 2 && window.r.length === 1;
+}
 
 function getUrlVars() {
     const vars = {};
@@ -44,7 +63,7 @@ function getUrlParam(parameter, defaultvalue) {
 }
 
 function displayZitat() {
-    if(id === undefined || id === "" || !(window.q.length === 2 && window.r.length === 1)) return;
+    if(!hasLoaded() || !checkId()) return;
     $(".get-quote").attr("href", getZitatUrl());
 
 
@@ -87,8 +106,8 @@ function displayZitat() {
 
 function getUrlWithoutParam() {
     let url = window.location.href;
-    window.location.href.toLowerCase().replace(/.+\/zitate\//, function (match) {
-        url =  match + "#/";
+    window.location.href.toLowerCase().replace(/.+\/zitate/, function (match) {
+        url =  match + "/#/";
     });
     return url;
 }
@@ -119,23 +138,44 @@ function getZitatUrl() {
     
     return getUrlWithId(keys[z]);
 }
+const id_regex = /^\d{1,4}\-\d{1,4}$/; //1234-1234
+function isValidId(val) {
+    if(val === undefined || val === null || id === "") {
+        return false;
+    }
+    if(id_regex.test(val)) {
+        if(hasLoaded()) {
+            const ids = id.split('-');
+            return ids[0] < window.q[1].length && ids[1] < window.q[0].length;
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
 
 function checkId() {
-    if(id === undefined || id === "") {
-        id = getUrlParam("id", "");
-        if(id !== "") {
-            window.location = getUrlWithId(id);
+    if(isValidId(id)) {
+        return true;
+    } else {
+        const id2 = getUrlParam("id", "");
+        if(isValidId(id2)) {
+            window.location = getUrlWithId(id2);
+        } else {
+            if(id !== undefined && id !== null) {
+                console.log("Given id (" + id + ") is invalid.");
+            }
+            window.location = getZitatUrl();
         }
+        return false;
     }
 }
 
 function checkLoad() {
-    if (window.q.length === 2 && window.r.length === 1) {
+    if (hasLoaded()) {
         checkId();
-        if (id.indexOf('-') < 1) window.location = getZitatUrl();
-        else {
-            displayZitat();
-        }
+        displayZitat();
     }
 }
 
