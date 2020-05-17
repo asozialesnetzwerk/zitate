@@ -12,6 +12,8 @@ const quoteRating = $(".rating-text");
 const witzig = $(".witzig");
 const nichtWitzig = $(".nicht-witzig");
 
+const id_regex = /^\d{1,4}-\d{1,4}$/; //1234-1234
+
 $(document).ready(function () {
     $('select').niceSelect();
 });
@@ -148,7 +150,6 @@ function getNewZitatUrl() {
     return getUrlWithId(keys[z]);
 }
 
-const id_regex = /^\d{1,4}-\d{1,4}$/; //1234-1234
 function isValidId(val) {
     if(val === undefined || val === null || id === "") {
         return false;
