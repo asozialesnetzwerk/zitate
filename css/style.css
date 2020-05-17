@@ -93,11 +93,6 @@ div.quote-container:before {
 
 .nicht-witzig {
     bottom: 0.008rem;
-    filter: brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%);
-}
-
-.witzig {
-    filter: brightness(0) invert(1) sepia(100) saturate(10000%) hue-rotate(30deg) brightness(60%);
 }
 
 .invisible {
