@@ -4,7 +4,7 @@ body {
 }
 
 div.quote-container:before {
-    content:url("ZitateBackgroundV1.svg");
+    content:url("ZitateBackground.svg");
 }
 
 .quote-container {
@@ -23,10 +23,7 @@ div.quote-container:before {
     }
     
     .quote-container {
-        background: #000000;
-        background-image:url("ZitateBackgroundV1.svg");
-        background-repeat: no-repeat;
-        background-position: right top 5px;
+        background: #000000 url("ZitateBackground.svg") no-repeat right top 5px;
 
         /*background-position: right 10px top 5px;*/
         width: 50rem;
@@ -34,10 +31,7 @@ div.quote-container:before {
         display: block;
         margin: 1rem auto;
         text-align: center;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        padding-top: 0rem;
-        padding-bottom: 2rem;
+        padding: 0 2rem 2rem;
     }
 
     #quote-important {
@@ -99,12 +93,10 @@ div.quote-container:before {
 
 .nicht-witzig {
     bottom: 0.008rem;
-    /*fill: #DC143C;*/
     filter: brightness(0) invert(1) sepia(1000) saturate(10000) hue-rotate(107deg) invert(84%) brightness(69%);
 }
 
 .witzig {
-    /*fill: #228B22; */
     filter: brightness(0) invert(1) sepia(100) saturate(10000%) hue-rotate(30deg) brightness(60%);
 }
 
@@ -115,8 +107,8 @@ div.quote-container:before {
 @media (orientation:landscape) { 
     .buttons {
         position: absolute; 
-        bottom: 0px; 
-        right: 0px;
+        bottom: 0;
+        right: 0;
     }
     
     .rating-container { 
@@ -136,8 +128,8 @@ div.quote-container:before {
     
     .quote-id {
         position: absolute; 
-        bottom: 0px; 
-        right: 0px;
+        bottom: 0;
+        right: 0;
     }
 
     .witzig {
