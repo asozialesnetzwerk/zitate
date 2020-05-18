@@ -18,12 +18,14 @@ $(document).ready(function () {
     $('select').niceSelect();
 });
 
-const rating = "bewertung_zitate.json";
-const authors = "namen.txt";
-const quotes = "zitate.txt";
+const ratingSource = "bewertung_zitate.json";
+const authorsSource = "namen.txt";
+const quotesSource = "zitate.txt";
 
-window.q = [];
-window.r = [];
+let authorsArr = [];
+let quotesArr = [];
+let ratingJson = null;
+
 let id;
 
 const app = $.sammy(function() {
@@ -43,7 +45,7 @@ const app = $.sammy(function() {
 app.run();
 
 function hasLoaded() {
-    return window.q.length === 2 && window.r.length === 1;
+    return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
 }
 
 function saveAsImg() {
@@ -75,12 +77,11 @@ function displayZitat() {
 
     const ids = id.split("-");
     
-    let theQuote = window.q[1][ids[0]] ;
-    const theAuthor = window.q[0][ids[1]];
+    let theQuote = quotesArr[ids[0]] ;
+    const theAuthor = authorsArr[ids[1]];
     theQuote = "»" + theQuote.substr(1, theQuote.lastIndexOf('"') - 1) + "«";
 
-    const ratingUndefined = window.r[0][id] === undefined;
-    const rating = ((ratingUndefined) ? 0 : window.r[0][id]);
+    const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
     
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
@@ -92,8 +93,8 @@ function displayZitat() {
 
     quoteId.text(id);
     if(rating !== oldRating) {
-        quoteRating.text((ratingUndefined) ? "—" : Math.abs(window.r[0][id]) + " x   ");
-        if(ratingUndefined || rating === 0) {
+        quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x   ");
+        if( rating === 0) {
             changeVisibility(witzig, false);
             changeVisibility(nichtWitzig, false);
         } else {
@@ -129,7 +130,7 @@ function getUrlWithRating(value) {//w; all; rated; n
 }
 
 function getRandomZitatId() {
-    return Math.floor(Math.random() * window.q[1].length) + '-' + Math.floor(Math.random() * window.q[0].length);
+    return Math.floor(Math.random() * quotesArr.length) + '-' + Math.floor(Math.random() * authorsArr.length);
 }
 
 function getNewZitatUrl() {
@@ -141,11 +142,11 @@ function getNewZitatUrl() {
         } while (newId === id);
         return getUrlWithId(newId);
     }
-    const keys = Object.keys(window.r[0]);
+    const keys = Object.keys(ratingJson);
     let z;
     do {
         z = Math.floor(Math.random() * keys.length);
-    } while ((window.r[0][keys[z]] <= 0 && paramRating === "w") || (window.r[0][keys[z]] >= 0 && paramRating === "n") || (window.r[0][keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
+    } while ((ratingJson[keys[z]] <= 0 && paramRating === "w") || (ratingJson[keys[z]] >= 0 && paramRating === "n") || (ratingJson[keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
     
     return getUrlWithId(keys[z]);
 }
@@ -157,7 +158,7 @@ function isValidId(val) {
     if(id_regex.test(val)) {
         if(hasLoaded()) {
             const ids = id.split('-');
-            return ids[0] < window.q[1].length && ids[1] < window.q[0].length;
+            return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
         } else {
             return true;
         }
@@ -182,26 +183,31 @@ function checkLoad() {
     }
 }
 
+const getAuthor = function (data) {
+    authorsArr = data.split(/\n/);
+    checkLoad();
+};
+
 const getQuote = function (data) {
-    window.q.push(data.split(/\n/));
+    quotesArr = data.split(/\n/);
     checkLoad();
 };
 
 const getRating = function (data) {
-    window.r.push(JSON.parse(data));
+    ratingJson = JSON.parse(data);
     checkLoad();
 };
 
-$.get(rating, getRating, 'text');
-$.get(authors, getQuote, 'text');
-$.get(quotes, getQuote, 'text');
+$.get(ratingSource, getRating, 'text');
+$.get(authorsSource, getAuthor, 'text');
+$.get(quotesSource, getQuote, 'text');
 
 function getRatingParam() {
     if(ratingParam.val() !== null) {
         return ratingParam.val();
     }
     window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        if(key === rating) {
+        if(key === ratingSource) {
             return value;
         }
     });
