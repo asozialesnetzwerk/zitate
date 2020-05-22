@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#8B0000">
+        <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
+        <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
+
+        <script src='js/jquery.js'></script>
+
+        <link rel="icon" href="css/WebsiteIcon.svg">
+        <title>Generator für falsche Zitate</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/nice-select.css">
+    </head>
+    <body>
+        <div id="quote-important" class="quote-container">
+            <div id="bottom">
+                <div class="quote-id"></div>
+                <div class="buttons">
+                    <a class="download"><i class="button fas fa-chevron-circle-down fa-4x" aria-hidden="true"></i></a>
+                    <a class="tweet" href="" target="_blank"><i id ="twitter"class="button fab fa-twitter fa-4x" aria-hidden="true"></i></a>
+                    <a class="get-quote" href=""><i class="button fas fa-chevron-circle-right fa-4x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div id="top">
+                <div class="quote-text" onClick="">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
+                <div class="quote-author" onClick="">- Batman zu Robin</div>
+            </div>
+            
+            <div onClick='window.open("http://asozialesnetzwerk.github.io/discord");' class="rating-container">
+                <div class="quote-rating">
+                    <div class="rating-text"></div>
+                    <img class="rating-image witzig invisible" src="css/StempelWitzig.svg"/>
+                    <img class="rating-image nicht-witzig invisible" src="css/StempelNichtWitzig.svg"/>
+                </div>
+            </div>
+        </div>
+        
+        <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
+        
+        <select class="rating-param">
+            <option value="w">witzig</option>
+            <option value="n">nicht witzig</option>
+            <option value="rated">rated</option>
+            <option value="all">all</option>
+        </select>
+
+        <script src="js/html2canvas.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+        <script src="js/jquery.nice-select.js"></script>
+        <script src="js/sammy.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
