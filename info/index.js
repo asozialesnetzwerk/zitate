@@ -1,6 +1,5 @@
 var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json"
-var authors = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/namen.txt"
-var quotes = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/zitate.txt"
+var inputfield = "2271-656";
 
 window.q = [];
 window.r = [];
@@ -14,8 +13,6 @@ var getRating = function(data) {
     if(window.q.length==2 && window.r.length==1) createZitat();
 };
 
-$.get(authors, getQuote, 'text');
-$.get(quotes, getQuote, 'text');
 $.get(rating, getRating, 'text');
 
 $(".get-quote").on("click", function() {
@@ -26,10 +23,16 @@ function createZitat()
 {
     var a = Math.floor(Math.random() * window.q[0].length);
     var q = Math.floor(Math.random() * window.q[1].length);
-    var z = q+"-"+a; //Zitat-ID
+    var z = inputfield; //Zitat-ID
     
     $(".quote-id").text(z);
     $(".quote-rating").text("Rating: "+window.r[0][z]);
+}
+
+function myQuoteStats() {
+  inputfield = document.getElementById("myQuote").value;
+  alert(inputfield);
+  createZitat()
 }
 
 
