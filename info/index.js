@@ -5,9 +5,20 @@ var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/
 
 var author="579"
 
-alert(rating);
+window.q = [];
 
-document.getElementById("myRating").textContent=rating;
+var getRating = function(data) {
+    r.push(JSON.parse(data));
+};
+
+$.get(rating, getRating, 'text');
+
+
+document.getElementById("myRating").textContent=getRating;
+
+alert(window.q)
+alert(q);
+alert(window);
 
 
 var keys = Object.keys(rating);
@@ -18,7 +29,7 @@ var rip = keys.filter(s=>~s.indexOf("-"+author)); //contain author
 
 var newarr = {};
 for (let [key, value] of Object.entries(rip)) {
-    newarr[`"${value}"`] =rating[`${value}`];
+    newarr[`"${value}"`] = getRating[`${value}`];
 }
 
 console.log(newarr);
