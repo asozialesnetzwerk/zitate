@@ -5,7 +5,7 @@ var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/
 
 var author="579"
 
-window.q = [];
+window.r = [];
 
 var getRating = function(data) {
     r.push(JSON.parse(data));
@@ -14,8 +14,11 @@ var getRating = function(data) {
 document.getElementById("myRating").textContent=getRating;
 
 alert("UFF");
-alert(window.q);
-alert(q);
+    var z = 3153+"-"+786; //Zitat-ID
+    
+    alert(window.r[0][z]);
+alert(window.r);
+alert(r);
 alert(window);
 
 
