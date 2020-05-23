@@ -18,9 +18,9 @@ $(document).ready(function () {
     $('select').niceSelect();
 });
 
-const ratingSource = "bewertung_zitate.json";
-const authorsSource = "namen.txt";
-const quotesSource = "zitate.txt";
+const ratingSource = "../bewertung_zitate.json";
+const authorsSource = "../namen.txt";
+const quotesSource = "../zitate.txt";
 
 let authorsArr = [];
 let quotesArr = [];
@@ -114,7 +114,7 @@ function displayZitat() {
 
 function getBaseUrl() {
     let url = window.location.href;
-    window.location.href.toLowerCase().replace(/.+\/zitate/, function (match) {
+    window.location.href.toLowerCase().replace(/.+\/info/, function (match) {
         url =  match + "/#/";
     });
     return url;
@@ -180,6 +180,7 @@ function checkLoad() {
     if (hasLoaded()) {
         checkId();
         displayZitat();
+        runInfo();
     }
 }
 
@@ -226,41 +227,33 @@ ratingParam.change(function () {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-var author="579"
+function runInfo() {
+    const author = "579";
+
+    const keys = Object.keys(ratingJson);
+    console.log(keys);
+
+    console.log(keys.filter(s => ~s.indexOf("-" + author)));
+    const rip = keys.filter(s => ~s.indexOf("-" + author)); //contain author
+
+    const newArr = {};
+    for (let [key, value] of Object.entries(rip)) {
+        newArr[`"${value}"`] = authorsArr[`${value}`];
+    }
+
+    console.log(newArr);
+    console.log(Object.values(newArr));
+
+    console.log(Math.max(...Object.values(newArr))); //max
 
 
-var keys = Object.keys(rating);
-console.log(keys)
+//console.log(Object.keys(newArr).find(key => newArr[key] === 7)); //only one result
 
-console.log(keys.filter(s=>~s.indexOf("-"+author)));
-var rip = keys.filter(s=>~s.indexOf("-"+author)); //contain author
 
-var newarr = {};
-for (let [key, value] of Object.entries(rip)) {
-    newarr[`"${value}"`] = window.r[0][`${value}`];
+    for (let [key, value] of Object.entries(newArr)) {
+        if (value === Math.max(...Object.values(newArr))) {
+            //console.log(`${key}`);
+            console.log(`${key}`.substring(1, `${key}`.indexOf('-')));
+        }
+    }
 }
-
-console.log(newarr);
-console.log(Object.values(newarr));
-
-console.log(Math.max(...Object.values(newarr))); //max
-
-
-//console.log(Object.keys(newarr).find(key => newarr[key] === 7)); //only one result
-
-
-for (let [key, value] of Object.entries(newarr)) {
-    if(`${value}` == Math.max(...Object.values(newarr)))
-  {
-      //console.log(`${key}`);
-    console.log(`${key}`.substring(1, `${key}`.indexOf('-')));
-  }
-}  
