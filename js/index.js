@@ -183,24 +183,20 @@ function checkLoad() {
     }
 }
 
-const getAuthor = function (data) {
-    authorsArr = data.split(/\n/);
-    checkLoad();
-};
-
-const getQuote = function (data) {
-    quotesArr = data.split(/\n/);
-    checkLoad();
-};
-
-const getRating = function (data) {
+$.get(ratingSource, data => {
     ratingJson = JSON.parse(data);
     checkLoad();
-};
+}, "text");
 
-$.get(ratingSource, getRating, 'text');
-$.get(authorsSource, getAuthor, 'text');
-$.get(quotesSource, getQuote, 'text');
+$.get(authorsSource, data => {
+    authorsArr = data.split(/\n/);
+    checkLoad();
+}, "text");
+
+$.get(quotesSource, data => {
+    quotesArr = data.split(/\n/);
+    checkLoad();
+}, "text");
 
 function getRatingParam() {
     if(ratingParam.val() !== null) {
