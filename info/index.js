@@ -27,11 +27,11 @@ const app = $.sammy(function() {
     });
 
     this.get("/", function () {
-        window.location = getUrlWithId(Math.random() > 0.5, 69);
+        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, 69);
     });
 
     this.get("/#", function () {
-        window.location = getUrlWithId(Math.random() > 0.5, 69);
+        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, 69);
     });
 });
 app.run();
@@ -69,9 +69,9 @@ function getUrlWithId(id) {
 
 function getUrlWithIdAndBoolean(isAuthor, value) {
     if(isAuthor) {
-        return getUrlWithId("-" + value);
+        return getUrlWithIdAndBoolean("-" + value);
     } else {
-        return getUrlWithId(value + "-");
+        return getUrlWithIdAndBoolean(value + "-");
     }
 }
 
