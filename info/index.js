@@ -69,9 +69,9 @@ function getUrlWithId(id) {
 
 function getUrlWithIdAndBoolean(isAuthor, value) {
     if(isAuthor) {
-        return getUrlWithIdAndBoolean("-" + value);
+        return getUrlWithId("-" + value);
     } else {
-        return getUrlWithIdAndBoolean(value + "-");
+        return getUrlWithId(value + "-");
     }
 }
 
@@ -144,7 +144,7 @@ function runInfo() {
 
     select.val(getFilter(id));
     if(select.val() === null) {
-        window.location = getUrlWithId(Math.random() > 0.5, id);
+        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, id);
     }
 
     select.change(function () {
