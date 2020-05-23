@@ -1,6 +1,7 @@
 var author="579"
 
-console.log(ratingJson);
+alert(ratingJson);
+alert("HI");
 
 var arr =
 {"1075-162":-1,
