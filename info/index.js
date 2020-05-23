@@ -11,12 +11,13 @@ var getRating = function(data) {
     r.push(JSON.parse(data));
 };
 
-$.get(rating, getRating, 'text');
+getRating(rating);
 
 
 document.getElementById("myRating").textContent=getRating;
 
-alert(window.q)
+alert("UFF");
+alert(window.q);
 alert(q);
 alert(window);
 
