@@ -11,9 +11,6 @@ var getRating = function(data) {
     r.push(JSON.parse(data));
 };
 
-getRating(rating);
-
-
 document.getElementById("myRating").textContent=getRating;
 
 alert("UFF");
