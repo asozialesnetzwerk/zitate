@@ -1,5 +1,5 @@
 var rating = "https://raw.githubusercontent.com/asozialesnetzwerk/zitate/master/bewertung_zitate.json"
-
+    var z = 3153+"-"+786; //Zitat-ID
 
 
 
@@ -7,14 +7,18 @@ var author="579"
 
 window.r = [];
 
-var getRating = function(data) {
+var getArray = function(data) {
     r.push(JSON.parse(data));
+    alert(window.r[0][z]);
+    alert(window.r);
+    alert(r);
+    alert(window);
 };
 
-document.getElementById("myRating").textContent=getRating;
+document.getElementById("myRating").textContent=window.r;
 
 alert("UFF");
-    var z = 3153+"-"+786; //Zitat-ID
+
     
     alert(window.r[0][z]);
 alert(window.r);
@@ -30,7 +34,7 @@ var rip = keys.filter(s=>~s.indexOf("-"+author)); //contain author
 
 var newarr = {};
 for (let [key, value] of Object.entries(rip)) {
-    newarr[`"${value}"`] = getRating[`${value}`];
+    newarr[`"${value}"`] = window.r[0][`${value}`];
 }
 
 console.log(newarr);
