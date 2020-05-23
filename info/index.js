@@ -1,6 +1,6 @@
 var author="579"
 
-alert(ratingJson);
+//alert(ratingJson);
 alert("HI");
 
 var arr =
