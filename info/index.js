@@ -2,6 +2,8 @@ const ratingSource = "../bewertung_zitate.json";
 const authorsSource = "../namen.txt";
 const quotesSource = "../zitate.txt";
 
+const list = document.getElementById("list");
+
 let authorsArr = [];
 let quotesArr = [];
 let ratingJson = null;
@@ -16,6 +18,7 @@ const app = $.sammy(function() {
         } else {
             id = "-" + id;
         }
+        console.log("loaded");
         runInfo();
     });
 
@@ -75,6 +78,13 @@ $.get(quotesSource, data => {
 }, "text");
 
 
+function getFalschesZitat(zitatId) {
+    let ids = zitatId.split("-");
+    if(ids.length < 2 || !hasLoaded()) return "";
+    return quotesArr[ids[0]] + " -" + authorsArr[ids[1]];
+}
+
+
 function runInfo() {
     if(!hasLoaded() || typeof id === "undefined") return;
 
@@ -90,13 +100,32 @@ function runInfo() {
         regexId = new RegExp("^" + id + "\\d{0,4}$");
     }
 
-    const rip = keys.filter(s => regexId.test(s)); //filters all which contain author/quote
-    alert(rip);
+    const zitatIdArr = keys.filter(s => regexId.test(s)).sort((a, b) => ratingJson[b] - ratingJson[a]); //filters all which contain author/quote
     //</works>
 
+    list.childNodes.forEach(node => {
+        list.removeChild(node); //klappt nicht immer
+    });
 
+    if(zitatIdArr.length === 0) {
+        const element = document.createElement("li");
+        element.appendChild(document.createTextNode("Es wurde kein bewertetes falsches Zitat mit folgendem " + (isAuthor( id) ? "Autor" : "Zitat") + " gefunden: " + (isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")])));
+        list.appendChild(element);
+        return;
+    }
+
+    for (let i = 0; i < zitatIdArr.length; i++) {
+        const element = document.createElement("li");
+        element.appendChild(document.createTextNode(getFalschesZitat(zitatIdArr[i]) + " (" + zitatIdArr[i] + ": " + ratingJson[zitatIdArr[i]] + ")"));
+        list.appendChild(element);
+    }
+
+
+
+    /*
+    //not working:
     const newArr = {};
-    for (let [key, value] of Object.entries(rip)) {
+    for (let [key, value] of Object.entries(zitatIdArr)) {
         newArr[`"${value}"`] = authorsArr[`${value}`];
     }
 
@@ -115,4 +144,5 @@ function runInfo() {
             console.log(`${key}`.substring(1, `${key}`.indexOf('-')));
         }
     }
+    */
 }
