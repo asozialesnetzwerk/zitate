@@ -8,6 +8,10 @@ let authorsArr = [];
 let quotesArr = [];
 let ratingJson = null;
 
+$(document).ready(function () {
+    $('select').niceSelect();
+});
+
 let id;
 const app = $.sammy(function() {
     this.get("#/:author/:id", function() {
@@ -32,6 +36,10 @@ const app = $.sammy(function() {
 });
 app.run();
 
+function getFilter(id) {
+    return isAuthor(id) ? "autor" : "zitat";
+}
+
 function isAuthor(id) {
     return id.startsWith("-");
 }
@@ -47,11 +55,23 @@ function getBaseUrl() {
     return url;
 }
 
-function getUrlWithId(isAuthor, value) {
+function getPlainId(id) {
+    return id.replace("-", "");
+}
+
+function getUrlWithIdAndFilter(id, filter) {
+    return getBaseUrl() + filter + "/" + getPlainId(id);
+}
+
+function getUrlWithId(id) {
+    return getUrlWithIdAndFilter(id, getFilter(id));
+}
+
+function getUrlWithIdAndBoolean(isAuthor, value) {
     if(isAuthor) {
-        return getBaseUrl() + "autor/" + value;
+        return getUrlWithId("-" + value);
     } else {
-        return getBaseUrl + "zitat/" + value;
+        return getUrlWithId(value + "-");
     }
 }
 
@@ -84,6 +104,7 @@ function getFalschesZitat(zitatId) {
     return quotesArr[ids[0]] + " -" + authorsArr[ids[1]];
 }
 
+const select = $(".select");
 
 function runInfo() {
     if(!hasLoaded() || typeof id === "undefined") return;
@@ -100,7 +121,8 @@ function runInfo() {
         regexId = new RegExp("^" + id + "\\d{0,4}$");
     }
 
-    const zitatIdArr = keys.filter(s => regexId.test(s)).sort((a, b) => ratingJson[b] - ratingJson[a]); //filters all which contain author/quote
+    const zitatIdArr = keys.filter(s => regexId.test(s))
+        .sort((a, b) => ratingJson[b] - ratingJson[a]); //filters all which contain author/quote
     //</works>
 
     list.childNodes.forEach(node => {
@@ -120,29 +142,13 @@ function runInfo() {
         list.appendChild(element);
     }
 
-
-
-    /*
-    //not working:
-    const newArr = {};
-    for (let [key, value] of Object.entries(zitatIdArr)) {
-        newArr[`"${value}"`] = authorsArr[`${value}`];
+    select.val(getFilter(id));
+    if(select.val() === null) {
+        window.location = getUrlWithId(Math.random() > 0.5, id);
     }
 
-    console.log(newArr);
-    console.log(Object.values(newArr));
-
-    console.log(Math.max(...Object.values(newArr))); //max
-
-
-//console.log(Object.keys(newArr).find(key => newArr[key] === 7)); //only one result
-
-
-    for (let [key, value] of Object.entries(newArr)) {
-        if (value === Math.max(...Object.values(newArr))) {
-            //console.log(`${key}`);
-            console.log(`${key}`.substring(1, `${key}`.indexOf('-')));
-        }
-    }
-    */
+    select.change(function () {
+        window.location = getUrlWithIdAndFilter(id, select.val());
+    });
 }
+

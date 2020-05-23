@@ -83,9 +83,11 @@ function displayZitat() {
     const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
     
     quoteText.text(theQuote);
-    quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
+    quoteText.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/zitat/') + " + ids[0] + ";");
+    //quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
     quoteAuthor.text("- " + theAuthor);
-    quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
+    quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/autor/') + " + ids[1] + ";");
+    //quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
 
     $('meta[property="og:description"]').remove();
     $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
