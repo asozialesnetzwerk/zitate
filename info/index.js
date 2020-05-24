@@ -2,11 +2,14 @@ const ratingSource = "../bewertung_zitate.json";
 const authorsSource = "../namen.txt";
 const quotesSource = "../zitate.txt";
 
-const list = document.getElementById("list");
+const list = $(".list");
+const text = $(".info-text");
 
 let authorsArr = [];
 let quotesArr = [];
 let ratingJson = null;
+
+text.text("");
 
 $(document).ready(function () {
     $('select').niceSelect();
@@ -17,27 +20,18 @@ const app = $.sammy(function() {
     this.get("#/:author/:id", function() {
         id = this.params["id"];
 
-        if(this.params["author"] === "zitat") {
+        if(this.params["author"].toLowerCase() === "zitat") {
             id = id + "-";
         } else {
             id = "-" + id;
         }
-        console.log("loaded");
         runInfo();
-    });
-
-    this.get("/", function () {
-        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, 69);
-    });
-
-    this.get("/#", function () {
-        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, 69);
     });
 });
 app.run();
 
-function getFilter(id) {
-    return isAuthor(id) ? "autor" : "zitat";
+function getFilter(isAuthor) {
+    return isAuthor ? "Autor" : "Zitat"
 }
 
 function isAuthor(id) {
@@ -63,16 +57,9 @@ function getUrlWithIdAndFilter(id, filter) {
     return getBaseUrl() + filter + "/" + getPlainId(id);
 }
 
-function getUrlWithId(id) {
-    return getUrlWithIdAndFilter(id, getFilter(id));
-}
-
-function getUrlWithIdAndBoolean(isAuthor, value) {
-    if(isAuthor) {
-        return getUrlWithId("-" + value);
-    } else {
-        return getUrlWithId(value + "-");
-    }
+function getRandomUrl() {
+    const isAuthor = Math.random() >= 0.5;
+    return getBaseUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
 }
 
 function checkLoad() {
@@ -101,17 +88,34 @@ $.get(quotesSource, data => {
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
     if(ids.length < 2 || !hasLoaded()) return "";
-    return quotesArr[ids[0]] + " -" + authorsArr[ids[1]];
+    return quotesArr[ids[0]] + "\n  - " + authorsArr[ids[1]];
 }
 
 const select = $(".select");
 
+function addToList(text) {
+    const element = document.createElement("li");
+    const element2 = document.createElement("pre");
+    element2.innerHTML = text;
+    element2.className = "text";
+    element.appendChild(element2);
+    list.append(element);
+}
+
 function runInfo() {
-    if(!hasLoaded() || typeof id === "undefined") return;
+    if(!hasLoaded()) return;
+    if(id === undefined) {
+        window.location = getRandomUrl();
+        return;
+    }
+
+    select.val(getFilter(isAuthor(id)));
+    if(select.val() === null) {
+        window.location = getRandomUrl();
+    }
 
     const keys = Object.keys(ratingJson);
 
-    //<works>
     let regexId;
     if(isAuthor(id)) {
         //URL should end with: /zitate/info/#/zitat/69
@@ -121,34 +125,31 @@ function runInfo() {
         regexId = new RegExp("^" + id + "\\d{0,4}$");
     }
 
-    const zitatIdArr = keys.filter(s => regexId.test(s))
-        .sort((a, b) => ratingJson[b] - ratingJson[a]); //filters all which contain author/quote
-    //</works>
+    const zitatIdArr = keys.filter(s => regexId.test(s)) //filters all which contain author/quote
+        .sort((a, b) => ratingJson[b] - ratingJson[a]); //sort them top to bottom
 
-    list.childNodes.forEach(node => {
-        list.removeChild(node); //klappt nicht immer
-    });
+
+    list.children().remove();
+
+    let thisText = isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
+    thisText = "<a href=\"" + encodeURI("https://ddg.gg/" + thisText) + "\">" + thisText + "</a>";
 
     if(zitatIdArr.length === 0) {
-        const element = document.createElement("li");
-        element.appendChild(document.createTextNode("Es wurde kein bewertetes falsches Zitat mit folgendem " + (isAuthor( id) ? "Autor" : "Zitat") + " gefunden: " + (isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")])));
-        list.appendChild(element);
+        text.text("Es wurde kein bewertetes falsches Zitat mit folgendem " + getFilter(isAuthor(id)) + " gefunden: ");
+        text.append(thisText);
         return;
+    } else {
+        text.text("Hier findest du alle bewerteten falschen Zitate mit folgendem " + getFilter(isAuthor(id)) + ": ");
+        text.append(thisText);
     }
 
     for (let i = 0; i < zitatIdArr.length; i++) {
-        const element = document.createElement("li");
-        element.appendChild(document.createTextNode(getFalschesZitat(zitatIdArr[i]) + " (" + zitatIdArr[i] + ": " + ratingJson[zitatIdArr[i]] + ")"));
-        list.appendChild(element);
-    }
-
-    select.val(getFilter(id));
-    if(select.val() === null) {
-        window.location = getUrlWithIdAndBoolean(Math.random() > 0.5, id);
+        addToList(getFalschesZitat(zitatIdArr[i]) + "\nID = '" + zitatIdArr[i] + "', Bewertung = '" + ratingJson[zitatIdArr[i]] + "'");
     }
 
     select.change(function () {
         window.location = getUrlWithIdAndFilter(id, select.val());
+        runInfo();
     });
 }
 
