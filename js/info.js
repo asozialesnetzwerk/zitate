@@ -1,13 +1,9 @@
-const ratingSource = "../bewertung_zitate.json";
-const authorsSource = "../namen.txt";
-const quotesSource = "../zitate.txt";
+const duckduckgoApiUrl = "https://api.duckduckgo.com/?format=json&t=FalscheZitateWebApp&q=";
 
 const list = $(".list");
 const text = $(".info-text");
-
-let authorsArr = [];
-let quotesArr = [];
-let ratingJson = null;
+const searchContainer = $(".search-container");
+const select = $(".select");
 
 text.text("");
 
@@ -30,15 +26,37 @@ const app = $.sammy(function() {
 });
 app.run();
 
+
+const elementPoweredBy = document.createElement("div");
+elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href=\"https://ddg.gg/DuckDuckGo\">DuckDuckGo</a>:<br>";
+
+function displaySearchResult(searchParam) {
+    $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
+        searchContainer.children().remove();
+        if(respondJson["Abstract"].length === 0) {
+            changeVisibility(searchContainer, false);
+        } else {
+            changeVisibility(searchContainer, true);
+            const element = document.createElement("p");
+            element.textContent = respondJson["AbstractText"] + " ";
+
+            const linkToSource = document.createElement("a");
+            linkToSource.href = respondJson["AbstractURL"];
+            linkToSource.textContent = respondJson["AbstractSource"];
+            element.append(linkToSource);
+
+            searchContainer.append(elementPoweredBy);
+            searchContainer.append(element);
+        }
+    });
+}
+
 function getFilter(isAuthor) {
     return isAuthor ? "Autor" : "Zitat"
 }
 
 function isAuthor(id) {
     return id.startsWith("-");
-}
-function hasLoaded() {
-    return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
 }
 
 function getBaseUrl() {
@@ -62,40 +80,15 @@ function getRandomUrl() {
     return getBaseUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
 }
 
-function checkLoad() {
-    if (hasLoaded()) {
-        runInfo();
-    }
-}
-
-
-$.get(ratingSource, data => {
-    ratingJson = JSON.parse(data);
-    checkLoad();
-}, "text");
-
-$.get(authorsSource, data => {
-    authorsArr = data.split(/\n/);
-    checkLoad();
-}, "text");
-
-$.get(quotesSource, data => {
-    quotesArr = data.split(/\n/);
-    checkLoad();
-}, "text");
-
-
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
     if(ids.length < 2 || !hasLoaded()) return "";
-    return quotesArr[ids[0]] + "\n  - " + authorsArr[ids[1]];
+    return quotesArr[ids[0]] + "<br>  - " + authorsArr[ids[1]];
 }
-
-const select = $(".select");
 
 function addToList(text) {
     const element = document.createElement("li");
-    const element2 = document.createElement("pre");
+    const element2 = document.createElement("p");
     element2.innerHTML = text;
     element2.className = "text";
     element.appendChild(element2);
@@ -103,8 +96,8 @@ function addToList(text) {
 }
 
 function runInfo() {
-    if(!hasLoaded()) return;
     if(id === undefined) {
+        console.log("Id wasn't defined.");
         window.location = getRandomUrl();
         return;
     }
@@ -132,6 +125,7 @@ function runInfo() {
     list.children().remove();
 
     let thisText = isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
+    displaySearchResult(thisText);
     thisText = "<a href=\"" + encodeURI("https://ddg.gg/" + thisText) + "\">" + thisText + "</a>";
 
     if(zitatIdArr.length === 0) {
@@ -144,7 +138,7 @@ function runInfo() {
     }
 
     for (let i = 0; i < zitatIdArr.length; i++) {
-        addToList(getFalschesZitat(zitatIdArr[i]) + "\nID = '" + zitatIdArr[i] + "', Bewertung = '" + ratingJson[zitatIdArr[i]] + "'");
+        addToList(getFalschesZitat(zitatIdArr[i]) + "<br>ID = '" + zitatIdArr[i] + "', Bewertung = '" + ratingJson[zitatIdArr[i]] + "'");
     }
 
     select.change(function () {
@@ -153,3 +147,4 @@ function runInfo() {
     });
 }
 
+runInfo();

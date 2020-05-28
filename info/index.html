@@ -14,19 +14,33 @@
         <link rel="icon" href="../css/WebsiteIcon.svg">
     </head>
     <body>
-        <strong class="info-text text">Bitte aktiviere Javascript, um diese Webseite zu nutzen :)</strong>
+        <div class="container">
+            <div class="info-container info-div">
+                <strong class="info-text text">Bitte aktiviere Javascript, um diese Webseite zu nutzen :)</strong>
 
-        <ol class="list"></ol>
+                <ol class="list"></ol>
 
-        <select class="select">
-            <option value="Autor">Autor</option>
-            <option value="Zitat">Zitat</option>
-        </select>
-        
-        <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
+                <select class="select">
+                    <option value="Autor">Autor</option>
+                    <option value="Zitat">Zitat</option>
+                </select>
+            </div>
+
+            <div class="search-container info-div text invisible"></div>
+        </div>
+
+
+        <footer class="footer">Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
+
+        <script>
+            const ratingSource = "../bewertung_zitate.json";
+            const authorsSource = "../namen.txt";
+            const quotesSource = "../zitate.txt";
+        </script>
 
         <script src="../js/jquery.nice-select.js"></script>
         <script src="../js/sammy.js"></script>
-        <script src="index.js"></script>
+        <script src="../js/util.js"></script>
+        <script src="../js/info.js"></script>
     </body>
 </html>

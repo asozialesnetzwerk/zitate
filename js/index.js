@@ -18,14 +18,6 @@ $(document).ready(function () {
     $('select').niceSelect();
 });
 
-const ratingSource = "bewertung_zitate.json";
-const authorsSource = "namen.txt";
-const quotesSource = "zitate.txt";
-
-let authorsArr = [];
-let quotesArr = [];
-let ratingJson = null;
-
 let id;
 
 const app = $.sammy(function() {
@@ -34,7 +26,7 @@ const app = $.sammy(function() {
         displayZitat();
     });
 
-    this.get("/", function () {
+    this.get("/:text", function () {
         checkId();
     });
 
@@ -43,10 +35,6 @@ const app = $.sammy(function() {
     });
 });
 app.run();
-
-function hasLoaded() {
-    return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
-}
 
 function saveAsImg() {
     html2canvas(document.getElementById('quote-important'), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
@@ -57,22 +45,9 @@ function saveAsImg() {
     });
 }
 
-function changeVisibility(element, visible) {
-    const isInvisible = element.hasClass("invisible");
-    if(visible === !isInvisible) {
-        return;
-    }
-    if(visible && isInvisible) {
-        element.removeClass("invisible");
-    } else if (!visible && !isInvisible) {
-        element.addClass("invisible");
-    }
-}
-
 let oldRating;
 function displayZitat() {
     checkId();
-    if(!hasLoaded()) return;
 
     const ids = id.split("-");
     
@@ -84,10 +59,8 @@ function displayZitat() {
     
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/zitat/') + " + ids[0] + ";");
-    //quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/autor/') + " + ids[1] + ";");
-    //quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
 
     $('meta[property="og:description"]').remove();
     $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
@@ -154,12 +127,12 @@ function getNewZitatUrl() {
 }
 
 function isValidId(val) {
-    if(val === undefined || val === null || id === "") {
+    if(val === undefined || val === null || val === "") {
         return false;
     }
     if(id_regex.test(val)) {
         if(hasLoaded()) {
-            const ids = id.split('-');
+            const ids = val.split('-');
             return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
         } else {
             return true;
@@ -177,28 +150,6 @@ function checkId() {
         window.location = getNewZitatUrl();
     }
 }
-
-function checkLoad() {
-    if (hasLoaded()) {
-        checkId();
-        displayZitat();
-    }
-}
-
-$.get(ratingSource, data => {
-    ratingJson = JSON.parse(data);
-    checkLoad();
-}, "text");
-
-$.get(authorsSource, data => {
-    authorsArr = data.split(/\n/);
-    checkLoad();
-}, "text");
-
-$.get(quotesSource, data => {
-    quotesArr = data.split(/\n/);
-    checkLoad();
-}, "text");
 
 function getRatingParam() {
     if(ratingParam.val() !== null) {
@@ -222,3 +173,5 @@ ratingParam.change(function () {
 });
 
 $(".download").on("click", saveAsImg);
+
+displayZitat();
