@@ -3,13 +3,9 @@ const duckduckgoApiUrl = "https://api.duckduckgo.com/?format=json&t=FalscheZitat
 const list = $(".list");
 const text = $(".info-text");
 const searchContainer = $(".search-container");
-const select = $(".select");
+const selectType = $(".select");
 
 text.text("");
-
-$(document).ready(function () {
-    $('select').niceSelect();
-});
 
 let id;
 
@@ -22,6 +18,7 @@ const app = $.sammy(function() {
         } else {
             id = "-" + id;
         }
+        setSelection(selectType, getFilter(isAuthor(id)));
         runCode();
     });
 });
@@ -109,11 +106,6 @@ function runCode() {
         return;
     }
 
-    select.val(getFilter(isAuthor(id)));
-    if(select.val() === null) {
-        window.location = getRandomUrl();
-    }
-
     const keys = Object.keys(ratingJson);
 
     let regexId;
@@ -147,12 +139,12 @@ function runCode() {
     for (let i = 0; i < zitatIdArr.length; i++) {
         addToList(getFalschesZitat(zitatIdArr[i]) + "<br>ID = '" + zitatIdArr[i] + "', Bewertung = '" + ratingJson[zitatIdArr[i]] + "'");
     }
-
-    select.change(function () {
-        window.location = getUrlWithIdAndFilter(id, select.val());
-        runCode();
-    });
 }
+
+selectType.change(function () {
+    window.location = getUrlWithIdAndFilter(id, selectType.val());
+    runCode();
+});
 
 //starts loading process:
 loadFiles();

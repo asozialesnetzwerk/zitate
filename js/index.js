@@ -14,15 +14,14 @@ const nichtWitzig = $(".nicht-witzig");
 
 const id_regex = /^\d{1,4}-\d{1,4}$/; //1234-1234
 
-$(document).ready(function () {
-    $('select').niceSelect();
-});
 
 let id;
 
 const app = $.sammy(function() {
     this.get("#/:id", function() {
+        console.log(this.path);
         id = this.params["id"];
+        updateRatingFromURL();
         runCode();
     });
 
@@ -153,25 +152,30 @@ function checkId() {
     }
 }
 
-function getRatingParam() {
-    if(ratingParam.val() !== null) {
-        return ratingParam.val();
-    }
-    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        if(key === ratingSource) {
-            return value;
-        }
-    });
-    return "w";
+function getRatingParamFromURL(){
+    let results = new RegExp('[\?&]rating=([^&#]*)').exec(window.location.href);
+    return results === null ? "w" : results[1];
 }
 
-ratingParam.val(getRatingParam());
-if(ratingParam.val() === null) {
-    window.location = getUrlWithRating("w");
+function getRatingParam() {
+    const urlRating = getRatingParamFromURL();
+    console.log(urlRating === "w" ? ratingParam.val() : urlRating);
+    return urlRating === "w" ? ratingParam.val() : urlRating;
 }
+
+function updateRatingFromURL() {
+    console.log(ratingParam.val() + " " + getRatingParamFromURL());
+
+    setSelection(ratingParam, getRatingParamFromURL(), "w");
+    //if(ratingParam.val() === null) {
+    //    window.location = getUrlWithRating("w");
+    //}
+}
+
+updateRatingFromURL();
 
 ratingParam.change(function () {
-    window.location = getUrlWithRating(getRatingParam());
+    window.location = getUrlWithRating(ratingParam.val());
 });
 
 $(".download").on("click", saveAsImg);

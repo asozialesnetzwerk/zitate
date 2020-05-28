@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+}
+
+.black {
+    background: black;
+    float: top;
+    width: 80%;
+}
+
+.container {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -133px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+    height: 133px; /* .push must be the same height as .footer */
+}
+
+.list {
+    max-height: 40rem;
+    overflow-y: auto;
+}
+
+.header {
+    width: fit-content;
+    border-bottom: #CD0000 dotted;
+}
