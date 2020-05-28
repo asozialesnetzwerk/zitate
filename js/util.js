@@ -6,22 +6,29 @@ function hasLoaded() {
     return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
 }
 
-$.ajaxSetup({
-    async: false
-});
+function checkStart() {
+    if(hasLoaded()) {
+        runCode();
+    }
+}
 
-$.getJSON(ratingSource, data => {
-    ratingJson = data;
-}, "text");
+function loadFiles() {
+    $.getJSON(ratingSource, data => {
+        ratingJson = data;
+        checkStart();
+    }, "text");
 
-$.get(authorsSource, data => {
-    authorsArr = data.split(/\n/);
-}, "text");
+    $.get(authorsSource, data => {
+        authorsArr = data.split(/\n/);
+        checkStart();
+    }, "text");
 
 
-$.get(quotesSource,data => {
-    quotesArr = data.split("\n");
-}, "text");
+    $.get(quotesSource, data => {
+        quotesArr = data.split("\n");
+        checkStart();
+    }, "text");
+}
 
 function changeVisibility(element, visible) {
     const isVisible = !element.hasClass("invisible");

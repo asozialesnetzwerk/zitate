@@ -23,7 +23,7 @@ let id;
 const app = $.sammy(function() {
     this.get("#/:id", function() {
         id = this.params["id"];
-        displayZitat();
+        runCode();
     });
 
     this.get("/:text", function () {
@@ -46,7 +46,9 @@ function saveAsImg() {
 }
 
 let oldRating;
-function displayZitat() {
+//displays Quote:
+function runCode() {
+    if(!hasLoaded()) return;
     checkId();
 
     const ids = id.split("-");
@@ -174,4 +176,5 @@ ratingParam.change(function () {
 
 $(".download").on("click", saveAsImg);
 
-displayZitat();
+//starts loading process:
+loadFiles();

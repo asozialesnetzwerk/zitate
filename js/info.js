@@ -12,6 +12,7 @@ $(document).ready(function () {
 });
 
 let id;
+
 const app = $.sammy(function() {
     this.get("#/:author/:id", function() {
         id = this.params["id"];
@@ -21,21 +22,24 @@ const app = $.sammy(function() {
         } else {
             id = "-" + id;
         }
-        runInfo();
+        runCode();
     });
 });
 app.run();
 
-
-const elementPoweredBy = document.createElement("div");
-elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href=\"https://ddg.gg/DuckDuckGo\">DuckDuckGo</a>:<br>";
-
+//more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
     $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
+        console.log(respondJson);
         searchContainer.children().remove();
         if(respondJson["Abstract"].length === 0) {
             changeVisibility(searchContainer, false);
         } else {
+            const elementPoweredBy = document.createElement("div");
+            elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
+
+            searchContainer.append(elementPoweredBy);
+
             changeVisibility(searchContainer, true);
             const element = document.createElement("p");
             element.textContent = respondJson["AbstractText"] + " ";
@@ -45,7 +49,6 @@ function displaySearchResult(searchParam) {
             linkToSource.textContent = respondJson["AbstractSource"];
             element.append(linkToSource);
 
-            searchContainer.append(elementPoweredBy);
             searchContainer.append(element);
         }
     });
@@ -95,7 +98,9 @@ function addToList(text) {
     list.append(element);
 }
 
-function runInfo() {
+function runCode() {
+    if(!hasLoaded()) return;
+
     if(id === undefined) {
         console.log("Id wasn't defined.");
         window.location = getRandomUrl();
@@ -143,8 +148,9 @@ function runInfo() {
 
     select.change(function () {
         window.location = getUrlWithIdAndFilter(id, select.val());
-        runInfo();
+        runCode();
     });
 }
 
-runInfo();
+//starts loading process:
+loadFiles();
