@@ -27,7 +27,6 @@ app.run();
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
     $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
-        console.log(respondJson);
         searchContainer.children().remove();
         if(respondJson["Abstract"].length === 0) {
             changeVisibility(searchContainer, false);

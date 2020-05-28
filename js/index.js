@@ -19,7 +19,6 @@ let id;
 
 const app = $.sammy(function() {
     this.get("#/:id", function() {
-        console.log(this.path);
         id = this.params["id"];
         updateRatingFromURL();
         runCode();
@@ -159,17 +158,11 @@ function getRatingParamFromURL(){
 
 function getRatingParam() {
     const urlRating = getRatingParamFromURL();
-    console.log(urlRating === "w" ? ratingParam.val() : urlRating);
     return urlRating === "w" ? ratingParam.val() : urlRating;
 }
 
 function updateRatingFromURL() {
-    console.log(ratingParam.val() + " " + getRatingParamFromURL());
-
     setSelection(ratingParam, getRatingParamFromURL(), "w");
-    //if(ratingParam.val() === null) {
-    //    window.location = getUrlWithRating("w");
-    //}
 }
 
 updateRatingFromURL();

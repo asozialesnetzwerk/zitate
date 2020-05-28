@@ -58,13 +58,20 @@ function setSelection(selectElement, selection, defaultSelection) {
         selection = defaultSelection;
     }
 
+    let selected = false;
+
     for (let i = 0; i < selectElement.children().length; i++) {
        if(selectElement.children()[i].value === selection) {
            selectElement.children()[i].className ="selected";
+           selected = true;
        } else {
            selectElement.children()[i].className = "";
        }
     }
 
-    select.niceSelect("update");
+    if(selected) {
+        select.niceSelect("update");
+    } else if(defaultSelection !== undefined) {
+        setSelection(selectElement, defaultSelection);
+    }
 }
