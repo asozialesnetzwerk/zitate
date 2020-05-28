@@ -37,17 +37,19 @@ function displaySearchResult(searchParam) {
         } else {
             const elementPoweredBy = document.createElement("div");
             elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
-
+            elementPoweredBy.className = "header";
             searchContainer.append(elementPoweredBy);
 
             changeVisibility(searchContainer, true);
             const element = document.createElement("p");
-            element.textContent = respondJson["AbstractText"] + " ";
+            element.innerHTML = respondJson["AbstractText"] + " (Quelle: ";
 
             const linkToSource = document.createElement("a");
             linkToSource.href = respondJson["AbstractURL"];
             linkToSource.textContent = respondJson["AbstractSource"];
             element.append(linkToSource);
+
+            element.append(")")
 
             searchContainer.append(element);
         }

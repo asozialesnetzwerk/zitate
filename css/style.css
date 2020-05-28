@@ -167,37 +167,48 @@ footer a {
     font-family: "Times New Roman";
 }
 
-.info-container {
-    max-width: 57%;
-    margin-top: 1%;
-    margin-left: 1%;
-}
 
-.search-container {
-    border-radius: 8px;
-    border: ridge #CD0000;
-
-    alignment: center;
-
-    margin-top: 1.5%;
-    margin-left: 2%;
-    max-width: 38%;
-
-    padding: 5px;
-
-    overflow-y: auto;
-
-    max-height: 40rem;
-}
 
 @media (orientation: portrait) {
-    .info-div {
-        float: bottom;
+    .search-container {
+        display: none;
+    }
+
+    .info-container {
+        max-width: 90%;
+        float: inside;
+        max-height: 70%;
     }
 }
 
 @media (orientation: landscape) {
-    .info-div {
+    .info-container {
+        float: left;
+        max-width: 57%;
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+
+    .search-container {
+        float: right;
+        border-radius: 8px;
+        border: ridge #CD0000;
+
+        alignment: center;
+
+        margin-top: 1.5%;
+        margin-left: 0.5%;
+        margin-right: 1.5%;
+        max-width: 38%;
+
+        padding: 5px;
+
+        overflow-y: auto;
+
+        max-height: 40rem;
+    }
+
+    .info-container {
         float: left;
     }
 }
@@ -209,17 +220,29 @@ footer a {
 html, body {
     height: 100%;
 }
+
+.black {
+    background-color: black;
+    float: top;
+    width: 80%;
+}
+
 .container {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+    margin: 0 auto -133px; /* the bottom margin is the negative value of the footer's height */
 }
 .footer, .push {
-    height: 142px; /* .push must be the same height as .footer */
+    height: 133px; /* .push must be the same height as .footer */
 }
 
 .list {
     max-height: 40rem;
     overflow-y: auto;
+}
+
+.header {
+    width: fit-content;
+    border-bottom: #CD0000 dotted;
 }
