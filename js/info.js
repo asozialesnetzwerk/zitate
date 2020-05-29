@@ -147,3 +147,10 @@ selectType.change(function () {
 
 //starts loading process:
 loadFiles();
+
+
+window.addEventListener("orientationchange", function() {
+    if(!windowIsLandscape()) {
+        alert("Bitte nutze diese Webseite im Querformat.");
+    }
+}, false);

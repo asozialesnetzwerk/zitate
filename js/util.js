@@ -1,11 +1,9 @@
-const select = $("select");
-
 let authorsArr = [];
 let quotesArr = [];
 let ratingJson = null;
 
 $(document).ready(function () {
-    select.niceSelect();
+    $("select").niceSelect();
 });
 
 function hasLoaded() {
@@ -22,7 +20,7 @@ function loadFiles() {
     $.getJSON(ratingSource, data => {
         ratingJson = data;
         checkStart();
-    }, "text");
+    }, "json");
 
     $.get(authorsSource, data => {
         authorsArr = data.split(/\n/);
@@ -51,27 +49,15 @@ function changeVisibility(element, visible) {
 function setSelection(selectElement, selection, defaultSelection) {
     selectElement.val(selection);
     if(selectElement.val() === null) {
-        if(defaultSelection === undefined) {
+        if(defaultSelection === undefined || defaultSelection === null) {
             return;
         }
         selectElement.val(defaultSelection);
-        selection = defaultSelection;
     }
 
-    let selected = false;
+    selectElement.niceSelect("update");
+}
 
-    for (let i = 0; i < selectElement.children().length; i++) {
-       if(selectElement.children()[i].value === selection) {
-           selectElement.children()[i].className ="selected";
-           selected = true;
-       } else {
-           selectElement.children()[i].className = "";
-       }
-    }
-
-    if(selected) {
-        select.niceSelect("update");
-    } else if(defaultSelection !== undefined) {
-        setSelection(selectElement, defaultSelection);
-    }
+function windowIsLandscape() {
+    return window.innerWidth > window.innerHeight;
 }

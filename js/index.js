@@ -35,9 +35,9 @@ const app = $.sammy(function() {
 app.run();
 
 function saveAsImg() {
-    html2canvas(document.getElementById('quote-important'), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
+    html2canvas(document.getElementById("quote-important"), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
         let a = document.createElement("a"); //Create <a>
-        a.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); //Image Base64
+        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"); //Image Base64
         a.download = "Zitat_(" + id + ")_asozialesnetzwerk.github.io.png"; //File name
         a.click(); //Downloaded file
     });
@@ -62,8 +62,8 @@ function runCode() {
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/autor/') + " + ids[1] + ";");
 
-    $('meta[property="og:description"]').remove();
-    $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
+    $("meta[property='og:description']").remove();
+    $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
 
     quoteId.text(id);
     if(rating !== oldRating) {
@@ -105,7 +105,7 @@ function getUrlWithRating(value) {//w; all; rated; n
 }
 
 function getRandomZitatId() {
-    return Math.floor(Math.random() * quotesArr.length) + '-' + Math.floor(Math.random() * authorsArr.length);
+    return Math.floor(Math.random() * quotesArr.length) + "-" + Math.floor(Math.random() * authorsArr.length);
 }
 
 function getNewZitatUrl() {
@@ -132,7 +132,7 @@ function isValidId(val) {
     }
     if(id_regex.test(val)) {
         if(hasLoaded()) {
-            const ids = val.split('-');
+            const ids = val.split("-");
             return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
         } else {
             return true;
