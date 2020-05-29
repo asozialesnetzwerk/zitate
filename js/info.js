@@ -36,17 +36,18 @@ function showSearch(boo) {
 }
 
 var lastSearch = -1;
+var lastSearchDisplayed = false;
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
     if(searchParam === undefined || !windowIsLandscape()) {
         showSearch(false);
     } else if(lastSearch === searchParam) {
-        showSearch(true);
+        showSearch(lastSearchDisplayed);
     } else {
         $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
             searchContainer.children().remove();
             if (respondJson["Abstract"].length === 0) {
-                showSearch(false);
+                lastSearchDisplayed = false;
             } else {
                 const elementPoweredBy = document.createElement("strong");
                 elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
@@ -64,8 +65,9 @@ function displaySearchResult(searchParam) {
 
                 searchContainer.append(element);
 
-                showSearch(true);
+                lastSearchDisplayed = true;
             }
+            showSearch(lastSearchDisplayed);
         });
         lastSearch = searchParam;
     }
