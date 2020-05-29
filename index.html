@@ -12,6 +12,7 @@
         <title>Generator für falsche Zitate</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/nice-select.css">
+        <link rel="stylesheet" href="css/zitat-page.css">
     </head>
     <body>
         <div id="quote-important" class="quote-container">
@@ -19,7 +20,7 @@
                 <div class="quote-id"></div>
                 <div class="buttons">
                     <a class="download"><i class="button fas fa-chevron-circle-down fa-4x" aria-hidden="true"></i></a>
-                    <a class="tweet" href="" target="_blank"><i id ="twitter"class="button fab fa-twitter fa-4x" aria-hidden="true"></i></a>
+                    <a class="tweet" href="" target="_blank"><i id ="twitter" class="button fab fa-twitter fa-4x" aria-hidden="true"></i></a>
                     <a class="get-quote" href=""><i class="button fas fa-chevron-circle-right fa-4x" aria-hidden="true"></i></a>
                 </div>
             </div>
@@ -40,16 +41,23 @@
         <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
         
         <select class="rating-param">
-            <option value="w">witzig</option>
+            <option value="w" class="selected">witzig</option>
             <option value="n">nicht witzig</option>
             <option value="rated">rated</option>
             <option value="all">all</option>
         </select>
 
+        <script>
+            const ratingSource = "bewertung_zitate.json";
+            const authorsSource = "namen.txt";
+            const quotesSource = "zitate.txt";
+        </script>
+
         <script src="js/html2canvas.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
         <script src="js/jquery.nice-select.js"></script>
         <script src="js/sammy.js"></script>
+        <script src="js/util.js"></script>
         <script src="js/index.js"></script>
     </body>
 </html>

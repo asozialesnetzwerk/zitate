@@ -14,27 +14,17 @@ const nichtWitzig = $(".nicht-witzig");
 
 const id_regex = /^\d{1,4}-\d{1,4}$/; //1234-1234
 
-$(document).ready(function () {
-    $('select').niceSelect();
-});
-
-const ratingSource = "bewertung_zitate.json";
-const authorsSource = "namen.txt";
-const quotesSource = "zitate.txt";
-
-let authorsArr = [];
-let quotesArr = [];
-let ratingJson = null;
 
 let id;
 
 const app = $.sammy(function() {
     this.get("#/:id", function() {
         id = this.params["id"];
-        displayZitat();
+        updateRatingFromURL();
+        runCode();
     });
 
-    this.get("/", function () {
+    this.get("/:text", function () {
         checkId();
     });
 
@@ -44,35 +34,20 @@ const app = $.sammy(function() {
 });
 app.run();
 
-function hasLoaded() {
-    return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
-}
-
 function saveAsImg() {
-    html2canvas(document.getElementById('quote-important'), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
+    html2canvas(document.getElementById("quote-important"), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
         let a = document.createElement("a"); //Create <a>
-        a.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); //Image Base64
+        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"); //Image Base64
         a.download = "Zitat_(" + id + ")_asozialesnetzwerk.github.io.png"; //File name
         a.click(); //Downloaded file
     });
 }
 
-function changeVisibility(element, visible) {
-    const isInvisible = element.hasClass("invisible");
-    if(visible === !isInvisible) {
-        return;
-    }
-    if(visible && isInvisible) {
-        element.removeClass("invisible");
-    } else if (!visible && !isInvisible) {
-        element.addClass("invisible");
-    }
-}
-
 let oldRating;
-function displayZitat() {
-    checkId();
+//displays Quote:
+function runCode() {
     if(!hasLoaded()) return;
+    checkId();
 
     const ids = id.split("-");
     
@@ -81,14 +56,19 @@ function displayZitat() {
     theQuote = "»" + theQuote.substr(1, theQuote.lastIndexOf('"') - 1) + "«";
 
     const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
-    
+
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
+    //when everything is fine:
+    //quoteText.text(theQuote);
+    //quoteText.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/zitat/') + " + ids[0] + ";");
+    //quoteAuthor.text("- " + theAuthor);
+    //quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/autor/') + " + ids[1] + ";");
 
-    $('meta[property="og:description"]').remove();
-    $('head').append('<meta property="og:description" content=\'' + theQuote + '\n- ' + theAuthor + '\'>' );
+    $("meta[property='og:description']").remove();
+    $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
 
     quoteId.text(id);
     if(rating !== oldRating) {
@@ -130,7 +110,7 @@ function getUrlWithRating(value) {//w; all; rated; n
 }
 
 function getRandomZitatId() {
-    return Math.floor(Math.random() * quotesArr.length) + '-' + Math.floor(Math.random() * authorsArr.length);
+    return Math.floor(Math.random() * quotesArr.length) + "-" + Math.floor(Math.random() * authorsArr.length);
 }
 
 function getNewZitatUrl() {
@@ -152,12 +132,12 @@ function getNewZitatUrl() {
 }
 
 function isValidId(val) {
-    if(val === undefined || val === null || id === "") {
+    if(val === undefined || val === null || val === "") {
         return false;
     }
     if(id_regex.test(val)) {
         if(hasLoaded()) {
-            const ids = id.split('-');
+            const ids = val.split("-");
             return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
         } else {
             return true;
@@ -176,51 +156,27 @@ function checkId() {
     }
 }
 
-function checkLoad() {
-    if (hasLoaded()) {
-        checkId();
-        displayZitat();
-    }
+function getRatingParamFromURL(){
+    let results = new RegExp('[\?&]rating=([^&#]*)').exec(window.location.href);
+    return results === null ? "w" : results[1];
 }
-
-const getAuthor = function (data) {
-    authorsArr = data.split(/\n/);
-    checkLoad();
-};
-
-const getQuote = function (data) {
-    quotesArr = data.split(/\n/);
-    checkLoad();
-};
-
-const getRating = function (data) {
-    ratingJson = JSON.parse(data);
-    checkLoad();
-};
-
-$.get(ratingSource, getRating, 'text');
-$.get(authorsSource, getAuthor, 'text');
-$.get(quotesSource, getQuote, 'text');
 
 function getRatingParam() {
-    if(ratingParam.val() !== null) {
-        return ratingParam.val();
-    }
-    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        if(key === ratingSource) {
-            return value;
-        }
-    });
-    return "w";
+    const urlRating = getRatingParamFromURL();
+    return urlRating === "w" ? ratingParam.val() : urlRating;
 }
 
-ratingParam.val(getRatingParam());
-if(ratingParam.val() === null) {
-    window.location = getUrlWithRating("w");
+function updateRatingFromURL() {
+    setSelection(ratingParam, getRatingParamFromURL(), "w");
 }
+
+updateRatingFromURL();
 
 ratingParam.change(function () {
-    window.location = getUrlWithRating(getRatingParam());
+    window.location = getUrlWithRating(ratingParam.val());
 });
 
 $(".download").on("click", saveAsImg);
+
+//starts loading process:
+loadFiles();

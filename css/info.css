@@ -1,0 +1,65 @@
+html, body {
+    height: 98%;
+}
+
+.container {
+    height: 95%;
+}
+.footer {
+    height: 5%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.list {
+    max-height: 40rem;
+    overflow-y: auto;
+}
+
+.info-div {
+    background: black;
+    padding: 7px;
+    border-radius: 9px;
+}
+
+@media (orientation: portrait) {
+    .search-container {
+        opacity: 0;
+    }
+
+    .info-container {
+        max-width: 100%;
+        float: inside;
+        max-height: 70%;
+    }
+}
+
+@media (orientation: landscape) {
+    .info-container {
+        float: left;
+        width: 54%;
+        max-width: 98%;
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+
+    .info-container .alone {
+        width: fit-content;
+    }
+
+    .search-container {
+        float: right;
+        border: ridge #CD0000;
+
+        alignment: center;
+
+        margin-top: 1%;
+        margin-left: 1.5%;
+        margin-right: 0.5%;
+        max-width: 38%;
+
+        overflow-y: auto;
+
+        max-height: 40rem;
+    }
+}

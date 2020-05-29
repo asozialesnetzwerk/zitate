@@ -3,149 +3,9 @@ body {
     color: white;
 }
 
-div.quote-container:before {
-    content:url("ZitateBackground.svg");
-}
-
-.quote-container {
-    background: #000000;
-    width: 30em;
-    height: auto;
-    display: block;
-    margin: 3rem auto;
-    text-align: center;
-    padding: 4rem;
-}
-
-@media (orientation:landscape) { 
-    div.quote-container:before {
-        content:url("");
-    }
-    
-    .quote-container {
-        background: #000000 url("ZitateBackground.svg") no-repeat right top 5px;
-
-        /*background-position: right 10px top 5px;*/
-        width: 50rem;
-        min-height: 380px;
-        display: block;
-        margin: 1rem auto;
-        text-align: center;
-        padding: 0 2rem 2rem;
-    }
-
-    #quote-important {
-        position: relative; z-index: 1;
-    }
-    
-    #top {
-        position: absolute; z-index: -1;
-    }
- 
-    .quote-text {
-        width: 32rem;
-    }
-    
-    .quote-author {
-        margin-right: 18rem;
-    }
-
-    .rating-image {
-        display: inline-block;
-        position: page;
-    }
-}
-
-
-.quote-text {
-    font-size: 1.9rem;
-    text-align: left;
-    line-height: 1.8rem;
-}
-
-.quote-author {
-    font-size: 1.4rem;
-    text-align: right;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.buttons {
-    margin: auto;
-    letter-spacing: 1rem;
-    padding: 1rem;
-}
-
-.rating-container {
-    font-size: 1.4rem;
-    text-align: left;
-    align-items: start;
-}
-
-.rating-image {
-    height: 2.2rem;
-    width: auto;
-}
-
-.rating-text {
-    display: inline-block;
-}
-
-.nicht-witzig {
-    bottom: 0.008rem;
-}
-
 .invisible {
     opacity: 0;
 }
-
-@media (orientation:landscape) { 
-    .buttons {
-        position: absolute; 
-        bottom: 0;
-        right: 0;
-    }
-    
-    .rating-container { 
-        position: absolute;
-        bottom: 20px;
-    }
-    
-    .quote-rating{
-        right: 1px;
-    }
-    
-    .rating-image {
-        display: inline;
-        position: absolute; 
-        left: 2rem;
-    }
-    
-    .quote-id {
-        position: absolute; 
-        bottom: 0;
-        right: 0;
-    }
-
-    .witzig {
-        transform: translateY(-0.1rem);
-    }
-}
-
-@media (orientation: portrait) {
-    .nicht-witzig {
-        transform: translateX(-5rem) translateY(0.5rem);
-    }
-
-    .witzig {
-        transform: translateY(0.75rem);
-    }
-}
-
-.buttons a {
-    color: darkred;
-}
-
 
 footer {
     text-align: center;
@@ -157,7 +17,11 @@ footer a {
     color: #CD0000;
 }
 
-.button:hover {
-    transform: scale(1.08);
-    -webkit-filter: drop-shadow(3px 3px 2px rgba(139, 0, 0, 0.5));
+.text {
+    font-size: 20px;
+    font-family: "Times New Roman";
+}
+
+.select {
+    margin-top: 15px;
 }
