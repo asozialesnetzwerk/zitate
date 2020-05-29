@@ -28,7 +28,8 @@ html, body {
     }
 
     .info-container {
-        max-width: 100%;
+        max-width: 98%;
+        width: 98%;
         float: inside;
         max-height: 70%;
     }
@@ -41,10 +42,6 @@ html, body {
         max-width: 98%;
         margin-top: 1%;
         margin-left: 1%;
-    }
-
-    .info-container .alone {
-        width: fit-content;
     }
 
     .search-container {
@@ -61,5 +58,19 @@ html, body {
         overflow-y: auto;
 
         max-height: 40rem;
+    }
+
+    .search-container .invisible {
+        max-width: 0;
+        width: 0;
+    }
+
+    .alone {
+        float: top;
+        margin-right: 1%;
+        margin-left: 1%;
+        max-height: 70%;
+        width: 98%;
+        max-width: 98%;
     }
 }

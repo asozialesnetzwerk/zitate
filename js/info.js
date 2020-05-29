@@ -35,35 +35,44 @@ function showSearch(boo) {
     }
 }
 
+var lastSearch = -1;
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
-    if(searchParam === undefined) {
+    if(searchParam === undefined || !windowIsLandscape()) {
         showSearch(false);
-        return;
+    } else if(lastSearch === searchParam) {
+        showSearch(true);
+    } else {
+        $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
+            searchContainer.children().remove();
+            if (respondJson["Abstract"].length === 0) {
+                showSearch(false);
+            } else {
+                const elementPoweredBy = document.createElement("strong");
+                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
+                searchContainer.append(elementPoweredBy);
+
+                const element = document.createElement("p");
+                element.innerHTML = respondJson["AbstractText"] + " (Quelle: ";
+
+                const linkToSource = document.createElement("a");
+                linkToSource.href = respondJson["AbstractURL"];
+                linkToSource.textContent = respondJson["AbstractSource"];
+                element.append(linkToSource);
+
+                element.append(")")
+
+                searchContainer.append(element);
+
+                showSearch(true);
+            }
+        });
+        lastSearch = searchParam;
     }
-    $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
-        searchContainer.children().remove();
-        if(respondJson["Abstract"].length === 0) {
-            showSearch(false);
-        } else {
-            const elementPoweredBy = document.createElement("strong");
-            elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
-            searchContainer.append(elementPoweredBy);
+}
 
-            showSearch(true);
-            const element = document.createElement("p");
-            element.innerHTML = respondJson["AbstractText"] + " (Quelle: ";
-
-            const linkToSource = document.createElement("a");
-            linkToSource.href = respondJson["AbstractURL"];
-            linkToSource.textContent = respondJson["AbstractSource"];
-            element.append(linkToSource);
-
-            element.append(")")
-
-            searchContainer.append(element);
-        }
-    });
+function getText(id) {
+    return isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
 }
 
 function getFilter(isAuthor) {
@@ -136,7 +145,7 @@ function runCode() {
 
     list.children().remove();
 
-    let thisText = isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
+    let thisText = getText(id);
     displaySearchResult(thisText);
     thisText = "<a href='https://ddg.gg/" + encodeURI(thisText) + "'>" + thisText + "</a>";
 
@@ -159,12 +168,13 @@ selectType.change(function () {
     runCode();
 });
 
-//starts loading process:
-loadFiles();
-
-
 window.addEventListener("orientationchange", function() {
-    if(!windowIsLandscape()) {
-        alert("Bitte nutze diese Webseite im Querformat.");
+    console.log(windowIsLandscape());
+    if(windowIsLandscape()) {
+        console.log(getText(id));
+        displaySearchResult(getText(id));
     }
 }, false);
+
+//starts loading process:
+loadFiles();
