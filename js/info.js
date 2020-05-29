@@ -4,6 +4,7 @@ const list = $(".list");
 const text = $(".info-text");
 const searchContainer = $(".search-container");
 const selectType = $(".select");
+const infoContainer = $(".info-container");
 
 text.text("");
 
@@ -24,19 +25,32 @@ const app = $.sammy(function() {
 });
 app.run();
 
+function showSearch(boo) {
+    if(boo) {
+        changeVisibility(searchContainer, true);
+        infoContainer.removeClass("alone");
+    } else {
+        changeVisibility(searchContainer, false);
+        infoContainer.addClass("alone");
+    }
+}
+
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
+    if(searchParam === undefined) {
+        showSearch(false);
+        return;
+    }
     $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
         searchContainer.children().remove();
         if(respondJson["Abstract"].length === 0) {
-            changeVisibility(searchContainer, false);
+            showSearch(false);
         } else {
-            const elementPoweredBy = document.createElement("div");
+            const elementPoweredBy = document.createElement("strong");
             elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
-            elementPoweredBy.className = "header";
             searchContainer.append(elementPoweredBy);
 
-            changeVisibility(searchContainer, true);
+            showSearch(true);
             const element = document.createElement("p");
             element.innerHTML = respondJson["AbstractText"] + " (Quelle: ";
 
@@ -124,7 +138,7 @@ function runCode() {
 
     let thisText = isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
     displaySearchResult(thisText);
-    thisText = "<a href=\"" + encodeURI("https://ddg.gg/" + thisText) + "\">" + thisText + "</a>";
+    thisText = "<a href='https://ddg.gg/" + encodeURI(thisText) + "'>" + thisText + "</a>";
 
     if(zitatIdArr.length === 0) {
         text.text("Es wurde kein bewertetes falsches Zitat mit folgendem " + getFilter(isAuthor(id)) + " gefunden: ");
