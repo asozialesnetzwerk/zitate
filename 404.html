@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#8B0000">
+        <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
+        <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
+
+        <link rel="icon" href="css/WebsiteIcon.svg">
+        <title>Generator für falsche Zitate</title>
+    </head>
+    <body>
+        <script>
+            const url = window.location.href.toLowerCase();
+            if(url.indexOf("zitate/info") >= 0) {
+
+            } else {
+                window.location = url.replace("/#", "").replace("zitate/", "zitate/#/");
+            }
+        </script>
+    </body>
+</html>

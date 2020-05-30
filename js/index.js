@@ -24,15 +24,26 @@ const app = $.sammy(function() {
         runCode();
     });
 
-    this.get("/:text", function () {
-        checkId();
+    this.get("/:id", function() {
+        id = this.params["id"];
+        updateRatingFromURL();
+        runCode();
     });
+
+    //this.get("/:text", function () {
+    //    console.log(this.params["text"]);
+    //    checkId();
+    //});
 
     this.get("/#", function () {
         checkId();
     });
 });
 app.run();
+
+function openUrl(url) {
+    history.replaceState("", url, url);
+}
 
 function saveAsImg() {
     html2canvas(document.getElementById("quote-important"), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
@@ -57,15 +68,15 @@ function runCode() {
 
     const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
 
-    quoteText.text(theQuote);
-    quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
-    quoteAuthor.text("- " + theAuthor);
-    quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
-    //when everything is fine:
     //quoteText.text(theQuote);
-    //quoteText.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/zitat/') + " + ids[0] + ";");
+    //quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
     //quoteAuthor.text("- " + theAuthor);
-    //quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('/#/', '/info/#/autor/') + " + ids[1] + ";");
+    //quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
+    //when everything is fine:
+    quoteText.text(theQuote);
+    quoteText.attr("onClick", "window.location = getBaseUrl() + 'info/#/Zitat/' + " + ids[0] + ";");
+    quoteAuthor.text("- " + theAuthor);
+    quoteAuthor.attr("onClick", "window.location = getBaseUrl() + 'info/#/Autor/' + " + ids[1] + ";");
 
     $("meta[property='og:description']").remove();
     $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
@@ -95,7 +106,7 @@ function runCode() {
 function getBaseUrl() {
     let url = window.location.href;
     window.location.href.toLowerCase().replace(/.+\/zitate/, function (match) {
-        url =  match + "/#/";
+        url =  match + "/"; // + "/#/";
     });
     return url;
 }
@@ -152,7 +163,7 @@ function checkId() {
         if(id !== undefined && id !== null) {
             console.log("Given id (" + id + ") is invalid.");
         }
-        window.location = getNewZitatUrl();
+        openUrl(getNewZitatUrl());
     }
 }
 
@@ -173,7 +184,7 @@ function updateRatingFromURL() {
 updateRatingFromURL();
 
 ratingParam.change(function () {
-    window.location = getUrlWithRating(ratingParam.val());
+    openUrl(getUrlWithRating(ratingParam.val()));
 });
 
 $(".download").on("click", saveAsImg);
