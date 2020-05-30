@@ -30,11 +30,6 @@ const app = $.sammy(function() {
         runCode();
     });
 
-    //this.get("/:text", function () {
-    //    console.log(this.params["text"]);
-    //    checkId();
-    //});
-
     this.get("/#", function () {
         checkId();
     });
@@ -106,7 +101,7 @@ function runCode() {
 function getBaseUrl() {
     let url = window.location.href;
     window.location.href.toLowerCase().replace(/.+\/zitate/, function (match) {
-        url =  match + "/"; // + "/#/";
+        url =  match + "/#/";
     });
     return url;
 }
