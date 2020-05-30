@@ -1,13 +1,13 @@
-let authorsArr = [];
-let quotesArr = [];
-let ratingJson = null;
+let authorsArr;
+let quotesArr;
+let ratingJson;
 
 $(document).ready(function () {
     $("select").niceSelect();
 });
 
 function hasLoaded() {
-    return authorsArr.length > 0 && quotesArr.length > 0 && ratingJson !== null;
+    return !(authorsArr === undefined || quotesArr === undefined || ratingJson === undefined);
 }
 
 function checkStart() {
@@ -18,9 +18,10 @@ function checkStart() {
 
 function loadFiles() {
     if(hasLoaded()) {
+        runCode();
         return;
     }
-    
+
     $.getJSON(ratingSource, data => {
         ratingJson = data;
         checkStart();

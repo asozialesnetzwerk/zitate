@@ -23,6 +23,10 @@ const app = $.sammy(function() {
         setSelection(selectType, getFilter(isAuthor(id)));
         runCode();
     });
+
+    this.get("/#/:author/", function () {
+        openPrivateUrl(getRandomUrl(this.params["author"].toLowerCase() === "autor"));
+    });
 });
 app.run();
 
@@ -36,8 +40,8 @@ function showSearch(boo) {
     }
 }
 
-var lastSearch = -1;
-var lastSearchDisplayed = false;
+let lastSearch = -1;
+let lastSearchDisplayed = false;
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
     if(searchParam === undefined || !windowIsLandscape()) {
@@ -102,8 +106,8 @@ function getUrlWithIdAndFilter(id, filter) {
     return getBaseUrl() + filter + "/" + getPlainId(id);
 }
 
-function getRandomUrl() {
-    const isAuthor = Math.random() >= 0.5;
+function getRandomUrl(isAuthor) {
+    isAuthor = isAuthor === undefined ? Math.random() >= 0.5 : isAuthor;
     return getBaseUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
 }
 
@@ -171,9 +175,7 @@ selectType.change(function () {
 });
 
 window.addEventListener("orientationchange", function() {
-    console.log(windowIsLandscape());
     if(windowIsLandscape()) {
-        console.log(getText(id));
         displaySearchResult(getText(id));
     }
 }, false);

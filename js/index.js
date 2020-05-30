@@ -65,9 +65,9 @@ function runCode() {
     quoteAuthor.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theAuthor) + "')");
     //when everything is fine:
     //quoteText.text(theQuote);
-    //quoteText.attr("onClick", "window.location = getBaseUrl() + 'info/#/Zitat/' + " + ids[0] + ";");
+    //quoteText.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Zitat/' + " + ids[0] + ";");
     //quoteAuthor.text("- " + theAuthor);
-    //quoteAuthor.attr("onClick", "window.location = getBaseUrl() + 'info/#/Autor/' + " + ids[1] + ";");
+    //quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Autor/' + " + ids[1] + ";");
 
     $("meta[property='og:description']").remove();
     $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
