@@ -17,6 +17,10 @@ function checkStart() {
 }
 
 function loadFiles() {
+    if(hasLoaded()) {
+        return;
+    }
+    
     $.getJSON(ratingSource, data => {
         ratingJson = data;
         checkStart();
@@ -60,4 +64,8 @@ function setSelection(selectElement, selection, defaultSelection) {
 
 function windowIsLandscape() {
     return window.innerWidth > window.innerHeight;
+}
+
+function openPrivateUrl(url) {
+    history.replaceState("", url, url);
 }

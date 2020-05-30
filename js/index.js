@@ -36,10 +36,6 @@ const app = $.sammy(function() {
 });
 app.run();
 
-function openUrl(url) {
-    history.replaceState("", url, url);
-}
-
 function saveAsImg() {
     html2canvas(document.getElementById("quote-important"), {scrollX: 0,scrollY: -window.scrollY, allowTaint: true, backgroundColor: "#000000"}).then(function (canvas) {
         let a = document.createElement("a"); //Create <a>
@@ -158,7 +154,7 @@ function checkId() {
         if(id !== undefined && id !== null) {
             console.log("Given id (" + id + ") is invalid.");
         }
-        openUrl(getNewZitatUrl());
+        openPrivateUrl(getNewZitatUrl());
     }
 }
 
@@ -179,7 +175,7 @@ function updateRatingFromURL() {
 updateRatingFromURL();
 
 ratingParam.change(function () {
-    openUrl(getUrlWithRating(ratingParam.val()));
+    openPrivateUrl(getUrlWithRating(ratingParam.val()));
 });
 
 $(".download").on("click", saveAsImg);

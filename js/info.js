@@ -11,7 +11,7 @@ text.text("");
 let id;
 
 const app = $.sammy(function() {
-    this.get("#/:author/:id", function() {
+    this.get("/#/:author/:id", function() {
         id = this.params["id"];
 
         if(this.params["author"].toLowerCase() === "zitat") {
@@ -19,6 +19,7 @@ const app = $.sammy(function() {
         } else {
             id = "-" + id;
         }
+
         setSelection(selectType, getFilter(isAuthor(id)));
         runCode();
     });
@@ -126,7 +127,7 @@ function runCode() {
 
     if(id === undefined) {
         console.log("Id wasn't defined.");
-        window.location = getRandomUrl();
+        openPrivateUrl(getRandomUrl());
         return;
     }
 
@@ -166,8 +167,7 @@ function runCode() {
 }
 
 selectType.change(function () {
-    window.location = getUrlWithIdAndFilter(id, selectType.val());
-    runCode();
+    window.location.href = getUrlWithIdAndFilter(id, selectType.val());
 });
 
 window.addEventListener("orientationchange", function() {
