@@ -13,7 +13,7 @@
         <script>
             const url = window.location.href.toLowerCase();
             if(url.indexOf("zitate/info") >= 0) {
-
+                window.location = url.replace("/#", "").replace("info/", "zitate/#/");
             } else {
                 window.location = url.replace("/#", "").replace("zitate/", "zitate/#/");
             }
