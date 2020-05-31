@@ -1,4 +1,4 @@
-"Hermann Josef Abs
+""Hermann Josef Abs
 Dean Acheson
 Douglas Adams
 John Adams
@@ -1307,3 +1307,4 @@ Ravachol
 Kai-Uwe Kling
 Der Verfasser der Bibel
 RTL II
+Midas
