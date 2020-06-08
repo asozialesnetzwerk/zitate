@@ -166,7 +166,8 @@ function runCode() {
     }
 
     for (let i = 0; i < zitatIdArr.length; i++) {
-        addToList(getFalschesZitat(zitatIdArr[i]) + "<br>ID = '" + zitatIdArr[i] + "', Bewertung = '" + ratingJson[zitatIdArr[i]] + "'");
+        const zitatId = zitatIdArr[i];
+        addToList("<a href='" + getBaseUrl().replace("/info", "") + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
     }
 }
 
