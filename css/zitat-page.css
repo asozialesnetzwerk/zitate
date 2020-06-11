@@ -135,9 +135,36 @@ div.quote-container:before {
 
 .buttons a {
     color: darkred;
+    position: relative;
+    display: inline-block;
 }
 
-.button:hover {
+.button-img {
+    width: 69px;
+    height: 69px;
+}
+
+.download-img {
+    transform: rotate(90deg);
+    rotation: 90deg;
+}
+
+.tweet-img {
+    transform: rotate(270deg);
+    rotation: 270deg;
+}
+
+.tweet-img:hover {
+    transform: scale(1.08) rotate(270deg);
+    -webkit-filter: drop-shadow(-3px 3px 2px rgba(139, 0, 0, 0.5));
+}
+
+.download-img:hover {
+    transform: scale(1.08) rotate(90deg);
+    -webkit-filter: drop-shadow(3px -3px 2px rgba(139, 0, 0, 0.5));
+}
+
+.get-quote-img:hover {
     transform: scale(1.08);
     -webkit-filter: drop-shadow(3px 3px 2px rgba(139, 0, 0, 0.5));
 }

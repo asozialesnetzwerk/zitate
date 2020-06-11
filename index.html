@@ -16,16 +16,28 @@
     </head>
     <body>
         <div id="quote-important" class="quote-container">
-            <div id="bottom">
+            <div id="bottom" data-html2canvas-ignore="true">
                 <div class="quote-id"></div>
                 <div class="buttons">
-                    <a class="download"><i class="button fas fa-chevron-circle-down fa-4x" aria-hidden="true"></i></a>
-                    <a class="tweet" href="" target="_blank"><i id ="twitter" class="button fab fa-twitter fa-4x" aria-hidden="true"></i></a>
-                    <a class="get-quote" href=""><i class="button fas fa-chevron-circle-right fa-4x" aria-hidden="true"></i></a>
+                    <a class="download tooltip">
+                        <img class="download-img button-img" src="css/arrow.svg" alt="">
+                        <div class="tooltip-text">Downloade das Zitat als Bild.</div>
+                    </a>
+                    <a class="tweet tooltip" href="">
+                        <img class="tweet-img button-img" src="css/arrow.svg" alt="">
+                        <div class="tooltip-text">Teile das Zitat auf Twitter.</div>
+                    </a>
+                    <a class="get-quote tooltip" href="">
+                        <img class="get-quote-img button-img" src="css/arrow.svg" alt="">
+                        <div class="tooltip-text">Gehe zum nächsten Zitat.</div>
+                    </a>
                 </div>
             </div>
             <div id="top">
-                <div class="quote-text" onClick="">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
+                <div class="tooltip">
+                    <div class="quote-text" onClick="">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
+                    <div class="tooltip-text">Klicke hier um nach diesem Zitat zu suchen.</div>
+                </div>
                 <div class="quote-author" onClick="">- Batman zu Robin</div>
             </div>
             
@@ -54,7 +66,6 @@
         </script>
 
         <script src="js/html2canvas.js"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
         <script src="js/jquery.nice-select.js"></script>
         <script src="js/sammy.js"></script>
         <script src="js/util.js"></script>
