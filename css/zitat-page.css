@@ -139,11 +139,6 @@ div.quote-container:before {
     display: inline-block;
 }
 
-.button-img {
-    width: 69px;
-    height: 69px;
-}
-
 .download-img {
     transform: rotate(90deg);
     rotation: 90deg;
@@ -164,7 +159,43 @@ div.quote-container:before {
     -webkit-filter: drop-shadow(3px -3px 2px rgba(139, 0, 0, 0.5));
 }
 
-.get-quote-img:hover {
-    transform: scale(1.08);
-    -webkit-filter: drop-shadow(3px 3px 2px rgba(139, 0, 0, 0.5));
+.button-img {
+    width: 69px;
+    height: 69px;
+}
+
+.tooltip .tooltip-text {
+    letter-spacing: normal;
+    visibility: hidden;
+    width: auto;
+    background-color: #111;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    -webkit-filter: drop-shadow(3px 3px 2px rgba(15, 15, 15, 0.42));
+}
+
+.tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 0.9;
 }

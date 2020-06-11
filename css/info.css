@@ -12,7 +12,7 @@ html, body {
 }
 
 .list {
-    max-height: 40rem;
+    max-height: 30rem;
     overflow-y: auto;
 }
 
@@ -30,7 +30,6 @@ html, body {
     .info-container {
         max-width: 98%;
         width: 98%;
-        float: inside;
         max-height: 70%;
     }
 }
@@ -45,6 +44,8 @@ html, body {
     }
 
     .search-container {
+        overflow-y: auto;
+
         float: right;
         border: ridge #CD0000;
 
@@ -54,8 +55,6 @@ html, body {
         margin-left: 1.5%;
         margin-right: 0.5%;
         max-width: 38%;
-
-        overflow-y: auto;
 
         max-height: 40rem;
     }
@@ -73,4 +72,11 @@ html, body {
         width: 98%;
         max-width: 98%;
     }
+}
+
+.reverse-order {
+    margin-left: 3px;
+    float: right;
+    width: 25px;
+    height: 25px;
 }

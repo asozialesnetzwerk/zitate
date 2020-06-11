@@ -126,10 +126,20 @@ function addToList(text) {
     list.append(element);
 }
 
-function runCode() {
-    if(!hasLoaded()) return;
+let zitatIdArr;
 
-    if(id === undefined) {
+function displayList() {
+    list.children().remove();
+    for (let i = 0; i < zitatIdArr.length; i++) {
+        const zitatId = zitatIdArr[i];
+        addToList("<a href='" + getBaseUrl().replace("/info", "") + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
+    }
+}
+
+function runCode() {
+    if (!hasLoaded()) return;
+
+    if (id === undefined) {
         console.log("Id wasn't defined.");
         openPrivateUrl(getRandomUrl());
         return;
@@ -138,7 +148,7 @@ function runCode() {
     const keys = Object.keys(ratingJson);
 
     let regexId;
-    if(isAuthor(id)) {
+    if (isAuthor(id)) {
         //URL should end with: /zitate/info/#/zitat/69
         regexId = new RegExp("^\\d{0,4}" + id + "$")
     } else {
@@ -146,29 +156,28 @@ function runCode() {
         regexId = new RegExp("^" + id + "\\d{0,4}$");
     }
 
-    const zitatIdArr = keys.filter(s => regexId.test(s)) //filters all which contain author/quote
+    zitatIdArr = keys.filter(s => regexId.test(s)) //filters all which contain author/quote
         .sort((a, b) => ratingJson[b] - ratingJson[a]); //sort them top to bottom
-
-
-    list.children().remove();
 
     let thisText = getText(id);
     displaySearchResult(thisText);
     thisText = "<a href='https://ddg.gg/" + encodeURI(thisText) + "'>" + thisText + "</a>";
 
-    if(zitatIdArr.length === 0) {
+    if (zitatIdArr.length === 0) {
+        list.children().remove();
         text.text("Es wurde kein bewertetes falsches Zitat mit folgendem " + getFilter(isAuthor(id)) + " gefunden: ");
         text.append(thisText);
         return;
     } else {
         text.text("Hier findest du alle bewerteten falschen Zitate mit folgendem " + getFilter(isAuthor(id)) + ": ");
         text.append(thisText);
+
+        if(zitatIdArr.length > 1) {
+            text.append("<img class=\"button-img button-img-no-rotation reverse-order\" src=\"../css/reverse-order.svg\" onclick=\"reverseOrder()\" alt=\"\">");
+        }
     }
 
-    for (let i = 0; i < zitatIdArr.length; i++) {
-        const zitatId = zitatIdArr[i];
-        addToList("<a href='" + getBaseUrl().replace("/info", "") + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
-    }
+    displayList();
 }
 
 selectType.change(function () {
@@ -176,10 +185,18 @@ selectType.change(function () {
 });
 
 window.addEventListener("orientationchange", function() {
-    if(windowIsLandscape()) {
+    if (windowIsLandscape()) {
         displaySearchResult(getText(id));
     }
 }, false);
+
+function reverseOrder() {
+    if (zitatIdArr === undefined) {
+        return;
+    }
+    zitatIdArr.reverse();
+    displayList();
+}
 
 //starts loading process:
 loadFiles();
