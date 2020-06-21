@@ -405,7 +405,7 @@ Novalis
 Sir Laurence Olivier
 Aristoteles Onassis
 José Ortega y Gasset
-George Orwell
+Ein Entwickler
 John James Osborne
 Ovid
 Marcel Pagnol
@@ -1318,4 +1318,4 @@ Ein Tier
 Ein Schüler
 Julia Müller
 Vernon Dursley
-Gorge Orwell
+George Orwell
