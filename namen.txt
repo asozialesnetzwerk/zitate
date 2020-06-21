@@ -972,7 +972,7 @@ Peter Parker
 Jesus von Nazaret
 Pontius Pilatus
 Tinky Winky
-Jesus von Nazaret
+Ein Übermensch
 Immanuel Kant
 Kim Jong-Il
 Sigmund Freud
@@ -1195,7 +1195,7 @@ Mark Zuckerberg
 Bill Gates
 BP
 Giacoma Casanova
-Jesus von Nazaret
+Ein Bot
 Kaiser Nero
 Ulbricht zu Chruschtschow
 Prince of Persia
