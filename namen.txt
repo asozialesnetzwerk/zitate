@@ -26,13 +26,13 @@ Ingeborg Bachmann
 Francis Bacon
 Josephine Baker
 Honoré de Balzac
-Honoré de Balzac
+Ein Romantiker
 Peter Bamm
 Brigitte Bardot
 Rainer Barzel
 Charles Baudelaire
 Vicky Baum
-Samuel Beckett
+Schriftsteller
 Samuel Beckett
 Alexander Graham Bell
 Gottfried Benn
@@ -171,7 +171,7 @@ Egon Friedell
 Friedrich II. der Große
 Friedrich II. von Staufen
 Max Frisch
-Gert FrÃ¶be
+Gert Fröbe
 Erich Fromm
 David Frost
 Robert Lee Frost
@@ -405,7 +405,7 @@ Novalis
 Sir Laurence Olivier
 Aristoteles Onassis
 José Ortega y Gasset
-George Orwell
+Ein Entwickler
 John James Osborne
 Ovid
 Marcel Pagnol
@@ -423,7 +423,7 @@ Cesare Pavese
 Johann Heinrich Pestalozzi
 Zarko Petan
 William Lyon Phelps
-Pablo Picasso
+Ein Maler
 Max Planck
 Platon
 Plutarch
@@ -675,7 +675,7 @@ Marc-Uwe Kling
 Gott
 Jesus
 Barbara Robinson
-Judas
+Stallman
 Markus "Notch" Persson
 Jeff Kinney
 Super Mario
@@ -972,11 +972,11 @@ Peter Parker
 Jesus von Nazaret
 Pontius Pilatus
 Tinky Winky
-Jesus von Nazaret
+Ein Übermensch
 Immanuel Kant
 Kim Jong-Il
 Sigmund Freud
-Joseph Goebbels
+Ein Nationalsozialist
 William Shakespeare
 Käpt’n Iglo
 Philipp Rösler
@@ -1111,7 +1111,7 @@ FDP-Wahlkampfsong
 Kim Jong-Il
 Boris Becker
 Vorstandssprecher von Penispumpenshop24
-Heckler &amp; Koch
+Heckler & Koch
 Michel aus Lönneberga
 Playboy-Chefredakteur Hugh Hefner
 Karl Lagerfeld
@@ -1195,7 +1195,7 @@ Mark Zuckerberg
 Bill Gates
 BP
 Giacoma Casanova
-Jesus von Nazaret
+Ein Bot
 Kaiser Nero
 Ulbricht zu Chruschtschow
 Prince of Persia
@@ -1290,7 +1290,7 @@ Meister Yoda
 Gott zur Stadt Ninive
 Judas 
 Ein SS-Mann
-Joseph Goebbels 
+Vertrauter Adolf Hitlers
 Ein Autonomer beim G20 Gipfel
 Anakin Skywalker 
 McDonalds
@@ -1310,8 +1310,21 @@ RTL II
 Midas
 Ein Hitlerjunge
 Ich kam ich sah ich siegte
-- Serpine bei Vile im Bett
+Serpine bei Vile im Bett
 Petrus
-Johannes der Täufer
+Ein Bischof
 H&M
 Ein Tier
+Ein Schüler
+Julia Müller
+Vernon Dursley
+George Orwell
+Fielmann
+Auszug aus dem #mitglieder-bereich eines (inoffiziellen) AfD-Servers
+AfD über die Nazis
+The Eckkneipe Formally Known As 'Bei Herta'
+Kaiser Napoleon I. | Napoléon  Bonaparte
+Katja Krasavice
+Ein AfD-Wähler.
+Ein AfD-Wähler
+Eloise Midgeon ||(Harry Potter)||
