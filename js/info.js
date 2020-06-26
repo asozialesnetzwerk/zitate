@@ -40,6 +40,19 @@ function showSearch(boo) {
     }
 }
 
+function optimizeSearchParam(searchParam) {
+    searchParam = searchParam.replace(/[\[({].*[\])}]/g, "");
+    if(searchParam.indexOf(" ") < 0) {
+        return searchParam;
+    }
+    return searchParam.toLowerCase()
+        .replace(/der/, "")
+        .replace(/die/, "")
+        .replace(/das/, "")
+        .replace(/ein[a-z]{0,2}\s?/, " ")
+        .replace(/\s+/g, " ");
+}
+
 let lastSearch = -1;
 let lastSearchDisplayed = false;
 //more info: https://duckduckgo.com/api
@@ -53,6 +66,10 @@ function displaySearchResult(searchParam) {
             searchContainer.children().remove();
             if (respondJson["Abstract"].length === 0) {
                 lastSearchDisplayed = false;
+                const newSearchParam = optimizeSearchParam(searchParam);
+                if(newSearchParam !== searchParam) {
+                    displaySearchResult(newSearchParam);
+                }
             } else {
                 const elementPoweredBy = document.createElement("strong");
                 elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
@@ -91,7 +108,7 @@ function isAuthor(id) {
 }
 
 function getInfoUrl() {
-    return getBaseUrl() + "info/";
+    return getBaseUrl() + "info/#/";
 }
 
 function getPlainId(id) {
