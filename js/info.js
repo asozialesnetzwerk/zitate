@@ -90,12 +90,8 @@ function isAuthor(id) {
     return id.startsWith("-");
 }
 
-function getBaseUrl() {
-    let url = window.location.href;
-    window.location.href.toLowerCase().replace(/.+\/info/, function (match) {
-        url =  match + "/#/";
-    });
-    return url;
+function getInfoUrl() {
+    return getBaseUrl() + "info/";
 }
 
 function getPlainId(id) {
@@ -103,12 +99,12 @@ function getPlainId(id) {
 }
 
 function getUrlWithIdAndFilter(id, filter) {
-    return getBaseUrl() + filter + "/" + getPlainId(id);
+    return getInfoUrl() + filter + "/" + getPlainId(id);
 }
 
 function getRandomUrl(isAuthor) {
     isAuthor = isAuthor === undefined ? Math.random() >= 0.5 : isAuthor;
-    return getBaseUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
+    return getInfoUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
 }
 
 function getFalschesZitat(zitatId) {
@@ -132,7 +128,7 @@ function displayList() {
     list.children().remove();
     for (let i = 0; i < zitatIdArr.length; i++) {
         const zitatId = zitatIdArr[i];
-        addToList("<a href='" + getBaseUrl().replace("/info", "") + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
+        addToList("<a href='" + getBaseUrl() + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
     }
 }
 
@@ -181,7 +177,7 @@ function runCode() {
 }
 
 selectType.change(function () {
-    window.location.href = getUrlWithIdAndFilter(id, selectType.val());
+    openUrl(getUrlWithIdAndFilter(id, selectType.val()));
 });
 
 window.addEventListener("orientationchange", function() {

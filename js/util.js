@@ -67,6 +67,35 @@ function windowIsLandscape() {
     return window.innerWidth > window.innerHeight;
 }
 
+function openUrl(url) {
+    window.location.href = url;
+}
+
+function getUrl() {
+    return window.location.href;
+}
+
+function getBaseUrl() {
+    let url = getUrl();
+    getUrl().toLowerCase().replace(/.+\/zitate/, function (match) {
+        url = match + "/";
+    });
+    return url;
+}
+
+function getRandomQuote() {
+    return Math.floor(quotesArr.length * Math.random());
+}
+
+function getRandomAuthor() {
+    return Math.floor(authorsArr.length * Math.random());
+}
+
 function openPrivateUrl(url) {
     history.replaceState("", url, url);
+}
+
+function getParamFromURL(param, defaultValue) {
+    let results = new RegExp("[\?&]" + param + "=([^&#]*)").exec(window.location.href);
+    return results === null ? defaultValue : results[1];
 }

@@ -1,0 +1,35 @@
+.search-select {
+    width: 90%;
+    height: auto;
+    color: #ffffff;
+}
+
+.select2-container--default {
+    background: #000;
+    color: #ffffff;
+}
+
+.select2-selection--single {
+    background: #111;
+    color: #ffffff;
+}
+
+.select2-results__option {
+    background: #000;
+    color: #ffffff;
+}
+
+.select2-search {
+    background: #000;
+    color: #ffffff;
+}
+
+.select2-search--dropdown {
+    background: #000;
+    color: #ffffff;
+}
+
+.select2-selection__rendered {
+    background: #000;
+    color: #ffffff;
+}
