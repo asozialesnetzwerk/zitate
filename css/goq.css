@@ -33,3 +33,8 @@
     background: #000;
     color: #ffffff;
 }
+
+span .select2-selection .select2-selection--single {
+    display: none;
+    opacity: 0;
+}
