@@ -67,7 +67,7 @@ function displayQuote() {
     authorText.text(authorIsSelected ? "- " + authorsArr[ids[1]] : "");
 
     nextQuote.attr("href", getRandomUrl());
-    tweetButton.attr("href", getBaseUrl() + "#/" + getId());
+    tweetButton.attr("href", getBaseUrl() + getId());
 }
 
 function getRandomUrl() {
