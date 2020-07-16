@@ -3,12 +3,10 @@ const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
 const tweetButton = $(".tweet");
 
-console.log(nextQuote);
-
-const quoteSelect = $(".quote-select");
-const authorSelect = $(".author-select");
 const quoteSelectContainer = $(".quote-select-container");
 const authorSelectContainer = $(".author-select-container");
+const quoteSelect = $(".quote-select");
+const authorSelect = $(".author-select");
 const quoteText = $(".quote");
 const authorText = $(".author");
 
@@ -16,7 +14,7 @@ const none = "n";
 const quote = "z";
 const author = "a";
 
-const ids = ["0", "0"];
+const ids = ["x", "x"];
 let preSelected = none;
 
 const app = $.sammy(function() {
@@ -91,39 +89,27 @@ function runCode() {
     for (let i = 0; i < quotesArr.length; i++) {
         quoteSelect.append(new Option(quotesArr[i], i.toString(), false, false));
     }
-
-    quoteSelect.append(new Option("Wähle ein Zitat :)", quotesArr.length, true, true));
-    if (preSelected === none || preSelected !== quote) {
-        ids[0] = "x";
-    } else {
-        ids[0] = getRandomQuote().toString();
-        quoteSelect.val(ids[0]);
+    quoteSelect.append(new Option("Wähle ein Zitat :)", "x", true, true));
+    if (preSelected === quote) {
+        quoteSelect.val(getRandomQuote().toString());
     }
 
+    let authors = "\n";
     for (let i = 0; i < authorsArr.length; i++) {
-        authorSelect.append(new Option(authorsArr[i], i.toString(), false, false));
+        if (authors.indexOf("\n" + authorsArr[i] + "\n") < 0) {
+            authorSelect.append(new Option(authorsArr[i], i.toString(), false, false));
+            authors += authorsArr[i] + "\n";
+        }
     }
-
-    authorSelect.append(new Option("Wähle einen Autor :)", authorsArr.length, true, true));
-    if (preSelected === none || preSelected !== author) {
-        ids[1] = "x";
-    } else {
-        ids[1] = getRandomAuthor().toString();
-        authorSelect.val(ids[1]);
+    authorSelect.append(new Option("Wähle einen Autor :)", "x", true, true));
+    if (preSelected === author) {
+        authorSelect.val(getRandomAuthor().toString());
     }
 
     quoteSelect.trigger("change");
     authorSelect.trigger("change");
 
-    quoteSelect.change(function() {
-        ids[0] = quoteSelect.val() === quotesArr.length.toString() ? "x" : quoteSelect.val();
-        updateUrl();
-    });
-
-    authorSelect.change(function() {
-        ids[1] = authorSelect.val() === authorsArr.length.toString() ? "x" : authorSelect.val();
-        updateUrl();
-    });
+    $(".select-container").css("opacity", "100");
 
     displayQuote();
     updateUrl();
@@ -133,6 +119,16 @@ $(document).ready(function() {
     $('.search-select').select2();
 
     preSelectedSelect.change(function () {
+        quoteSelect.change(function() {
+            ids[0] = quoteSelect.val();
+            updateUrl();
+        });
+
+        authorSelect.change(function() {
+            ids[1] = authorSelect.val();
+            updateUrl();
+        });
+
         if (preSelectedSelect.val() !== preSelected) {
             preSelected = preSelectedSelect.val();
 

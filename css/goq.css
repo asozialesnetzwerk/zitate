@@ -34,7 +34,10 @@
     color: #ffffff;
 }
 
-span .select2-selection .select2-selection--single {
-    display: none;
+footer {
+    margin-top: 20%;
+}
+
+.select-container {
     opacity: 0;
 }
