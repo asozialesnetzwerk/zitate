@@ -52,6 +52,28 @@ function getId() {
 
 function displayQuote() {
     if (!hasLoaded()) return;
+    if (isNullOrUndefined(quoteSelect.val())) {
+        quoteSelect.val("x").trigger("change");
+        ids[0] = "x";
+    }
+    if (isNullOrUndefined(authorSelect.val())) {
+        console.log("undefined: " + ids[1]);
+        const name = authorsArr[ids[1]];
+        console.log("name = " + name);
+        if (isNullOrUndefined(name)) {
+            authorSelect.val("x").trigger("change");
+        }
+        //cuz names only get added to the list once:
+        for (let i = 0; i < authorsArr.length; i++) {
+            if (name === authorsArr[i]) {
+                authorSelect.val(i.toString()).trigger("change");
+                ids[1] = i.toString();
+                break;
+            }
+        }
+        console.log(ids);
+    }
+
     quoteId.text(getId());
 
     const quoteIsSelected = preSelected === quote;
@@ -123,25 +145,38 @@ $(document).ready(function() {
     $('.search-select').select2();
 
     quoteSelect.change(function() {
-        ids[0] = quoteSelect.val();
-        updateUrl();
+        if (!isNullOrUndefined(quoteSelect.val())) {
+            ids[0] = quoteSelect.val();
+            updateUrl();
+        }
     });
 
     authorSelect.change(function() {
-        ids[1] = authorSelect.val();
-        updateUrl();
+        if (!isNullOrUndefined(authorSelect.val())) {
+            ids[1] = authorSelect.val();
+            updateUrl();
+        }
     });
 
     preSelectedSelect.change(function () {
         if (preSelectedSelect.val() !== preSelected) {
             preSelected = preSelectedSelect.val();
 
-            if (preSelected !== quote) {
+            if (preSelected === quote) {
+                if (quoteSelect.val() === "x") {
+                    quoteSelect.val(getRandomQuote()).trigger("change");
+                }
+            } /*else {
                 ids[0] = "x";
-            }
-            if (preSelected !== author) {
+            } */
+
+            if (preSelected === author) {
+                if (authorSelect.val() === "x") {
+                    authorSelect.val(getRandomAuthor()).trigger("change");
+                }
+            } /*else {
                 ids[1] = "x";
-            }
+            }*/
 
             displayQuote();
             updateUrl();

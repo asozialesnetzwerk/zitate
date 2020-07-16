@@ -127,7 +127,7 @@ function getNewZitatUrl() {
 }
 
 function isValidId(val) {
-    if (!(val === undefined || val === null || val === "")) {
+    if (!(isNullOrUndefined(val) || val === "")) {
         if (id_regex.test(val)) {
             if (hasLoaded()) {
                 const ids = val.split("-");

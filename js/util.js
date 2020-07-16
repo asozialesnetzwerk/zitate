@@ -51,15 +51,18 @@ function changeVisibility(element, visible) {
     }
 }
 
+function isNullOrUndefined(obj) {
+    return obj === null || typeof obj === "undefined";
+}
+
 function setSelection(selectElement, selection, defaultSelection) {
     selectElement.val(selection);
     if (selectElement.val() === null) {
-        if (defaultSelection === undefined || defaultSelection === null) {
+        if (isNullOrUndefined(defaultSelection)) {
             return;
         }
         selectElement.val(defaultSelection);
     }
-
     selectElement.niceSelect("update");
 }
 
