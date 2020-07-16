@@ -34,11 +34,11 @@ const app = $.sammy(function() {
         }
 
         if (quoteSelect.val() !== ids[0]) {
-            quoteSelect.val(ids[0] === "x" ? quotesArr.length : ids[0]).trigger("change");
+            quoteSelect.val(ids[0]).trigger("change");
         }
 
         if (authorSelect.val() !== ids[1]) {
-            authorSelect.val(ids[1] === "x" ? authorsArr.length : ids[1]).trigger("change");
+            authorSelect.val(ids[1]).trigger("change");
         }
 
         displayQuote();
@@ -93,6 +93,7 @@ function runCode() {
     if (preSelected === quote) {
         quoteSelect.val(getRandomQuote().toString());
     }
+    ids[0] = quoteSelect.val();
 
     let authors = "\n";
     for (let i = 0; i < authorsArr.length; i++) {
@@ -105,6 +106,9 @@ function runCode() {
     if (preSelected === author) {
         authorSelect.val(getRandomAuthor().toString());
     }
+    ids[1] = authorSelect.val();
+
+    console.log(ids);
 
     quoteSelect.trigger("change");
     authorSelect.trigger("change");
@@ -118,25 +122,25 @@ function runCode() {
 $(document).ready(function() {
     $('.search-select').select2();
 
+    quoteSelect.change(function() {
+        ids[0] = quoteSelect.val();
+        updateUrl();
+    });
+
+    authorSelect.change(function() {
+        ids[1] = authorSelect.val();
+        updateUrl();
+    });
+
     preSelectedSelect.change(function () {
-        quoteSelect.change(function() {
-            ids[0] = quoteSelect.val();
-            updateUrl();
-        });
-
-        authorSelect.change(function() {
-            ids[1] = authorSelect.val();
-            updateUrl();
-        });
-
         if (preSelectedSelect.val() !== preSelected) {
             preSelected = preSelectedSelect.val();
 
             if (preSelected !== quote) {
-                ids[0] = quotesArr.length;
+                ids[0] = "x";
             }
             if (preSelected !== author) {
-                ids[1] = authorsArr.length;
+                ids[1] = "x";
             }
 
             displayQuote();
