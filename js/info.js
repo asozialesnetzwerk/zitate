@@ -14,7 +14,7 @@ const app = $.sammy(function() {
     this.get("/#/:author/:id", function() {
         id = this.params["id"];
 
-        if(this.params["author"].toLowerCase() === "zitat") {
+        if (this.params["author"].toLowerCase() === "zitat") {
             id = id + "-";
         } else {
             id = "-" + id;
@@ -31,7 +31,7 @@ const app = $.sammy(function() {
 app.run();
 
 function showSearch(boo) {
-    if(boo) {
+    if (boo) {
         changeVisibility(searchContainer, true);
         infoContainer.removeClass("alone");
     } else {
@@ -42,7 +42,7 @@ function showSearch(boo) {
 
 function optimizeSearchParam(searchParam) {
     searchParam = searchParam.replace(/[\[({].*[\])}]/g, "");
-    if(searchParam.indexOf(" ") < 0) {
+    if (searchParam.indexOf(" ") < 0) {
         return searchParam;
     }
     return searchParam.toLowerCase()
@@ -57,9 +57,9 @@ let lastSearch = -1;
 let lastSearchDisplayed = false;
 //more info: https://duckduckgo.com/api
 function displaySearchResult(searchParam) {
-    if(searchParam === undefined || !windowIsLandscape()) {
+    if (searchParam === undefined || !windowIsLandscape()) {
         showSearch(false);
-    } else if(lastSearch === searchParam) {
+    } else if (lastSearch === searchParam) {
         showSearch(lastSearchDisplayed);
     } else {
         $.getJSON(duckduckgoApiUrl + searchParam, respondJson => {
@@ -67,7 +67,7 @@ function displaySearchResult(searchParam) {
             if (respondJson["Abstract"].length === 0) {
                 lastSearchDisplayed = false;
                 const newSearchParam = optimizeSearchParam(searchParam);
-                if(newSearchParam !== searchParam) {
+                if (newSearchParam !== searchParam) {
                     displaySearchResult(newSearchParam);
                 }
             } else {
@@ -126,7 +126,7 @@ function getRandomUrl(isAuthor) {
 
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
-    if(ids.length < 2 || !hasLoaded()) return "";
+    if (ids.length < 2 || !hasLoaded()) return "";
     return quotesArr[ids[0]] + "<br>  - " + authorsArr[ids[1]];
 }
 
@@ -185,7 +185,7 @@ function runCode() {
         text.text("Hier findest du alle bewerteten falschen Zitate mit folgendem " + getFilter(isAuthor(id)) + ": ");
         text.append(thisText);
 
-        if(zitatIdArr.length > 1) {
+        if (zitatIdArr.length > 1) {
             text.append("<img class=\"button-img button-img-no-rotation reverse-order\" src=\"../css/reverse-order.svg\" onclick=\"reverseOrder()\" alt=\"\">");
         }
     }

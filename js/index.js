@@ -54,7 +54,7 @@ function saveAsImg() {
 let oldRating;
 //displays Quote:
 function runCode() {
-    if(!hasLoaded() || !checkId()) return;
+    if (!hasLoaded() || !checkId()) return;
 
     const ids = id.split("-");
     
@@ -73,9 +73,9 @@ function runCode() {
     $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
 
     quoteId.text(id);
-    if(rating !== oldRating) {
+    if (rating !== oldRating) {
         quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x   ");
-        if( rating === 0) {
+        if ( rating === 0) {
             changeVisibility(witzig, false);
             changeVisibility(nichtWitzig, false);
         } else {
@@ -127,24 +127,22 @@ function getNewZitatUrl() {
 }
 
 function isValidId(val) {
-    if(val === undefined || val === null || val === "") {
-        return false;
-    }
-    if(id_regex.test(val)) {
-        if(hasLoaded()) {
-            const ids = val.split("-");
-            return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
-        } else {
-            return true;
+    if (!(val === undefined || val === null || val === "")) {
+        if (id_regex.test(val)) {
+            if (hasLoaded()) {
+                const ids = val.split("-");
+                return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
+            } else {
+                return true;
+            }
         }
-    } else {
-        return false;
     }
+    return false;
 }
 
 function checkId() {
-    if(!isValidId(id)) {
-        if(id !== undefined && id !== null) {
+    if (!isValidId(id)) {
+        if (id !== undefined && id !== null) {
             console.log("Given id (" + id + ") is invalid.");
         }
         openPrivateUrl(getNewZitatUrl());

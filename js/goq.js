@@ -26,10 +26,10 @@ const app = $.sammy(function() {
 
         const idsParam = this.params["id"].split("-");
 
-        ids[0] = idsParam[0] === "" || idsParam[0] === null ? "x" : idsParam[0];
-        ids[1] = idsParam[1] === "" || idsParam[1] === null ? "x" : idsParam[1];
+        ids[0] = idsParam[0] === "" || idsParam[0] === null || idsParam[0] === "null" ? "x" : idsParam[0];
+        ids[1] = idsParam[1] === "" || idsParam[1] === null || idsParam[1] === "null" ? "x" : idsParam[1];
 
-        if(preSelected === quote && ids[0] === "x") {
+        if (preSelected === quote && ids[0] === "x") {
             ids[0] = getRandomQuote().toString();
         } else if (preSelected === author && ids[1] === "x") {
             ids[1] = getRandomQuote().toString();
@@ -56,28 +56,30 @@ function displayQuote() {
     if (!hasLoaded()) return;
     quoteId.text(getId());
 
-    if(preSelected === quote) {
-        changeVisibility(quoteSelectContainer, false);
-        changeVisibility(quoteText, true);
-        quoteText.text(quotesArr[ids[0]]);
-    } else {
-        changeVisibility(quoteSelectContainer, true);
-        changeVisibility(quoteText, false);
-        quoteText.text("");
-    }
+    const quoteIsSelected = preSelected === quote;
+    changeVisibility(quoteSelectContainer, !quoteIsSelected);
+    changeVisibility(quoteText, quoteIsSelected);
+    quoteText.text(quoteIsSelected ? quotesArr[ids[0]] : "");
 
-    if(preSelected === author) {
-        changeVisibility(authorSelectContainer, false);
-        changeVisibility(authorText, true);
-        authorText.text(authorsArr[ids[1]]);
-    } else {
-        changeVisibility(authorSelectContainer, true);
-        changeVisibility(authorText, false);
-        authorText.text("");
-    }
+    const authorIsSelected = preSelected === author;
+    changeVisibility(authorSelectContainer, !authorIsSelected);
+    changeVisibility(authorText, authorIsSelected);
+    authorText.text(authorIsSelected ? "- " + authorsArr[ids[1]] : "");
 
-    nextQuote.attr("href", getBaseUrl() + "goq/#/x-x?pre=" + preSelected);
+    nextQuote.attr("href", getRandomUrl());
     tweetButton.attr("href", getBaseUrl() + "#/" + getId());
+}
+
+function getRandomUrl() {
+    let url = getBaseUrl() + "goq/#/";
+    if (preSelected === quote) {
+        url += getRandomQuote() + "-x";
+    } else if (preSelected === author) {
+        url += "x-" + getRandomAuthor();
+    } else {
+        url += "x-x";
+    }
+    return url + "?pre=" + preSelected;
 }
 
 function updateUrl() {
@@ -90,11 +92,11 @@ function runCode() {
         quoteSelect.append(new Option(quotesArr[i], i.toString(), false, false));
     }
 
-    const chooseQuote = preSelected === none || preSelected !== quote;
-    quoteSelect.append(new Option("Wähle ein Zitat :)", quotesArr.length, chooseQuote, chooseQuote));
-    ids[0] = chooseQuote ? "x" : getRandomQuote();
-
-    if(!chooseQuote) {
+    quoteSelect.append(new Option("Wähle ein Zitat :)", quotesArr.length, true, true));
+    if (preSelected === none || preSelected !== quote) {
+        ids[0] = "x";
+    } else {
+        ids[0] = getRandomQuote().toString();
         quoteSelect.val(ids[0]);
     }
 
@@ -102,11 +104,11 @@ function runCode() {
         authorSelect.append(new Option(authorsArr[i], i.toString(), false, false));
     }
 
-    const chooseAuthor = preSelected === none || preSelected !== author;
-    authorSelect.append(new Option("Wähle einen Autor :)", authorsArr.length, chooseAuthor, chooseAuthor));
-    ids[1] = chooseAuthor ? "x" : getRandomAuthor();
-
-    if(!chooseAuthor) {
+    authorSelect.append(new Option("Wähle einen Autor :)", authorsArr.length, true, true));
+    if (preSelected === none || preSelected !== author) {
+        ids[1] = "x";
+    } else {
+        ids[1] = getRandomAuthor().toString();
         authorSelect.val(ids[1]);
     }
 
@@ -131,13 +133,13 @@ $(document).ready(function() {
     $('.search-select').select2();
 
     preSelectedSelect.change(function () {
-        if(preSelectedSelect.val() !== preSelected) {
+        if (preSelectedSelect.val() !== preSelected) {
             preSelected = preSelectedSelect.val();
 
-            if(preSelected !== quote) {
+            if (preSelected !== quote) {
                 ids[0] = quotesArr.length;
             }
-            if(preSelected !== author) {
+            if (preSelected !== author) {
                 ids[1] = authorsArr.length;
             }
 

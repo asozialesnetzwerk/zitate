@@ -3,7 +3,7 @@ let quotesArr;
 let ratingJson;
 
 $(document).ready(function () {
-    $("select").niceSelect();
+    $(".select").niceSelect();
 });
 
 function hasLoaded() {
@@ -11,13 +11,13 @@ function hasLoaded() {
 }
 
 function checkStart() {
-    if(hasLoaded()) {
+    if (hasLoaded()) {
         runCode();
     }
 }
 
 function loadFiles() {
-    if(hasLoaded()) {
+    if (hasLoaded()) {
         runCode();
         return;
     }
@@ -41,10 +41,10 @@ function loadFiles() {
 
 function changeVisibility(element, visible) {
     const isVisible = !element.hasClass("invisible");
-    if(visible === isVisible) {
+    if (visible === isVisible) {
         return;
     }
-    if(visible && !isVisible) {
+    if (visible && !isVisible) {
         element.removeClass("invisible");
     } else if (!visible && isVisible) {
         element.addClass("invisible");
@@ -53,8 +53,8 @@ function changeVisibility(element, visible) {
 
 function setSelection(selectElement, selection, defaultSelection) {
     selectElement.val(selection);
-    if(selectElement.val() === null) {
-        if(defaultSelection === undefined || defaultSelection === null) {
+    if (selectElement.val() === null) {
+        if (defaultSelection === undefined || defaultSelection === null) {
             return;
         }
         selectElement.val(defaultSelection);
