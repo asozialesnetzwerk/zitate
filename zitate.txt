@@ -3450,7 +3450,7 @@
 "Die Berühmtheit mancher Zeitgenossen hängt mit der Blödheit der Bewunderer zusammen."
 "Dafür stehe ich mit meinem Namen."
 "Hier können wir nicht anhalten! Das ist Fledermausland!"
-"Auf der Mauer, auf der Lauer, sitzt ›ne kleine Wanze."
+"Auf der Mauer, auf der Lauer, sitzt 'ne kleine Wanze."
 "Vertrauen ist gut, Kontrolle ist besser."
 "Mal verliert man und mal gewinnen die anderen."
 "We will rock you!"
