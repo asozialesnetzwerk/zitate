@@ -3581,3 +3581,4 @@
 "A-E-I-O-U lass uns tanzen!"
 "Alle Staatsgewalt geht vom Volke aus."
 "Ich bin der Geist, der stets verneint! Und das mit Recht; denn alles, was entsteht, ist wert, daß es zugrunde geht."
+"Ihr Ziel befindet sich auf der rechten Seite."
