@@ -24,6 +24,7 @@ const app = $.sammy(function() {
         runCode();
     });
 
+
     this.get("/:id", function() {
         id = this.params["id"];
         updateRatingFromURL();
@@ -57,12 +58,11 @@ function runCode() {
     if (!hasLoaded() || !checkId()) return;
 
     const ids = id.split("-");
-    
-    let theQuote = quotesArr[ids[0]] ;
-    const theAuthor = authorsArr[ids[1]];
-    theQuote = "»" + theQuote.substr(1, theQuote.lastIndexOf('"') - 1) + "«";
 
-    const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
+    let theQuote =  "»" + getQuoteById(ids[0])["quote"]  + "«";
+    const theAuthor = getAuthorById(ids[1])["author"];
+
+    const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
 
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
@@ -118,12 +118,13 @@ function getNewZitatUrl() {
         return getUrlWithId(newId);
     }
     const keys = Object.keys(ratingJson);
-    let z;
-    do {
-        z = Math.floor(Math.random() * keys.length);
-    } while ((ratingJson[keys[z]] <= 0 && paramRating === "w") || (ratingJson[keys[z]] >= 0 && paramRating === "n") || (ratingJson[keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
-    
-    return getUrlWithId(keys[z]);
+    if (false) {
+        let z;
+        do {
+            z = Math.floor(Math.random() * keys.length);
+        } while ((ratingJson[keys[z]] <= 0 && paramRating === "w") || (ratingJson[keys[z]] >= 0 && paramRating === "n") || (ratingJson[keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
+    }
+    return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
 }
 
 function isValidId(val) {

@@ -127,7 +127,7 @@ function getRandomUrl(isAuthor) {
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
     if (ids.length < 2 || !hasLoaded()) return "";
-    return quotesArr[ids[0]] + "<br>  - " + authorsArr[ids[1]];
+    return getQuoteById(ids[0])["quote"] + "<br>  - " + getAuthorById(ids[1])["author"];;
 }
 
 function addToList(text) {
