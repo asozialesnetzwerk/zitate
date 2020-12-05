@@ -104,7 +104,7 @@ function searchAndDisplayResult(searchParam) {
 }
 
 function getText(id) {
-    return isAuthor(id) ? getAuthorById(id.replace("-", ""))["author"] : getQuoteById(id.replace("-", ""))["quote"];
+    return isAuthor(id) ? getAuthorById(id.replace("-", ""))["author"] : '"' + getQuoteById(id.replace("-", ""))["quote"]+ '"';
 }
 
 function getFilter(isAuthor) {
@@ -135,7 +135,7 @@ function getRandomUrl(isAuthor) {
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
     if (ids.length < 2 || !hasLoaded()) return "";
-    return getQuoteById(ids[0])["quote"] + "<br>  - " + getAuthorById(ids[1])["author"];
+    return '"' + getQuoteById(ids[0])["quote"] + "\"<br>  - " + getAuthorById(ids[1])["author"];
 }
 
 function addToList(text) {
@@ -181,16 +181,19 @@ function runCode() {
         .sort((a, b) => ratingJson[b] - ratingJson[a]); //sort them top to bottom
 
     displayInfoText();
-    const thisText = "<a href='https://ddg.gg/" + encodeURI(getText(id)) + "'>" + getText(id) + "</a>";
 
     if (zitatIdArr.length === 0) {
         list.children().remove();
         text.text("Es wurde kein bewertetes falsches Zitat mit folgendem " + getFilter(isAuthor(id)) + " gefunden: ");
-        text.append(thisText);
+        text.append(getSearchHyperLink(getText(id)));
         return;
     } else {
         text.text("Hier findest du alle bewerteten falschen Zitate mit folgendem " + getFilter(isAuthor(id)) + ": ");
-        text.append(thisText);
+        text.append(getSearchHyperLink(getText(id)));
+
+        if (!isAuthor(id)) {
+            text.append(" von " + getSearchHyperLink(getQuoteById(id.replace("-", ""))["author"]["author"]));
+        }
 
         if (zitatIdArr.length > 1) {
             text.append("<img class='button-img button-img-no-rotation reverse-order' src='../css/reverse-order.svg\' onclick='reverseOrder()' alt='Reihenfolge umkehren.'>");
@@ -198,6 +201,10 @@ function runCode() {
     }
 
     displayList();
+}
+
+function getSearchHyperLink(toSearch) {
+    return "<a href='https://ddg.gg/" + encodeURI(toSearch) + "'>" + toSearch + "</a>";
 }
 
 selectType.change(function () {
