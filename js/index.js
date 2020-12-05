@@ -123,8 +123,7 @@ function getNewZitatUrl() {
                 keys.push(key);
             }
         });
-
-        console.log(keys);
+        
         if (keys.length > 0) {
             return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
         }
