@@ -109,22 +109,33 @@ function getRandomZitatId() {
 }
 
 function getNewZitatUrl() {
-    const paramRating = getRatingParam();
-    if (paramRating === "all") {
-        let newId;
-        do {
-            newId = getRandomZitatId();
-        } while (newId === id);
-        return getUrlWithId(newId);
+    const ratingParam = getRatingParam();
+
+    if (ratingParam !== "all") {
+        const keys = [];
+        Object.keys(ratingJson).forEach((key, index) => {
+            if (key !== id
+                && ((ratingParam === "w" && ratingJson[key] > 0)
+                    || (ratingParam === "n" && ratingJson[key] < 0)
+                    || (ratingParam === "rated" && ratingJson[key] !== 0)
+                    || (ratingParam === "unrated" && ratingJson[key] === 0)
+                )) {
+                keys.push(key);
+            }
+        });
+
+        console.log(keys);
+        if (keys.length > 0) {
+            return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
+        }
     }
-    const keys = Object.keys(ratingJson);
-    if (false) {
-        let z;
-        do {
-            z = Math.floor(Math.random() * keys.length);
-        } while ((ratingJson[keys[z]] <= 0 && paramRating === "w") || (ratingJson[keys[z]] >= 0 && paramRating === "n") || (ratingJson[keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
-    }
-    return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
+
+    let newId;
+    do {
+        newId = getRandomZitatId();
+    } while (newId === id);
+
+    return getUrlWithId(newId);
 }
 
 function isValidId(val) {
