@@ -193,7 +193,7 @@ function runCode() {
         text.append(thisText);
 
         if (zitatIdArr.length > 1) {
-            text.append("<img class=\"button-img button-img-no-rotation reverse-order\" src=\"../css/reverse-order.svg\" onclick=\"reverseOrder()\" alt=\"\">");
+            text.append("<img class='button-img button-img-no-rotation reverse-order' src='../css/reverse-order.svg\' onclick='reverseOrder()' alt='Reihenfolge umkehren.'>");
         }
     }
 
