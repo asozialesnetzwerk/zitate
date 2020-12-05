@@ -137,9 +137,9 @@ function quotesApiGetRequest(endPoint, callbackFunction) {
 
 function binarySearch(arr, toSearch) {
     let start = 0;
-    let end = arr.length-1;
+    let end = arr.length - 1;
     // Iterate while start not meets end
-    while (start <= end){
+    while (start <= end) {
         // Find the mid index
         let mid = Math.floor((start + end) / 2);
         // If element is present at mid, return the position
