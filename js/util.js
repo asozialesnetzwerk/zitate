@@ -12,29 +12,6 @@ function hasLoaded() {
     return !(authorsArr === undefined || quotesArr === undefined || ratingJson === undefined);
 }
 
-/*
-[
-  {
-    "author": {
-      "author": "Kim Jong-il",
-      "id": 2
-    },
-    "checked": true,
-    "id": 1,
-    "quote": {
-      "author": {
-        "author": "Abraham Lincoln",
-        "id": 1
-      },
-      "id": 1,
-      "quote": "Frage nicht, was dein Land für dich tun kann, frage was du für dein Land tun kannst."
-    },
-    "rating": 0,
-    "showed": 198,
-    "voted": 118
-  }
- */
-
 function loadFiles() {
 
     if (hasLoaded()) {
@@ -61,7 +38,7 @@ function loadFiles() {
 }
 
 function addValToArr(val, arr) {
-    if (binarySearch(arr, val) === -1) {
+    if (binarySearch(arr, val.id) === -1) { //if the id of the val isn't already in the arr
         arr.push(val);
     }
 }
