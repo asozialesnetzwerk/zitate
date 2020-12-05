@@ -42,7 +42,6 @@ function loadFiles() {
         return;
     }
 
-    console.log(new Date());
     quotesApiGetRequest("wrongquotes", data => {
         authorsArr = [];
         quotesArr = [];
@@ -57,7 +56,6 @@ function loadFiles() {
         }
         authorsArr.sort((a, b) => a.id - b.id);
         quotesArr.sort((a, b) => a.id - b.id);
-        console.log(new Date());
         runCode();
     });
 }
@@ -157,7 +155,7 @@ function getParamFromURL(param, defaultValue) {
 }
 
 function quotesApiGetRequest(endPoint, callbackFunction) {
-    $.getJSON(quotesApi + endPoint, "", callbackFunction, "json");
+    $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(new Date().getTime().toString(16)), "", callbackFunction, "json");
 }
 
 function binarySearch(arr, toSearch) {

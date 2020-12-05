@@ -65,7 +65,7 @@ function runCode() {
     const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
 
     quoteText.text(theQuote);
-    quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
+    quoteText.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Zitat/' + " + ids[0] + ";");
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Autor/' + " + ids[1] + ";");
 
