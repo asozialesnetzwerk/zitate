@@ -6,8 +6,6 @@ const searchContainer = $(".search-container");
 const selectType = $(".select");
 const infoContainer = $(".info-container");
 
-text.text("");
-
 let id;
 
 const app = $.sammy(function() {
