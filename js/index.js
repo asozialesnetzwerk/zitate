@@ -187,7 +187,7 @@ function updateRatingFromURL() {
 
 updateRatingFromURL();
 
-function voteQuote(id, vote) {
+function voteQuote(vote) {
     if (typeof vote !== "number"
         || vote === 0
         || typeof id !== "string") {
@@ -201,20 +201,26 @@ function voteQuote(id, vote) {
             quote: ids[0],
             author: ids[1]
         }, function() {
-            updateData(() => ratingRequest(id, vote));
+            updateData(() => ratingRequest(vote));
         });
     } else {
-        ratingRequest(id, vote);
+        ratingRequest(vote);
     }
 }
 
-function ratingRequest(id, vote) { //only call this in voteQuote()
-    $.post(quotesApi + "wrongquotes/" + idJson[id], {
-        vote: vote
-    }, function() {
-        ratingJson[id] += vote;
-        runCode();
-    });
+let voted = {};
+function ratingRequest(vote) { //only call this in voteQuote()
+    if (vote !== voted[id]) {
+        voted[id] = vote;
+        $.post(quotesApi + "wrongquotes/" + idJson[id], {
+            vote: vote
+        }, function () {
+            ratingJson[id] += vote;
+            runCode();
+        });
+    } else {
+        alert("Du hast dieses falsche Zitat bereits mit " + vote + " bewertet");
+    }
 }
 
 ratingParam.change(function () {
