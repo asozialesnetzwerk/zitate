@@ -3,6 +3,7 @@ const quotesApi = "https://zitate.prapsschnalinen.de/api/";
 let authorsArr;
 let quotesArr;
 let ratingJson;
+let idJson;
 
 $(document).ready(function () {
     $(".select").niceSelect();
@@ -19,17 +20,26 @@ function loadFiles() {
         return;
     }
 
+    updateData();
+}
+
+function updateData() {
     quotesApiGetRequest("wrongquotes", data => {
         authorsArr = [];
         quotesArr = [];
         ratingJson = {};
-        for (const quote of data) {
+        idJson = {};
+        for (let i = 0; i < data.length; i++) {
+            const quote = data[i];
             const a = quote["author"];
             addValToArr(a, authorsArr);
             const q = quote["quote"];
             addValToArr(q, quotesArr);
             addValToArr(q["author"], authorsArr);
-            ratingJson[q.id + "-" + a.id] = quote["rating"];
+
+            const id = q.id + "-" + a.id;
+            ratingJson[id] = quote["rating"];
+            idJson[id] = i + 1;
         }
         authorsArr.sort((a, b) => a.id - b.id);
         quotesArr.sort((a, b) => a.id - b.id);
@@ -44,7 +54,7 @@ function addValToArr(val, arr) {
 }
 
 const getAuthorById = authorId => {
-    const a = authorsArr[authorId];
+    const a = authorsArr[authorId - 1];
     if (a.id == authorId) {
         return a;
     }
@@ -56,7 +66,7 @@ const getAuthorById = authorId => {
 };
 
 function getQuoteById(quoteId) {
-    const q = quotesArr[quoteId];
+    const q = quotesArr[quoteId - 1];
     if (q.id == quoteId) {
         return q;
     }
@@ -152,4 +162,25 @@ function binarySearch(arr, toSearch) {
             end = mid - 1;
     }
     return -1;
+}
+
+//TODO: Doesn't work lol
+function voteQuote(id, vote) {
+    console.log(encodeURIComponent("asozialesnetzwerk.github.io/zitate"));
+    if (vote === 0 || typeof vote !== "number") return;
+    vote = vote / Math.abs(vote);
+    if (typeof idJson[id] === "undefined") {
+        const ids = id.split("-");
+        $.post(quotesApi + "wrongquotes/?contributed_by=asozialesnetzwerk.github.io%2Fzitate&quote=" + ids[0] + "&author=" + ids[1],
+            function (data) {
+                alert("Data Loaded: " + data);
+            }
+        );
+    } else {
+        $.post(quotesApi + "wrongquotes/" + idJson[id] + "?vote=" + vote,
+            function (data) {
+                alert("Data Loaded: " + data);
+            }
+        );
+    }
 }
