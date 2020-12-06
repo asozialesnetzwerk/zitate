@@ -52,8 +52,6 @@ function addData(data, i) {
     const id = q.id + "-" + a.id;
     ratingJson[id] = quote["rating"];
 
-    console.log(data);
-
     idJson[id] = i + 1;
 }
 
