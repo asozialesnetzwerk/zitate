@@ -110,11 +110,13 @@ function getNewZitatUrl() {
 
     if (ratingParam === "smart") {
         const r = Math.floor(Math.random() * 30)
-        if (r === 1) {
+        if (r < 2) { // 0 - 1 → 2 → ~6,7%
             ratingParam = "n";
-        } else if (r < 13) {
+        } else if (r < 8) { // 2 - 7 → 6 → 20%
+            ratingParam = "unrated";
+        } else if (r < 15) { // 8 - 14 → 7 → ~23,3%
             ratingParam = "all";
-        } else {
+        } else { // 15 - 29 → 15 → 50%
             ratingParam = "w";
         }
     }
@@ -123,10 +125,11 @@ function getNewZitatUrl() {
         const keys = [];
         Object.keys(ratingJson).forEach((key, index) => {
             if (key !== id
-                && ((ratingParam === "w" && ratingJson[key] > 0)
+                && (ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
+                    || (ratingParam === "w" && ratingJson[key] > 0)
                     || (ratingParam === "n" && ratingJson[key] < 0)
                     || (ratingParam === "rated" && ratingJson[key] !== 0)
-                )) {
+            ) {
                 keys.push(key);
             }
         });
