@@ -20,31 +20,41 @@ function loadFiles() {
         return;
     }
 
-    updateData();
+    updateData(() => runCode());
 }
 
-function updateData() {
+function updateData(after) {
     quotesApiGetRequest("wrongquotes", data => {
         authorsArr = [];
         quotesArr = [];
         ratingJson = {};
         idJson = {};
         for (let i = 0; i < data.length; i++) {
-            const quote = data[i];
-            const a = quote["author"];
-            addValToArr(a, authorsArr);
-            const q = quote["quote"];
-            addValToArr(q, quotesArr);
-            addValToArr(q["author"], authorsArr);
-
-            const id = q.id + "-" + a.id;
-            ratingJson[id] = quote["rating"];
-            idJson[id] = i + 1;
+            addData(data[i], i);
         }
         authorsArr.sort((a, b) => a.id - b.id);
         quotesArr.sort((a, b) => a.id - b.id);
-        runCode();
+
+        if (typeof after === "function") {
+            after();
+        }
     });
+}
+
+function addData(data, i) {
+    const quote = data;
+    const a = quote["author"];
+    addValToArr(a, authorsArr);
+    const q = quote["quote"];
+    addValToArr(q, quotesArr);
+    addValToArr(q["author"], authorsArr);
+
+    const id = q.id + "-" + a.id;
+    ratingJson[id] = quote["rating"];
+
+    console.log(data);
+
+    idJson[id] = i + 1;
 }
 
 function addValToArr(val, arr) {
@@ -162,25 +172,4 @@ function binarySearch(arr, toSearch) {
             end = mid - 1;
     }
     return -1;
-}
-
-//TODO: Doesn't work lol
-function voteQuote(id, vote) {
-    console.log(encodeURIComponent("asozialesnetzwerk.github.io/zitate"));
-    if (vote === 0 || typeof vote !== "number") return;
-    vote = vote / Math.abs(vote);
-    if (typeof idJson[id] === "undefined") {
-        const ids = id.split("-");
-        $.post(quotesApi + "wrongquotes/?contributed_by=asozialesnetzwerk.github.io%2Fzitate&quote=" + ids[0] + "&author=" + ids[1],
-            function (data) {
-                alert("Data Loaded: " + data);
-            }
-        );
-    } else {
-        $.post(quotesApi + "wrongquotes/" + idJson[id] + "?vote=" + vote,
-            function (data) {
-                alert("Data Loaded: " + data);
-            }
-        );
-    }
 }

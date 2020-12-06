@@ -62,8 +62,6 @@ function runCode() {
     let theQuote =  "»" + getQuoteById(ids[0])["quote"]  + "«";
     const theAuthor = getAuthorById(ids[1])["author"];
 
-    const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
-
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Zitat/' + " + ids[0] + ";");
     quoteAuthor.text("- " + theAuthor);
@@ -73,6 +71,8 @@ function runCode() {
     $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
 
     quoteId.text(id);
+
+    const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
     if (rating !== oldRating) {
         quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x   ");
         if ( rating === 0) {
@@ -186,6 +186,36 @@ function updateRatingFromURL() {
 }
 
 updateRatingFromURL();
+
+function voteQuote(id, vote) {
+    if (typeof vote !== "number"
+        || vote === 0
+        || typeof id !== "string") {
+        return;
+    }
+    vote = vote / Math.abs(vote);
+    if (typeof (idJson[id]) === "undefined") {
+        const ids = id.split("-");
+        $.post(quotesApi + "wrongquotes", {
+            contributed_by: "asozialesnetzwerk.github.io/discord",
+            quote: ids[0],
+            author: ids[1]
+        }, function() {
+            updateData(() => ratingRequest(id, vote));
+        });
+    } else {
+        ratingRequest(id, vote);
+    }
+}
+
+function ratingRequest(id, vote) { //only call this in voteQuote()
+    $.post(quotesApi + "wrongquotes/" + idJson[id], {
+        vote: vote
+    }, function() {
+        ratingJson[id] += vote;
+        runCode();
+    });
+}
 
 ratingParam.change(function () {
     openPrivateUrl(getUrlWithRating(ratingParam.val()));
