@@ -52,10 +52,10 @@ function optimizeSearchParam(searchParam) {
 }
 function displayInfoText() {
     if (isAuthor(id)) {
-        searchAndDisplayResult(getText(id));
+        searchAndDisplayResult(getText(id).toLowerCase());
     } else { //author of the quote if it is a quote
         const authorOfQuote = getQuoteById(id.replace("-", ""))["author"]["author"];
-        searchAndDisplayResult(authorOfQuote);
+        searchAndDisplayResult(authorOfQuote.toLowerCase());
     }
 }
 
