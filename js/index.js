@@ -97,11 +97,11 @@ function runCode() {
 
 function getUrlWithId(value) {
     let rating = getRatingParam();
-    return getBaseUrl() + "#/" + value + (rating === "w" || rating === "" ? "" : "?rating=" + rating);
+    return getBaseUrl() + "#/" + value + (rating === "smart" || rating === "" ? "" : "?rating=" + rating);
 }
 
-function getUrlWithRating(value) {//w; all; rated; n
-    return getBaseUrl() + "#/" + id + (value === "w" || value === "" ? "" : "?rating=" + value);
+function getUrlWithRating(value) {//smart; w; all; rated; n
+    return getBaseUrl() + "#/" + id + (value === "smart" || value === "" ? "" : "?rating=" + value);
 }
 
 function getRandomZitatId() {
@@ -109,7 +109,18 @@ function getRandomZitatId() {
 }
 
 function getNewZitatUrl() {
-    const ratingParam = getRatingParam();
+    let ratingParam = getRatingParam();
+
+    if (ratingParam === "smart") {
+        const r = Math.floor(Math.random() * 30)
+        if (r === 1) {
+            ratingParam = "n";
+        } else if (r < 13) {
+            ratingParam = "all";
+        } else {
+            ratingParam = "w";
+        }
+    }
 
     if (ratingParam !== "all") {
         const keys = [];
@@ -118,7 +129,6 @@ function getNewZitatUrl() {
                 && ((ratingParam === "w" && ratingJson[key] > 0)
                     || (ratingParam === "n" && ratingJson[key] < 0)
                     || (ratingParam === "rated" && ratingJson[key] !== 0)
-                    || (ratingParam === "unrated" && ratingJson[key] === 0)
                 )) {
                 keys.push(key);
             }
@@ -163,16 +173,16 @@ function checkId() {
 }
 
 function getRatingParamFromURL(){
-    return getParamFromURL("rating", "w");
+    return getParamFromURL("rating", "smart");
 }
 
 function getRatingParam() {
     const urlRating = getRatingParamFromURL();
-    return urlRating === "w" ? ratingParam.val() : urlRating;
+    return urlRating === "smart" ? ratingParam.val() : urlRating;
 }
 
 function updateRatingFromURL() {
-    setSelection(ratingParam, getRatingParamFromURL(), "w");
+    setSelection(ratingParam, getRatingParamFromURL(), "smart");
 }
 
 updateRatingFromURL();
