@@ -1,9 +1,6 @@
 const quoteText = $(".quote-text");
 const quoteAuthor = $(".quote-author");
 
-quoteText.text("");
-quoteAuthor.text("");
-
 const ratingParam = $(".rating-param");
 const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
