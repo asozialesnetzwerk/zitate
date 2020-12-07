@@ -14,7 +14,6 @@ function hasLoaded() {
 }
 
 function loadFiles() {
-
     if (hasLoaded()) {
         runCode();
         return;
@@ -29,11 +28,10 @@ function updateData(after) {
         quotesArr = [];
         ratingJson = {};
         idJson = {};
-        for (let i = 0; i < data.length; i++) {
-            addData(data[i], i);
+        for (let item of data) {
+            addQuoteData(item);
         }
-        authorsArr.sort((a, b) => a.id - b.id);
-        quotesArr.sort((a, b) => a.id - b.id);
+        sortArrays();
 
         if (typeof after === "function") {
             after();
@@ -41,7 +39,12 @@ function updateData(after) {
     });
 }
 
-function addData(data, i) {
+function sortArrays() {
+    authorsArr.sort((a, b) => a.id - b.id);
+    quotesArr.sort((a, b) => a.id - b.id);
+}
+
+function addQuoteData(data) {
     const quote = data;
     const a = quote["author"];
     addValToArr(a, authorsArr);
@@ -52,11 +55,12 @@ function addData(data, i) {
     const id = q.id + "-" + a.id;
     ratingJson[id] = quote["rating"];
 
-    idJson[id] = i + 1;
+    idJson[id] = data.id;
 }
 
 function addValToArr(val, arr) {
-    if (binarySearch(arr, val.id) === -1) { //if the id of the val isn't already in the arr
+    if (typeof val !== "undefined" //if the val is defined
+        && binarySearch(arr, val.id) === -1) { //if the id of the val isn't already in the arr
         arr.push(val);
     }
 }

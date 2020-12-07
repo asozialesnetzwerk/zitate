@@ -109,16 +109,17 @@ function getNewZitatUrl() {
     let ratingParam = getRatingParam();
 
     if (ratingParam === "smart") {
-        const r = Math.floor(Math.random() * 30)
-        if (r < 2) { // 0 - 1 → 2 → ~6,7%
+        const r = Math.floor(Math.random() * 28)
+        if (r < 2) { // 0 - 1 → 2 → ~7.14%
             ratingParam = "n";
-        } else if (r < 8) { // 2 - 7 → 6 → 20%
+        } else if (r < 9) { // 2 - 8 → 7 → 25%
             ratingParam = "unrated";
-        } else if (r < 15) { // 8 - 14 → 7 → ~23,3%
+        } else if (r < 15) { // 9 - 14 → 6 → ~21.43%
             ratingParam = "all";
-        } else { // 15 - 29 → 15 → 50%
+        } else { // 15 - 27 → 13 → 46.43%
             ratingParam = "w";
         }
+        console.log(ratingParam);
     }
 
     if (ratingParam !== "all") {
@@ -139,6 +140,7 @@ function getNewZitatUrl() {
         }
     }
 
+    console.log("random");
     let newId;
     do {
         newId = getRandomZitatId();
@@ -200,8 +202,11 @@ function voteQuote(vote) {
             contributed_by: "asozialesnetzwerk.github.io/discord",
             quote: ids[0],
             author: ids[1]
-        }, function() {
-            updateData(() => ratingRequest(vote));
+        }, function(data) {
+            console.log(data);
+            addQuoteData(data);
+            sortArrays();
+            ratingRequest(vote);
         });
     } else {
         ratingRequest(vote);
@@ -214,8 +219,9 @@ function ratingRequest(vote) { //only call this in voteQuote()
         voted[id] = vote;
         $.post(quotesApi + "wrongquotes/" + idJson[id], {
             vote: vote
-        }, function () {
-            ratingJson[id] += vote;
+        }, function (data) {
+            addQuoteData(data); //updates quote data
+            sortArrays();
             runCode();
         });
     } else {
