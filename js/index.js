@@ -93,7 +93,7 @@ function runCode() {
 }
 
 function getUrlWithId(value) {
-    let rating = getRatingParam();
+    let rating = getRatingParamFromURL();
     return getBaseUrl() + "#/" + value + (rating === "smart" || rating === "" ? "" : "?rating=" + rating);
 }
 
@@ -106,7 +106,7 @@ function getRandomZitatId() {
 }
 
 function getNewZitatUrl() {
-    let ratingParam = getRatingParam();
+    let ratingParam = getRatingParamFromURL();
 
     if (ratingParam === "smart") {
         const r = Math.floor(Math.random() * 28)
@@ -126,15 +126,16 @@ function getNewZitatUrl() {
         const keys = [];
         Object.keys(ratingJson).forEach((key, index) => {
             if (key !== id
-                && (ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
+                && (
+                    (ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
                     || (ratingParam === "w" && ratingJson[key] > 0)
                     || (ratingParam === "n" && ratingJson[key] < 0)
                     || (ratingParam === "rated" && ratingJson[key] !== 0)
-            ) {
+                )) {
                 keys.push(key);
             }
         });
-        
+
         if (keys.length > 0) {
             return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
         }
@@ -176,11 +177,6 @@ function checkId() {
 
 function getRatingParamFromURL(){
     return getParamFromURL("rating", "smart");
-}
-
-function getRatingParam() {
-    const urlRating = getRatingParamFromURL();
-    return urlRating === "smart" ? ratingParam.val() : urlRating;
 }
 
 function updateRatingFromURL() {

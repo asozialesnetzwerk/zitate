@@ -149,8 +149,8 @@ function openPrivateUrl(url) {
 }
 
 function getParamFromURL(param, defaultValue) {
-    let results = new RegExp("[\?&]" + param + "=([^&#]*)").exec(window.location.href);
-    return results === null ? defaultValue : results[1];
+    let results = new RegExp("[\?&]" + param + "=([^&#]*)").exec(getUrl());
+    return isNullOrUndefined(results) ? defaultValue : results[1];
 }
 
 function quotesApiGetRequest(endPoint, callbackFunction) {
