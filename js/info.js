@@ -6,8 +6,6 @@ const searchContainer = $(".search-container");
 const selectType = $(".select");
 const infoContainer = $(".info-container");
 
-text.text("");
-
 let id;
 
 const app = $.sammy(function() {
@@ -52,11 +50,19 @@ function optimizeSearchParam(searchParam) {
         .replace(/ein[a-z]{0,2}\s?/, " ")
         .replace(/\s+/g, " ");
 }
+function displayInfoText() {
+    if (isAuthor(id)) {
+        searchAndDisplayResult(getText(id).toLowerCase());
+    } else { //author of the quote if it is a quote
+        const authorOfQuote = getQuoteById(id.replace("-", ""))["author"]["author"];
+        searchAndDisplayResult(authorOfQuote.toLowerCase());
+    }
+}
 
 let lastSearch = -1;
 let lastSearchDisplayed = false;
 //more info: https://duckduckgo.com/api
-function displaySearchResult(searchParam) {
+function searchAndDisplayResult(searchParam) {
     if (searchParam === undefined || !windowIsLandscape()) {
         showSearch(false);
     } else if (lastSearch === searchParam) {
@@ -68,11 +74,11 @@ function displaySearchResult(searchParam) {
                 lastSearchDisplayed = false;
                 const newSearchParam = optimizeSearchParam(searchParam);
                 if (newSearchParam !== searchParam) {
-                    displaySearchResult(newSearchParam);
+                    searchAndDisplayResult(newSearchParam);
                 }
             } else {
                 const elementPoweredBy = document.createElement("strong");
-                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/DuckDuckGo'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
+                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/" + searchParam + "'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
                 searchContainer.append(elementPoweredBy);
 
                 const element = document.createElement("p");
@@ -96,7 +102,7 @@ function displaySearchResult(searchParam) {
 }
 
 function getText(id) {
-    return isAuthor(id) ? authorsArr[id.replace("-", "")] : quotesArr[id.replace("-", "")];
+    return isAuthor(id) ? getAuthorById(id.replace("-", ""))["author"] : '"' + getQuoteById(id.replace("-", ""))["quote"]+ '"';
 }
 
 function getFilter(isAuthor) {
@@ -127,7 +133,7 @@ function getRandomUrl(isAuthor) {
 function getFalschesZitat(zitatId) {
     let ids = zitatId.split("-");
     if (ids.length < 2 || !hasLoaded()) return "";
-    return quotesArr[ids[0]] + "<br>  - " + authorsArr[ids[1]];
+    return '"' + getQuoteById(ids[0])["quote"] + "\"<br>  - " + getAuthorById(ids[1])["author"];
 }
 
 function addToList(text) {
@@ -172,25 +178,31 @@ function runCode() {
     zitatIdArr = keys.filter(s => regexId.test(s)) //filters all which contain author/quote
         .sort((a, b) => ratingJson[b] - ratingJson[a]); //sort them top to bottom
 
-    let thisText = getText(id);
-    displaySearchResult(thisText);
-    thisText = "<a href='https://ddg.gg/" + encodeURI(thisText) + "'>" + thisText + "</a>";
+    displayInfoText();
 
     if (zitatIdArr.length === 0) {
         list.children().remove();
         text.text("Es wurde kein bewertetes falsches Zitat mit folgendem " + getFilter(isAuthor(id)) + " gefunden: ");
-        text.append(thisText);
+        text.append(getSearchHyperLink(getText(id)));
         return;
     } else {
         text.text("Hier findest du alle bewerteten falschen Zitate mit folgendem " + getFilter(isAuthor(id)) + ": ");
-        text.append(thisText);
+        text.append(getSearchHyperLink(getText(id)));
+
+        if (!isAuthor(id)) {
+            text.append(" von " + getSearchHyperLink(getQuoteById(id.replace("-", ""))["author"]["author"]));
+        }
 
         if (zitatIdArr.length > 1) {
-            text.append("<img class=\"button-img button-img-no-rotation reverse-order\" src=\"../css/reverse-order.svg\" onclick=\"reverseOrder()\" alt=\"\">");
+            text.append("<img class='button-img button-img-no-rotation reverse-order' src='../css/reverse-order.svg\' onclick='reverseOrder()' alt='Reihenfolge umkehren.'>");
         }
     }
 
     displayList();
+}
+
+function getSearchHyperLink(toSearch) {
+    return "<a href='https://ddg.gg/" + encodeURI(toSearch) + "'>" + toSearch + "</a>";
 }
 
 selectType.change(function () {
@@ -199,7 +211,7 @@ selectType.change(function () {
 
 window.addEventListener("orientationchange", function() {
     if (windowIsLandscape()) {
-        displaySearchResult(getText(id));
+        getText(id);
     }
 }, false);
 

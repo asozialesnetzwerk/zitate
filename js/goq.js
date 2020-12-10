@@ -58,14 +58,14 @@ function displayQuote() {
     }
     if (isNullOrUndefined(authorSelect.val())) {
         console.log("undefined: " + ids[1]);
-        const name = authorsArr[ids[1]];
+        const name = getAuthorById(ids[1])["author"];
         console.log("name = " + name);
         if (isNullOrUndefined(name)) {
             authorSelect.val("x").trigger("change");
         }
         //cuz names only get added to the list once:
         for (let i = 0; i < authorsArr.length; i++) {
-            if (name === authorsArr[i]) {
+            if (name === authorsArr[i]["author"]) {
                 authorSelect.val(i.toString()).trigger("change");
                 ids[1] = i.toString();
                 break;
@@ -79,12 +79,12 @@ function displayQuote() {
     const quoteIsSelected = preSelected === quote;
     changeVisibility(quoteSelectContainer, !quoteIsSelected);
     changeVisibility(quoteText, quoteIsSelected);
-    quoteText.text(quoteIsSelected ? quotesArr[ids[0]] : "");
+    quoteText.text(quoteIsSelected ? getQuoteById(ids[0])["quote"] : "");
 
     const authorIsSelected = preSelected === author;
     changeVisibility(authorSelectContainer, !authorIsSelected);
     changeVisibility(authorText, authorIsSelected);
-    authorText.text(authorIsSelected ? "- " + authorsArr[ids[1]] : "");
+    authorText.text(authorIsSelected ? "- " + getAuthorById(ids[1])["author"] : "");
 
     nextQuote.attr("href", getRandomUrl());
     tweetButton.attr("href", getBaseUrl() + getId());
@@ -108,8 +108,8 @@ function updateUrl() {
 }
 
 function runCode() {
-    for (let i = 0; i < quotesArr.length; i++) {
-        quoteSelect.append(new Option(quotesArr[i], i.toString(), false, false));
+    for (let q of quotesArr) {
+        quoteSelect.append(new Option(q["quote"], q.id, false, false));
     }
     quoteSelect.append(new Option("Wähle ein Zitat :)", "x", true, true));
     if (preSelected === quote) {
@@ -117,11 +117,11 @@ function runCode() {
     }
     ids[0] = quoteSelect.val();
 
-    let authors = "\n";
-    for (let i = 0; i < authorsArr.length; i++) {
-        if (authors.indexOf("\n" + authorsArr[i] + "\n") < 0) {
-            authorSelect.append(new Option(authorsArr[i], i.toString(), false, false));
-            authors += authorsArr[i] + "\n";
+    let authors = [];
+    for (let a of authorsArr) {
+        if (!authors.includes(a["author"])) {
+            authorSelect.append(new Option(a["author"], a.id, false, false));
+            authors.push(a["author"]);
         }
     }
     authorSelect.append(new Option("Wähle einen Autor :)", "x", true, true));

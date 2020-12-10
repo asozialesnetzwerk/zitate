@@ -1,9 +1,6 @@
 const quoteText = $(".quote-text");
 const quoteAuthor = $(".quote-author");
 
-quoteText.text("");
-quoteAuthor.text("");
-
 const ratingParam = $(".rating-param");
 const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
@@ -23,6 +20,7 @@ const app = $.sammy(function() {
         updateRatingFromURL();
         runCode();
     });
+
 
     this.get("/:id", function() {
         id = this.params["id"];
@@ -57,15 +55,12 @@ function runCode() {
     if (!hasLoaded() || !checkId()) return;
 
     const ids = id.split("-");
-    
-    let theQuote = quotesArr[ids[0]] ;
-    const theAuthor = authorsArr[ids[1]];
-    theQuote = "»" + theQuote.substr(1, theQuote.lastIndexOf('"') - 1) + "«";
 
-    const rating = ((ratingJson[id] === undefined) ? 0 : ratingJson[id]);
+    let theQuote =  "»" + getQuoteById(ids[0])["quote"]  + "«";
+    const theAuthor = getAuthorById(ids[1])["author"];
 
     quoteText.text(theQuote);
-    quoteText.attr("onClick", "window.open('https://ddg.gg/?q=" +  encodeURIComponent(theQuote) + "')");
+    quoteText.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Zitat/' + " + ids[0] + ";");
     quoteAuthor.text("- " + theAuthor);
     quoteAuthor.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Autor/' + " + ids[1] + ";");
 
@@ -73,6 +68,8 @@ function runCode() {
     $("head").append("<meta property='og:description' content='" + theQuote + "\n- " + theAuthor + "'>" );
 
     quoteId.text(id);
+
+    const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
     if (rating !== oldRating) {
         quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x   ");
         if ( rating === 0) {
@@ -96,12 +93,12 @@ function runCode() {
 }
 
 function getUrlWithId(value) {
-    let rating = getRatingParam();
-    return getBaseUrl() + "#/" + value + (rating === "w" || rating === "" ? "" : "?rating=" + rating);
+    let rating = getRatingParamFromURL();
+    return getBaseUrl() + "#/" + value + (rating === "smart" || rating === "" ? "" : "?rating=" + rating);
 }
 
-function getUrlWithRating(value) {//w; all; rated; n
-    return getBaseUrl() + "#/" + id + (value === "w" || value === "" ? "" : "?rating=" + value);
+function getUrlWithRating(value) {//smart; w; all; rated; n
+    return getBaseUrl() + "#/" + id + (value === "smart" || value === "" ? "" : "?rating=" + value);
 }
 
 function getRandomZitatId() {
@@ -109,21 +106,48 @@ function getRandomZitatId() {
 }
 
 function getNewZitatUrl() {
-    const paramRating = getRatingParam();
-    if (paramRating === "all") {
-        let newId;
-        do {
-            newId = getRandomZitatId();
-        } while (newId === id);
-        return getUrlWithId(newId);
+    let ratingParam = getRatingParamFromURL();
+
+    if (ratingParam === "smart") {
+        const r = Math.floor(Math.random() * 28)
+        if (r < 2) { // 0 - 1 → 2 → ~7.14%
+            ratingParam = "n";
+        } else if (r < 9) { // 2 - 8 → 7 → 25%
+            ratingParam = "unrated";
+        } else if (r < 15) { // 9 - 14 → 6 → ~21.43%
+            ratingParam = "all";
+        } else { // 15 - 27 → 13 → 46.43%
+            ratingParam = "w";
+        }
+        console.log(ratingParam);
     }
-    const keys = Object.keys(ratingJson);
-    let z;
+
+    if (ratingParam !== "all") {
+        const keys = [];
+        Object.keys(ratingJson).forEach((key, index) => {
+            if (key !== id
+                && (
+                    (ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
+                    || (ratingParam === "w" && ratingJson[key] > 0)
+                    || (ratingParam === "n" && ratingJson[key] < 0)
+                    || (ratingParam === "rated" && ratingJson[key] !== 0)
+                )) {
+                keys.push(key);
+            }
+        });
+
+        if (keys.length > 0) {
+            return getUrlWithId(keys[Math.floor(Math.random() * keys.length)]);
+        }
+    }
+
+    console.log("random");
+    let newId;
     do {
-        z = Math.floor(Math.random() * keys.length);
-    } while ((ratingJson[keys[z]] <= 0 && paramRating === "w") || (ratingJson[keys[z]] >= 0 && paramRating === "n") || (ratingJson[keys[z]] === 0 && paramRating === "rated") || (keys[z] === id)); //Bis richtiges Zitat gefunden
-    
-    return getUrlWithId(keys[z]);
+        newId = getRandomZitatId();
+    } while (newId === id);
+
+    return getUrlWithId(newId);
 }
 
 function isValidId(val) {
@@ -152,19 +176,54 @@ function checkId() {
 }
 
 function getRatingParamFromURL(){
-    return getParamFromURL("rating", "w");
-}
-
-function getRatingParam() {
-    const urlRating = getRatingParamFromURL();
-    return urlRating === "w" ? ratingParam.val() : urlRating;
+    return getParamFromURL("rating", "smart");
 }
 
 function updateRatingFromURL() {
-    setSelection(ratingParam, getRatingParamFromURL(), "w");
+    setSelection(ratingParam, getRatingParamFromURL(), "smart");
 }
 
 updateRatingFromURL();
+
+function voteQuote(vote) {
+    if (typeof vote !== "number"
+        || vote === 0
+        || typeof id !== "string") {
+        return;
+    }
+    vote = vote / Math.abs(vote);
+    if (typeof (idJson[id]) === "undefined") {
+        const ids = id.split("-");
+        $.post(quotesApi + "wrongquotes", {
+            contributed_by: "asozialesnetzwerk.github.io/discord",
+            quote: ids[0],
+            author: ids[1]
+        }, function(data) {
+            console.log(data);
+            addQuoteData(data);
+            sortArrays();
+            ratingRequest(vote);
+        });
+    } else {
+        ratingRequest(vote);
+    }
+}
+
+let voted = {};
+function ratingRequest(vote) { //only call this in voteQuote()
+    if (vote !== voted[id]) {
+        voted[id] = vote;
+        $.post(quotesApi + "wrongquotes/" + idJson[id], {
+            vote: vote
+        }, function (data) {
+            addQuoteData(data); //updates quote data
+            sortArrays();
+            runCode();
+        });
+    } else {
+        alert("Du hast dieses falsche Zitat bereits mit " + vote + " bewertet");
+    }
+}
 
 ratingParam.change(function () {
     openPrivateUrl(getUrlWithRating(ratingParam.val()));

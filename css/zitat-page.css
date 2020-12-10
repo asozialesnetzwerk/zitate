@@ -148,3 +148,44 @@ div.quote-container:before {
     transform: scale(1.08) rotate(90deg);
     -webkit-filter: drop-shadow(3px -3px 2px rgba(139, 0, 0, 0.5));
 }
+
+.vote-container {
+    margin: 0 auto 40px;
+}
+
+.vote {
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    background-color: #0e0e0e;
+    color: #fdfdfd;
+    width: 42%;
+}
+
+.vote:active {
+    border-width: 1px;
+    border-color: whitesmoke;
+}
+
+#upvote {
+    border-color: rgb(0, 200, 0);
+    margin-left: auto;
+}
+
+#upvote:hover {
+    border-color: rgb(20, 255, 20);
+    transform: scale(1.005);
+}
+
+#downvote {
+    border-color: rgb(200, 0, 0);
+    margin-right: auto;
+}
+
+#downvote:hover {
+    border-color: rgb(255, 20, 20);
+    transform: scale(1.005);
+}

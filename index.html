@@ -15,55 +15,61 @@
         <link rel="stylesheet" href="css/zitat-page.css">
     </head>
     <body>
-        <div id="quote-important" class="quote-container">
-            <div id="bottom">
-                <div class="quote-id"></div>
-                <div class="buttons" data-html2canvas-ignore="true">
-                    <a class="download tooltip">
-                        <img class="download-img button-img" src="css/arrow.svg" alt="">
-                        <div class="tooltip-top-text tooltip-text">Downloade das Zitat als Bild.</div>
-                    </a>
-                    <a class="tweet tooltip" href="">
-                        <img class="tweet-img button-img" src="css/arrow.svg" alt="">
-                        <div class="tooltip-top-text  tooltip-text">Teile das Zitat auf Twitter.</div>
-                    </a>
-                    <a class="get-quote tooltip" href="">
-                        <img class="get-quote-img button-img button-img-no-rotation" src="css/arrow.svg" alt="">
-                        <div class="tooltip-top-text  tooltip-text">Gehe zum nächsten Zitat.</div>
-                    </a>
+        <div>
+            <div id="quote-important" class="quote-container">
+                <div id="bottom">
+                    <div class="quote-id"></div>
+                    <div class="buttons" data-html2canvas-ignore="true">
+                        <a class="download tooltip">
+                            <img class="download-img button-img" src="css/arrow.svg" alt="Zitat downloaden.">
+                            <div class="tooltip-top-text tooltip-text">Downloade das Zitat als Bild.</div>
+                        </a>
+                        <a class="tweet tooltip" href="">
+                            <img class="tweet-img button-img" src="css/arrow.svg" alt="Zitat teilen.">
+                            <div class="tooltip-top-text  tooltip-text">Teile das Zitat auf Twitter.</div>
+                        </a>
+                        <a class="get-quote tooltip" href="">
+                            <img class="get-quote-img button-img button-img-no-rotation" alt="Nächstes Zitat" src="css/arrow.svg">
+                            <div class="tooltip-top-text  tooltip-text">Gehe zum nächsten Zitat.</div>
+                        </a>
+                    </div>
+                </div>
+                <div id="top">
+                    <noscript>»Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.«<br>- Batman zu Robin</noscript>
+                    <div class="quote-text" onClick=""></div>
+                    <div class="quote-author" onClick=""></div>
+                </div>
+
+                <div onClick='window.open("http://asozialesnetzwerk.github.io/discord");' class="rating-container">
+                    <div class="quote-rating">
+                        <div class="rating-text"></div>
+                        <img class="rating-image witzig invisible" src="css/StempelWitzig.svg" alt=">Witzig-Stempel"/>
+                        <img class="rating-image nicht-witzig invisible" src="css/StempelNichtWitzig.svg" alt="Nicht-Witzig-Stempel"/>
+                    </div>
                 </div>
             </div>
-            <div id="top">
-                <div class="tooltip">
-                    <div class="quote-text" onClick="">Wer Javascipt nicht aktiviert, darf unseren Service nicht nutzen.</div>
-                    <div class="tooltip-bottom-text tooltip-text">Klicke hier um nach diesem Zitat zu suchen.</div>
-                </div>
-                <div class="quote-author" onClick="">- Batman zu Robin</div>
-            </div>
-            
-            <div onClick='window.open("http://asozialesnetzwerk.github.io/discord");' class="rating-container">
-                <div class="quote-rating">
-                    <div class="rating-text"></div>
-                    <img class="rating-image witzig invisible" src="css/StempelWitzig.svg"/>
-                    <img class="rating-image nicht-witzig invisible" src="css/StempelNichtWitzig.svg"/>
-                </div>
+
+            <!--TODO: Make this prettier:-->
+            <div class="vote-container">
+                <input id="upvote" class="vote" type="button" onclick="voteQuote(1)" value="Witzig!">
+                <input id="downvote" class="vote" type="button" onclick="voteQuote(-1)" value="Nicht witzig!">
+
+                <a class="tooltip" href="https://zitate.prapsschnalinen.de/einreichen">
+                    <img class="button-img plus-img" src="css/plus.svg" alt="Zitat hinzufügen.">
+                    <div class="tooltip-top-text tooltip-text">Füge neues Zitat hinzu.</div>
+                </a>
             </div>
         </div>
-        
-        <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
-        
-        <select class="rating-param select">
-            <option value="w" class="selected">witzig</option>
-            <option value="n">nicht witzig</option>
-            <option value="rated">rated</option>
-            <option value="all">all</option>
-        </select>
 
-        <script>
-            const ratingSource = "bewertung_zitate.json";
-            const authorsSource = "namen.txt";
-            const quotesSource = "zitate.txt";
-        </script>
+        <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
+
+        <select class="rating-param select">
+            <option value="smart" class="selected">Smart</option>
+            <option value="w">Witzig</option>
+            <option value="n">Nicht witzig</option>
+            <option value="rated">Bewertet</option>
+            <option value="all">Alle</option>
+        </select>
 
         <script src="js/html2canvas.js"></script>
         <script src="js/jquery.nice-select.js"></script>
