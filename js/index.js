@@ -102,7 +102,7 @@ function getUrlWithRating(value) {//smart; w; all; rated; n
 }
 
 function getRandomZitatId() {
-    return getRandomQuote() + "-" + getRandomAuthor();
+    return getRandomQuoteId() + "-" + getRandomAuthorId();
 }
 
 function getNewZitatUrl() {
@@ -155,7 +155,7 @@ function isValidId(val) {
         if (id_regex.test(val)) {
             if (hasLoaded()) {
                 const ids = val.split("-");
-                return ids[0] < quotesArr.length && ids[1] < authorsArr.length;
+                return !isNullOrUndefined(getQuoteById(ids[0])) && !isNullOrUndefined(getAuthorById(ids[1]));
             } else {
                 return true;
             }

@@ -127,7 +127,7 @@ function getUrlWithIdAndFilter(id, filter) {
 
 function getRandomUrl(isAuthor) {
     isAuthor = isAuthor === undefined ? Math.random() >= 0.5 : isAuthor;
-    return getInfoUrl() + getFilter(isAuthor) + "/" + Math.floor(Math.random() * (isAuthor ? authorsArr.length : quotesArr.length));
+    return getInfoUrl() + getFilter(isAuthor) + "/" + (isAuthor ? getRandomAuthorId() : getRandomQuoteId());
 }
 
 function getFalschesZitat(zitatId) {

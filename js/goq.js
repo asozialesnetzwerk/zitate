@@ -28,9 +28,9 @@ const app = $.sammy(function() {
         ids[1] = idsParam[1] === "" || idsParam[1] === null || idsParam[1] === "null" ? "x" : idsParam[1];
 
         if (preSelected === quote && ids[0] === "x") {
-            ids[0] = getRandomQuote().toString();
+            ids[0] = getRandomQuoteId().toString();
         } else if (preSelected === author && ids[1] === "x") {
-            ids[1] = getRandomQuote().toString();
+            ids[1] = getRandomQuoteId().toString();
         }
 
         if (quoteSelect.val() !== ids[0]) {
@@ -64,8 +64,9 @@ function displayQuote() {
             authorSelect.val("x").trigger("change");
         }
         //cuz names only get added to the list once:
-        for (let i = 0; i < authorsArr.length; i++) {
-            if (name === authorsArr[i]["author"]) {
+        const authors = Object.values(authorsJson);
+        for (let i = 0; i < authors.length; i++) {
+            if (name === authors[i]["author"]) {
                 authorSelect.val(i.toString()).trigger("change");
                 ids[1] = i.toString();
                 break;
@@ -93,9 +94,9 @@ function displayQuote() {
 function getRandomUrl() {
     let url = getBaseUrl() + "goq/#/";
     if (preSelected === quote) {
-        url += getRandomQuote() + "-x";
+        url += getRandomQuoteId() + "-x";
     } else if (preSelected === author) {
-        url += "x-" + getRandomAuthor();
+        url += "x-" + getRandomAuthorId();
     } else {
         url += "x-x";
     }
@@ -108,17 +109,17 @@ function updateUrl() {
 }
 
 function runCode() {
-    for (let q of quotesArr) {
+    for (let q of Object.values(quotesJson)) {
         quoteSelect.append(new Option(q["quote"], q.id, false, false));
     }
     quoteSelect.append(new Option("Wähle ein Zitat :)", "x", true, true));
     if (preSelected === quote) {
-        quoteSelect.val(getRandomQuote().toString());
+        quoteSelect.val(getRandomQuoteId().toString());
     }
     ids[0] = quoteSelect.val();
 
     let authors = [];
-    for (let a of authorsArr) {
+    for (let a of Object.values(authorsJson)) {
         if (!authors.includes(a["author"])) {
             authorSelect.append(new Option(a["author"], a.id, false, false));
             authors.push(a["author"]);
@@ -126,7 +127,7 @@ function runCode() {
     }
     authorSelect.append(new Option("Wähle einen Autor :)", "x", true, true));
     if (preSelected === author) {
-        authorSelect.val(getRandomAuthor().toString());
+        authorSelect.val(getRandomAuthorId().toString());
     }
     ids[1] = authorSelect.val();
 
@@ -164,7 +165,7 @@ $(document).ready(function() {
 
             if (preSelected === quote) {
                 if (quoteSelect.val() === "x") {
-                    quoteSelect.val(getRandomQuote()).trigger("change");
+                    quoteSelect.val(getRandomQuoteId()).trigger("change");
                 }
             } /*else {
                 ids[0] = "x";
@@ -172,7 +173,7 @@ $(document).ready(function() {
 
             if (preSelected === author) {
                 if (authorSelect.val() === "x") {
-                    authorSelect.val(getRandomAuthor()).trigger("change");
+                    authorSelect.val(getRandomAuthorId()).trigger("change");
                 }
             } /*else {
                 ids[1] = "x";

@@ -1,7 +1,7 @@
 const quotesApi = "https://zitate.prapsschnalinen.de/api/";
 
-let authorsArr;
-let quotesArr;
+let authorsJson;
+let quotesJson;
 let ratingJson;
 let idJson;
 
@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 function hasLoaded() {
-    return !(authorsArr === undefined || quotesArr === undefined || ratingJson === undefined);
+    return !(authorsJson === undefined || quotesJson === undefined || ratingJson === undefined);
 }
 
 function loadFiles() {
@@ -23,16 +23,21 @@ function loadFiles() {
 }
 
 function updateData(after) {
-    quotesApiGetRequest("wrongquotes", data => {
-        authorsArr = [];
-        quotesArr = [];
-        ratingJson = {};
-        idJson = {};
-        for (let item of data) {
-            addQuoteData(item);
-        }
-        sortArrays();
+    authorsJson = {};
+    quotesJson = {};
+    ratingJson = {};
+    idJson = {};
 
+    let time = window.performance.now();
+
+    const promises = [];
+
+    promises.push(quotesApiGetRequest("wrongquotes"));
+    promises.push(quotesApiGetRequest("quotes"));
+    promises.push(quotesApiGetRequest("authors"));
+
+    Promise.all(promises).then(() => {
+        console.log("requested data from quotes api in " + (window.performance.now() - time) + "ms");
         if (typeof after === "function") {
             after();
         }
@@ -40,53 +45,57 @@ function updateData(after) {
 }
 
 function sortArrays() {
-    authorsArr.sort((a, b) => a.id - b.id);
-    quotesArr.sort((a, b) => a.id - b.id);
+    authorsJson.sort((a, b) => a.id - b.id);
+    quotesJson.sort((a, b) => a.id - b.id);
 }
 
-function addQuoteData(data) {
-    const quote = data;
-    const a = quote["author"];
-    addValToArr(a, authorsArr);
-    const q = quote["quote"];
-    addValToArr(q, quotesArr);
-    addValToArr(q["author"], authorsArr);
+function handleQuoteApiData(data) {
+    if (typeof data === "object") {
+        if (Array.isArray(data)) {
+            for (let item of data) {
+                handleQuoteApiData(item);
+            }
+            return;
+        } else {
+            if (typeof data["rating"] === "undefined") {
+                if (typeof data["quote"] === "undefined") { //is not quote
+                    if (typeof data["author"] !== "undefined") { //is author
+                        authorsJson[data.id] = data;
+                        return;
+                    }
+                } else { //is quote
+                    quotesJson[data.id] = data;
+                    return;
+                }
+            } else { //is wrong quote
+                const a = data["author"];
+                const q = data["quote"];
 
-    const id = q.id + "-" + a.id;
-    ratingJson[id] = quote["rating"];
+                const id = q.id + "-" + a.id;
+                ratingJson[id] = data["rating"];
 
-    idJson[id] = data.id;
+                idJson[id] = data.id;
+
+                if (typeof a["author"] !== "undefined") {
+                    handleQuoteApiData(a);
+                }
+                if (typeof q["quote"] !== "undefined") {
+                    handleQuoteApiData(q);
+                }
+                return;
+            }
+        }
+    }
+    console.log("invalid package")
+    console.log(data);
 }
 
-function addValToArr(val, arr) {
-    if (typeof val !== "undefined" //if the val is defined
-        && binarySearch(arr, val.id) === -1) { //if the id of the val isn't already in the arr
-        arr.push(val);
-    }
+function getAuthorById(authorId) {
+    return authorsJson[authorId];
 }
-
-const getAuthorById = authorId => {
-    const a = authorsArr[authorId - 1];
-    if (a.id == authorId) {
-        return a;
-    }
-    const index = binarySearch(authorsArr, authorId);
-    if (index === -1) {
-        return undefined;
-    }
-    return authorsArr[index];
-};
 
 function getQuoteById(quoteId) {
-    const q = quotesArr[quoteId - 1];
-    if (q.id == quoteId) {
-        return q;
-    }
-    const index = binarySearch(quotesArr, quoteId);
-    if (index === -1) {
-        return undefined;
-    }
-    return quotesArr[index];
+    return quotesJson[quoteId];
 }
 
 function changeVisibility(element, visible) {
@@ -136,12 +145,14 @@ function getBaseUrl() {
     return url;
 }
 
-function getRandomQuote() {
-    return quotesArr[Math.floor(quotesArr.length * Math.random())].id;
+function getRandomQuoteId() {
+    const keys = Object.keys(quotesJson);
+    return keys[Math.floor(keys.length * Math.random())];
 }
 
-function getRandomAuthor() {
-    return authorsArr[Math.floor(authorsArr.length * Math.random())].id;
+function getRandomAuthorId() {
+    const keys = Object.keys(authorsJson);
+    return keys[Math.floor(keys.length * Math.random())];
 }
 
 function openPrivateUrl(url) {
@@ -153,25 +164,11 @@ function getParamFromURL(param, defaultValue) {
     return isNullOrUndefined(results) ? defaultValue : results[1];
 }
 
-function quotesApiGetRequest(endPoint, callbackFunction) {
-    $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(new Date().getTime().toString(16)), "", callbackFunction, "json");
-}
-
-function binarySearch(arr, toSearch) {
-    let start = 0;
-    let end = arr.length - 1;
-    // Iterate while start not meets end
-    while (start <= end) {
-        // Find the mid index
-        let mid = Math.floor((start + end) / 2);
-        // If element is present at mid, return the position
-        if (arr[mid].id == toSearch)
-            return mid;
-        // Else look in left or right half accordingly
-        else if (arr[mid].id < toSearch)
-            start = mid + 1;
-        else
-            end = mid - 1;
-    }
-    return -1;
+function quotesApiGetRequest(endPoint) {
+    return new Promise(resolve => {
+        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(new Date().getTime().toString(16)), "", data => {
+            handleQuoteApiData(data);
+            resolve();
+        }, "json");
+    });
 }
