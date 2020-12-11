@@ -200,8 +200,7 @@ function voteQuote(vote) {
             author: ids[1]
         }, function(data) {
             console.log(data);
-            addQuoteData(data);
-            sortArrays();
+            handleQuoteApiData(data);
             ratingRequest(vote);
         });
     } else {
@@ -216,8 +215,7 @@ function ratingRequest(vote) { //only call this in voteQuote()
         $.post(quotesApi + "wrongquotes/" + idJson[id], {
             vote: vote
         }, function (data) {
-            addQuoteData(data); //updates quote data
-            sortArrays();
+            handleQuoteApiData(data); //updates quote data
             runCode();
         });
     } else {

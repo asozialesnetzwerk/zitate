@@ -44,11 +44,6 @@ function updateData(after) {
     });
 }
 
-function sortArrays() {
-    authorsJson.sort((a, b) => a.id - b.id);
-    quotesJson.sort((a, b) => a.id - b.id);
-}
-
 function handleQuoteApiData(data) {
     if (typeof data === "object") {
         if (Array.isArray(data)) {
