@@ -107,7 +107,7 @@ function getRandomZitatId() {
         const aId = getRandomAuthorId();
 
         if (getQuoteById(qId)["author"].id !== aId) {
-            return getRandomQuoteId() + "-" + getRandomAuthorId();
+            return qId + "-" + aId;
         }
     }
 }
