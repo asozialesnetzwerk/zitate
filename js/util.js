@@ -51,7 +51,7 @@ function handleQuoteApiData(data) {
                 handleQuoteApiData(item);
             }
             return;
-        } else {
+        } else if (typeof data.id === "number") {
             if (typeof data["rating"] === "undefined") {
                 if (typeof data["quote"] === "undefined") { //is not quote
                     if (typeof data["author"] !== "undefined") { //is author
