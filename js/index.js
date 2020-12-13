@@ -102,7 +102,14 @@ function getUrlWithRating(value) {//smart; w; all; rated; n
 }
 
 function getRandomZitatId() {
-    return getRandomQuoteId() + "-" + getRandomAuthorId();
+    while (true) {
+        const qId = getRandomQuoteId();
+        const aId = getRandomAuthorId();
+
+        if (getQuoteById(qId)["author"].id !== aId) {
+            return getRandomQuoteId() + "-" + getRandomAuthorId();
+        }
+    }
 }
 
 function getNewZitatUrl() {
