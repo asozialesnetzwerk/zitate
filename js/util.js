@@ -162,8 +162,31 @@ function getParamFromURL(param, defaultValue) {
 function quotesApiGetRequest(endPoint) {
     return new Promise(resolve => {
         $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(new Date().getTime().toString(16)), "", data => {
+            let time = window.performance.now();
             handleQuoteApiData(data);
+            console.log(endPoint + (window.performance.now() - time) + "ms");
             resolve();
         }, "json");
     });
+}
+
+//info + goq:
+function optimizeSearchParam(searchParam) {
+    searchParam = searchParam.toLowerCase().trim()
+        .replace(/\[.*\]/g, "") // replace everything in []
+        .replace(/\{.*\}/g, "") // replace everything in {}
+        .replace(/\(.*\)/g, "") // replace everything in ()
+        .replace(/[^a-z 0-9.]/g, ""); // replace everything except a-z, " ", "."
+
+    if (searchParam.indexOf(" ") < 0) {
+        return searchParam;
+    }
+    return searchParam
+        .replace(/d(er)|(ie)|(as)/g, "")
+        .replace(/ein[a-z]{0,2}\s?/g, "")
+        .replace(/\s+/g, " ")
+        .replace(/ä/g, "ae")
+        .replace(/ö/g, "oe")
+        .replace(/ü/g, "ue")
+        .replace(/ß/g, "ss");
 }
