@@ -89,6 +89,22 @@ function searchAndDisplayResult(searchParam) {
     }
 }
 
+function optimizeSearchParam(searchParam) {
+    searchParam = searchParam.toLowerCase().trim()
+        .replace(/\[.*\]/g, "") // replace everything in []
+        .replace(/\{.*\}/g, "") // replace everything in {}
+        .replace(/\(.*\)/g, "") // replace everything in ()
+        .replace(/[^a-z 0-9.,]/g, ""); // replace everything except a-z, " ", "."
+
+    if (searchParam.indexOf(" ") < 0) {
+        return searchParam;
+    }
+    return searchParam
+        .replace(/d(er)|(ie)|(as)/g, "")
+        .replace(/ein[a-z]{0,2}\s?/g, "")
+        .replace(/\s+/g, " ");
+}
+
 function getText(id) {
     return isAuthor(id) ? getAuthorById(id.replace("-", ""))["author"] : '"' + getQuoteById(id.replace("-", ""))["quote"]+ '"';
 }

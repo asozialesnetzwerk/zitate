@@ -98,7 +98,7 @@ function updateUrl() {
 
 const selectsHtml = {};
 function resetQuoteOptions() {
-    quoteSelect.empty();
+    quoteSelect.html("");
 
     for (let q of Object.values(quotesJson)) {
         quoteSelect.append(new Option(q["quote"], q.id, false, false));
@@ -117,7 +117,7 @@ function resetQuoteOptions() {
 }
 
 function resetAuthorOptions() {
-    authorSelect.empty();
+    authorSelect.html("");
 
     for (let a of Object.values(authorsJson)) {
         authorSelect.append(new Option(a["author"], a.id, false, false));
@@ -139,6 +139,7 @@ function resetAuthorOptions() {
 function runCode() {
     resetQuoteOptions();
     resetAuthorOptions();
+    updateSearchIndex();
 
     console.log(ids);
 
@@ -174,19 +175,26 @@ $(document).ready(function() {
     function checkInput(type) {
         const newVal = inputs[type].val();
         if (oldValues[type] !== newVal) {
-            const obj = findObject(type, newVal);
-            console.log(obj);
+            let obj = {};
             const select = selects[type];
 
-            select.empty();
+            select.html("");
             select.append(selectsHtml[type]);
 
-            if (obj.id === -1) {
-                select.append(new Option(newVal, "-1", false, true));
+            if (newVal.length > 0) {
+                obj = findObject(type, newVal);
+                console.log(obj);
+
+                if (obj.id === -1) {
+                    select.append(new Option(newVal, "-1", false, true));
+                }
+            } else {
+                obj.id = "x";
             }
 
+            select.html(select.html());
             select.niceSelect('update');
-            setSelection(select, obj.id.toString());
+            setSelection(select, obj.id);
         }
         oldValues[type] = newVal;
     }
@@ -239,88 +247,42 @@ function findObject(type, str) {
     const isQuote = type === "quote";
     str = str.trim();
     const time = window.performance.now();
-    const id = findStringInArr(Object.values(isQuote ? quotesJson : authorsJson), type, str);
+    const found = searchObject(type, str);
+    const id = found.length === 0 ? -1 : found[0]["ref"];
+    console.log(id);
     console.log(window.performance.now() - time);
-    return id === -1
-        ? {id: -1, type: str}
-        : (isQuote
+    if (id === -1) {
+        const obj = {id:-1};
+        obj[type] = str;
+        return obj;
+    } else {
+        return isQuote
             ? getQuoteById(id)
-            : getAuthorById(id)
-        );
+            : getAuthorById(id);
+    }
 }
 
-//to use in findStringInArr
-function findInArr(arr, arrKey, str, optimizedStr) {
-    str = str.toLowerCase();
-    const iMap = {};
+const idx = {};
+function updateSearchIndex() {
+    idx["quote"] = lunr(function () {
+        this.ref("id");
+        this.field("quote");
 
-    const oBoo = typeof optimizedStr === "string";
+        Object.values(quotesJson).forEach(function (doc) {
+            this.add(doc);
+        }, this);
+    });
 
-    for (let i = 0; i < arr.length; i++){
-        const elStr = arr[i][arrKey].toLowerCase();
-        if (elStr === str) {
-            return i;
-        } else if (elStr.indexOf(str) !== -1) {
-            iMap[i] = 3;
-        } else if (oBoo) {
-            let optimizedElStr = optimizeSearchParam(elStr);
-            if (optimizedElStr === optimizedStr) {
-                iMap[i] = 2;
-            } else if (optimizedElStr.indexOf(optimizedStr) !== -1) {
-                iMap[i] = 1;
-            }
-        }
-    }
-    return iMap;
+    idx["author"] = lunr(function () {
+        this.ref("id");
+        this.field("author");
+
+        Object.values(authorsJson).forEach(function (doc) {
+            this.add(doc);
+        }, this);
+    });
 }
 
-function findStringInArr(arr, arrKey, str) {
-    const optimizedStr = optimizeSearchParam(str);
-
-    const iMap = findInArr(arr, arrKey, str, optimizedStr);
-
-    if (typeof iMap === "number") {
-        return arr[iMap].id;
-    }
-
-    let indexArr = Object.keys(iMap);
-
-    if (indexArr.length === 0) {
-        const strArr = optimizedStr.trim().split(/\s+/gm);
-
-        if (strArr.length === 1) {
-            return -1;
-        }
-
-        let notFoundCount = 0;
-        for (let i = 0; i < strArr.length; i++) {
-            const map = findInArr(arr, arrKey, strArr[i]);
-            if (typeof map === "number") {
-                iMap[map] += 3;
-            } else {
-                if (Object.keys(map).length === 0) {
-                    console.log(strArr[i]);
-                    if (++notFoundCount > 1) {
-                        return -1;
-                    }
-                } else {
-                    for (const mapKey in map) {
-                        iMap[mapKey] = (typeof iMap[mapKey] === "undefined" ? 0 : iMap[mapKey]) + map[mapKey];
-                    }
-                }
-            }
-        }
-
-        indexArr = Object.keys(iMap);
-
-        if (indexArr.length === 0) {
-            return -1;
-        }
-    }
-
-    console.log(iMap);
-
-    const index = indexArr.reduce((a, b) => iMap[a] > iMap[b] ? a : b);
-
-    return index === -1 ? -1 : arr[index].id;
+function searchObject(type, str) {
+    return idx[type].search(str);
 }
