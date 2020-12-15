@@ -267,6 +267,7 @@ function updateSearchIndex() {
     idx["quote"] = lunr(function () {
         this.ref("id");
         this.field("quote");
+        this.use(lunr.de);
 
         Object.values(quotesJson).forEach(function (doc) {
             this.add(doc);
@@ -276,6 +277,7 @@ function updateSearchIndex() {
     idx["author"] = lunr(function () {
         this.ref("id");
         this.field("author");
+        this.use(lunr.de);
 
         Object.values(authorsJson).forEach(function (doc) {
             this.add(doc);
