@@ -3,7 +3,7 @@ const duckduckgoApiUrl = "https://api.duckduckgo.com/?format=json&t=FalscheZitat
 const list = $(".list");
 const text = $(".info-text");
 const searchContainer = $(".search-container");
-const selectType = $(".select");
+//const selectType = $(".select");
 const infoContainer = $(".info-container");
 
 let id;
@@ -18,7 +18,7 @@ const app = $.sammy(function() {
             id = "-" + id;
         }
 
-        setSelection(selectType, getFilter(isAuthor(id)));
+        //setSelection(selectType, getFilter(isAuthor(id)));
         runCode();
     });
 
@@ -205,9 +205,12 @@ function getSearchHyperLink(toSearch) {
     return "<a href='https://ddg.gg/" + encodeURI(toSearch) + "'>" + toSearch + "</a>";
 }
 
+/*
 selectType.change(function () {
     openUrl(getUrlWithIdAndFilter(id, selectType.val()));
 });
+*/
+
 
 window.addEventListener("orientationchange", function() {
     if (windowIsLandscape()) {
