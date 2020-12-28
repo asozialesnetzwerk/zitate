@@ -38,18 +38,6 @@ function showSearch(boo) {
     }
 }
 
-function optimizeSearchParam(searchParam) {
-    searchParam = searchParam.replace(/[\[({].*[\])}]/g, "");
-    if (searchParam.indexOf(" ") < 0) {
-        return searchParam;
-    }
-    return searchParam.toLowerCase()
-        .replace(/der/, "")
-        .replace(/die/, "")
-        .replace(/das/, "")
-        .replace(/ein[a-z]{0,2}\s?/, " ")
-        .replace(/\s+/g, " ");
-}
 function displayInfoText() {
     if (isAuthor(id)) {
         searchAndDisplayResult(getText(id).toLowerCase());
@@ -78,7 +66,7 @@ function searchAndDisplayResult(searchParam) {
                 }
             } else {
                 const elementPoweredBy = document.createElement("strong");
-                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/" + searchParam + "'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
+                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/" + encodeURIComponent(searchParam) + "'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
                 searchContainer.append(elementPoweredBy);
 
                 const element = document.createElement("p");
@@ -99,6 +87,22 @@ function searchAndDisplayResult(searchParam) {
         });
         lastSearch = searchParam;
     }
+}
+
+function optimizeSearchParam(searchParam) {
+    searchParam = searchParam.toLowerCase().trim()
+        .replace(/\[.*\]/g, "") // replace everything in []
+        .replace(/\{.*\}/g, "") // replace everything in {}
+        .replace(/\(.*\)/g, "") // replace everything in ()
+        .replace(/[^a-z 0-9.,]/g, ""); // replace everything except a-z, " ", "."
+
+    if (searchParam.indexOf(" ") < 0) {
+        return searchParam;
+    }
+    return searchParam
+        .replace(/d(er)|(ie)|(as)/g, "")
+        .replace(/ein[a-z]{0,2}\s?/g, "")
+        .replace(/\s+/g, " ");
 }
 
 function getText(id) {
@@ -202,7 +206,7 @@ function runCode() {
 }
 
 function getSearchHyperLink(toSearch) {
-    return "<a href='https://ddg.gg/" + encodeURI(toSearch) + "'>" + toSearch + "</a>";
+    return "<a href='https://ddg.gg/" + encodeURIComponent(toSearch) + "'>" + toSearch + "</a>";
 }
 
 selectType.change(function () {

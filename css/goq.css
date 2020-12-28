@@ -41,3 +41,28 @@ footer {
 .select-container {
     opacity: 0;
 }
+
+.text-input {
+    width: 48%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    border: 2px solid red;
+    border-radius: 10px;
+    background-color: #0e0e0e;
+    color: #fdfdfd;
+    margin: 8px 0 8px 4px;
+}
+
+.author-select {
+    width: 48%;
+}
+
+.quote-select {
+    width: 48%;
+}
+
+.text-input:focus {
+    outline: none;
+    border: 2px solid whitesmoke;
+}

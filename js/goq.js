@@ -1,4 +1,4 @@
-const preSelectedSelect = $(".select");
+const preSelectedSelect = $(".pre-selected-select");
 const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
 const tweetButton = $(".tweet");
@@ -9,6 +9,8 @@ const quoteSelect = $(".quote-select");
 const authorSelect = $(".author-select");
 const quoteText = $(".quote");
 const authorText = $(".author");
+const quoteInput = $(".quote-input");
+const authorInput = $(".author-input");
 
 const none = "n";
 const quote = "z";
@@ -57,22 +59,8 @@ function displayQuote() {
         ids[0] = "x";
     }
     if (isNullOrUndefined(authorSelect.val())) {
-        console.log("undefined: " + ids[1]);
-        const name = getAuthorById(ids[1])["author"];
-        console.log("name = " + name);
-        if (isNullOrUndefined(name)) {
-            authorSelect.val("x").trigger("change");
-        }
-        //cuz names only get added to the list once:
-        const authors = Object.values(authorsJson);
-        for (let i = 0; i < authors.length; i++) {
-            if (name === authors[i]["author"]) {
-                authorSelect.val(i.toString()).trigger("change");
-                ids[1] = i.toString();
-                break;
-            }
-        }
-        console.log(ids);
+        authorSelect.val("x").trigger("change");
+        ids[1] = "x";
     }
 
     quoteId.text(getId());
@@ -108,28 +96,50 @@ function updateUrl() {
     quoteId.text(getId());
 }
 
-function runCode() {
+const selectsHtml = {};
+function resetQuoteOptions() {
+    quoteSelect.html("");
+
     for (let q of Object.values(quotesJson)) {
         quoteSelect.append(new Option(q["quote"], q.id, false, false));
     }
+
     quoteSelect.append(new Option("Wähle ein Zitat :)", "x", true, true));
+
+    selectsHtml["quote"] = quoteSelect.html();
+
     if (preSelected === quote) {
         quoteSelect.val(getRandomQuoteId().toString());
     }
     ids[0] = quoteSelect.val();
 
-    let authors = [];
+    quoteSelect.niceSelect('update');
+}
+
+function resetAuthorOptions() {
+    authorSelect.html("");
+
     for (let a of Object.values(authorsJson)) {
-        if (!authors.includes(a["author"])) {
-            authorSelect.append(new Option(a["author"], a.id, false, false));
-            authors.push(a["author"]);
-        }
+        authorSelect.append(new Option(a["author"], a.id, false, false));
     }
+
     authorSelect.append(new Option("Wähle einen Autor :)", "x", true, true));
+
+    selectsHtml["author"] = authorSelect.html();
+
+
     if (preSelected === author) {
         authorSelect.val(getRandomAuthorId().toString());
     }
     ids[1] = authorSelect.val();
+
+    authorSelect.niceSelect('update');
+}
+
+function runCode() {
+    resetQuoteOptions();
+    resetAuthorOptions();
+    updateSearchIndex();
 
     console.log(ids);
 
@@ -143,8 +153,6 @@ function runCode() {
 }
 
 $(document).ready(function() {
-    $('.search-select').select2();
-
     quoteSelect.change(function() {
         if (!isNullOrUndefined(quoteSelect.val())) {
             ids[0] = quoteSelect.val();
@@ -158,6 +166,54 @@ $(document).ready(function() {
             updateUrl();
         }
     });
+
+    const inputs = {"quote":quoteInput,"author":authorInput};
+    const selects = {"quote":quoteSelect, "author":authorSelect}
+    const oldValues = {"quote":"", "author":""};
+    const intervals = {};
+
+    function checkInput(type) {
+        const newVal = inputs[type].val();
+        if (oldValues[type] !== newVal) {
+            let obj = {};
+            const select = selects[type];
+
+            select.html("");
+            select.append(selectsHtml[type]);
+
+            if (newVal.length > 0) {
+                obj = findObject(type, newVal);
+                console.log(obj);
+
+                if (obj.id === -1) {
+                    select.append(new Option(newVal, "-1", false, true));
+                }
+            } else {
+                obj.id = "x";
+            }
+
+            select.html(select.html());
+            select.niceSelect('update');
+            setSelection(select, obj.id);
+        }
+        oldValues[type] = newVal;
+    }
+
+    addInputListener("quote");
+    addInputListener("author");
+    function addInputListener(type) {
+        inputs[type]
+            .bind('mouseout keyup', function () {
+                checkInput(type);
+            })
+            .bind('focus', function () {
+                intervals[type] = setInterval(() => checkInput(type), 200);
+            })
+            .bind('blur', function () {
+                clearInterval(intervals[type]);
+                checkInput(type);
+            });
+    }
 
     preSelectedSelect.change(function () {
         if (preSelectedSelect.val() !== preSelected) {
@@ -186,3 +242,49 @@ $(document).ready(function() {
 });
 
 loadFiles();
+
+function findObject(type, str) {
+    const isQuote = type === "quote";
+    str = str.trim();
+    const time = window.performance.now();
+    const found = searchObject(type, str);
+    const id = found.length === 0 ? -1 : found[0]["ref"];
+    console.log(id);
+    console.log(window.performance.now() - time);
+    if (id === -1) {
+        const obj = {id:-1};
+        obj[type] = str;
+        return obj;
+    } else {
+        return isQuote
+            ? getQuoteById(id)
+            : getAuthorById(id);
+    }
+}
+
+const idx = {};
+function updateSearchIndex() {
+    idx["quote"] = lunr(function () {
+        this.ref("id");
+        this.field("quote");
+        this.use(lunr.de);
+
+        Object.values(quotesJson).forEach(function (doc) {
+            this.add(doc);
+        }, this);
+    });
+
+    idx["author"] = lunr(function () {
+        this.ref("id");
+        this.field("author");
+        this.use(lunr.de);
+
+        Object.values(authorsJson).forEach(function (doc) {
+            this.add(doc);
+        }, this);
+    });
+}
+
+function searchObject(type, str) {
+    return idx[type].search(str);
+}
