@@ -151,7 +151,7 @@ function displayList() {
     list.children().remove();
     for (let i = 0; i < zitatIdArr.length; i++) {
         const zitatId = zitatIdArr[i];
-        addToList("<a href='" + getBaseUrl() + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
+        addToList("<a href='" + getBaseUrl() + "#/" + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
     }
 }
 
