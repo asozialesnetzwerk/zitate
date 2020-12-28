@@ -169,3 +169,27 @@ function quotesApiGetRequest(endPoint) {
         }, "json");
     });
 }
+
+/*
+const promises = [];
+let authorsArr;
+promises.push(new Promise(resolve => {$.get("../namen.txt", data => {authorsArr = data.split(/\n/);resolve()}, "text")}));
+let quotesArr;
+promises.push(new Promise(resolve => {$.get("../zitate.txt", data => {quotesArr = data.split(/\n/);resolve()}, "text")}));
+let bewertung;
+promises.push(new Promise(resolve => {$.get("../bewertung_zitate.json", data => {bewertung = data;resolve()}, "json")}));
+Promise.all(promises).then(() => {
+    const strBuilder = [];
+    for (let key in bewertung) {
+        if (bewertung[key] > 0) {
+            let q = quotesArr[key.split("-")[0]].trim();
+            q = q.substr(1, q.length - 2);
+            if (q.indexOf(",") !== -1) q = '"' + q + '"';
+            let a = authorsArr[key.split("-")[1]];
+            if (a.indexOf(",") !== -1) a = '"' + a + '"';
+            strBuilder.push(q, "," , a, "\n");
+        }
+    }
+    console.log(strBuilder.join(""));
+});
+*/
