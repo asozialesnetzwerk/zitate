@@ -127,7 +127,7 @@ function getNewZitatUrl(ratingParam) {
     if (ratingParam !== "all") {
         let keys = [];
         if (typeof cachedKeys[ratingParam] !== "undefined") {
-            keys = cachedKeys[ratingParam].filter((v) => v !== id);
+            keys = cachedKeys[ratingParam];
         } else {
             Object.keys(ratingJson).forEach((key) => {
                 if ((ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
@@ -139,11 +139,19 @@ function getNewZitatUrl(ratingParam) {
                 }
             });
             cachedKeys[ratingParam] = keys;
-            keys = keys.filter((v) => v !== id);
         }
 
         if (keys.length > 0) {
-            return getUrlWithIdAndRating(keys[Math.floor(Math.random() * keys.length)], param);
+            if (!keys.includes(id)) {
+                return getUrlWithIdAndRating(keys[Math.floor(Math.random() * keys.length)], param);
+            } else if (keys.length > 1) {
+                let newId;
+                do {
+                    newId = keys[Math.floor(Math.random() * keys.length)];
+                } while (newId === id);
+
+                return getUrlWithIdAndRating(newId, param);
+            }
         }
     }
 
