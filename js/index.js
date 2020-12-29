@@ -107,7 +107,6 @@ function getRandomZitatId() {
     }
 }
 
-const cachedKeys = {};
 function getNewZitatUrl(ratingParam) {
     const param = ratingParam;
     if (ratingParam === "smart") {
@@ -125,33 +124,10 @@ function getNewZitatUrl(ratingParam) {
     }
 
     if (ratingParam !== "all") {
-        let keys = [];
-        if (typeof cachedKeys[ratingParam] !== "undefined") {
-            keys = cachedKeys[ratingParam];
-        } else {
-            Object.keys(ratingJson).forEach((key) => {
-                if ((ratingParam === "unrated" && ratingJson[key] === 0) //can't be selected
-                        || (ratingParam === "w" && ratingJson[key] > 0)
-                        || (ratingParam === "n" && ratingJson[key] < 0)
-                        || (ratingParam === "rated" && ratingJson[key] !== 0)
-                    ) {
-                    keys.push(key);
-                }
-            });
-            cachedKeys[ratingParam] = keys;
-        }
-
+        let keys = Object.keys(ratingJson).filter(getKeyFilter(ratingParam));
+        
         if (keys.length > 0) {
-            if (!keys.includes(id)) {
-                return getUrlWithIdAndRating(keys[Math.floor(Math.random() * keys.length)], param);
-            } else if (keys.length > 1) {
-                let newId;
-                do {
-                    newId = keys[Math.floor(Math.random() * keys.length)];
-                } while (newId === id);
-
-                return getUrlWithIdAndRating(newId, param);
-            }
+            return getUrlWithIdAndRating(keys[Math.floor(Math.random() * keys.length)], param);
         }
     }
 
@@ -161,6 +137,16 @@ function getNewZitatUrl(ratingParam) {
     } while (newId === id);
 
     return getUrlWithIdAndRating(newId, param);
+}
+
+function getKeyFilter(ratingParam) {
+    switch (ratingParam) {
+        case "unrated": return (key) => key !== id && ratingJson[key] === 0;
+        case "w": return (key) => key !== id && ratingJson[key] > 0;
+        case "n": return (key) => key !== id && ratingJson[key] < 0;
+        case "rated": return (key) => key !== id && ratingJson[key] !== 0;
+        default: return (key) => key !== id;
+    }
 }
 
 function isValidId(val) {
