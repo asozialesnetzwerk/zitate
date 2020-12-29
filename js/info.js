@@ -190,7 +190,7 @@ function runCode() {
         text.append(getSearchHyperLink(getText(id)));
 
         if (!isAuthor(id)) {
-            let author = getQuoteById(id.replace("-", ""))["author"];
+            const author = getQuoteById(id.replace("-", ""))["author"];
             text.append(" von " + getHyperLink(getUrlWithIdAndFilter(author.id.toString(), getFilter(true)), author["author"]));
         }
 

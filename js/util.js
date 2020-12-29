@@ -54,11 +54,13 @@ function handleQuoteApiData(data) {
         } else if (typeof data.id === "number") {
             if (typeof data["rating"] === "undefined") {
                 if (typeof data["quote"] === "undefined") { //is not quote
-                    if (typeof data["author"] !== "undefined") { //is author
+                    if (typeof data["author"] === "string") { //is author
+                        data["author"] = firstCharToUppercase(data["author"]);
                         authorsJson[data.id] = data;
                         return;
                     }
-                } else { //is quote
+                } else if (typeof data["quote"] === "string") { //is quote
+                    data["author"]["author"] = firstCharToUppercase(data["author"]["author"]);
                     quotesJson[data.id] = data;
                     return;
                 }
@@ -83,6 +85,10 @@ function handleQuoteApiData(data) {
     }
     console.log("invalid package")
     console.log(data);
+}
+
+function firstCharToUppercase(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function getAuthorById(authorId) {
@@ -161,7 +167,7 @@ function getParamFromURL(param, defaultValue) {
 
 function quotesApiGetRequest(endPoint) {
     return new Promise(resolve => {
-        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(new Date().getTime().toString(16)), "", data => {
+        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60000).toString(16)), "", data => {
             handleQuoteApiData(data);
             resolve();
         }, "json");
