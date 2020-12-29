@@ -1,7 +1,7 @@
 const preSelectedSelect = $(".select");
 const quoteId = $(".quote-id");
 const nextQuote = $(".get-quote");
-const tweetButton = $(".tweet");
+const openButton = $(".tweet");
 
 const quoteSelectContainer = $(".quote-select-container");
 const authorSelectContainer = $(".author-select-container");
@@ -88,7 +88,7 @@ function displayQuote() {
     authorText.text(authorIsSelected ? "- " + getAuthorById(ids[1])["author"] : "");
 
     nextQuote.attr("href", getRandomUrl());
-    tweetButton.attr("href", getBaseUrl() + getId());
+    openButton.attr("href", getBaseUrl() + getId());
 }
 
 function getRandomUrl() {
