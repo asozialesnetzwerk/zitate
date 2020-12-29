@@ -78,7 +78,7 @@ function searchAndDisplayResult(searchParam) {
                 }
             } else {
                 const elementPoweredBy = document.createElement("strong");
-                elementPoweredBy.innerHTML = "Folgender Text ist präsentiert von <a href='https://ddg.gg/" + searchParam + "'>DuckDuckGo <img alt='DuckDuckGo Logo' width='21px' height='21px' src='https://duckduckgo.com/assets/common/dax-logo.svg'</a>:<br>";
+                elementPoweredBy.innerHTML = `Folgender Text ist präsentiert von <a href="https://ddg.gg/${searchParam}">DuckDuckGo <img alt="DuckDuckGo Logo" width="21px" height="21px" src="https://duckduckgo.com/assets/common/dax-logo.svg"</a>:<br>`;
                 searchContainer.append(elementPoweredBy);
 
                 const element = document.createElement("p");
@@ -151,7 +151,7 @@ function displayList() {
     list.children().remove();
     for (let i = 0; i < zitatIdArr.length; i++) {
         const zitatId = zitatIdArr[i];
-        addToList("<a href='" + getBaseUrl() + "#/" + zitatId + "'>" + getFalschesZitat(zitatIdArr[i]) + "</a></br>ID = '" + zitatId + "', Bewertung = '" + ratingJson[zitatId] + "'", zitatId);
+        addToList(getHyperLink(getBaseUrl() + "#/" + zitatId, getFalschesZitat(zitatIdArr[i])) + `</br>ID = "${zitatId}", Bewertung = "${ratingJson[zitatId]}"`, zitatId);
     }
 }
 
@@ -190,7 +190,8 @@ function runCode() {
         text.append(getSearchHyperLink(getText(id)));
 
         if (!isAuthor(id)) {
-            text.append(" von " + getSearchHyperLink(getQuoteById(id.replace("-", ""))["author"]["author"]));
+            let author = getQuoteById(id.replace("-", ""))["author"];
+            text.append(" von " + getHyperLink(getUrlWithIdAndFilter(author.id.toString(), getFilter(true)), author["author"]));
         }
 
         if (zitatIdArr.length > 1) {
@@ -202,7 +203,11 @@ function runCode() {
 }
 
 function getSearchHyperLink(toSearch) {
-    return "<a href='https://ddg.gg/" + encodeURI(toSearch) + "'>" + toSearch + "</a>";
+    return getHyperLink("https://ddg.gg/" + encodeURI(toSearch), toSearch);
+}
+
+function getHyperLink(url, toSearch) {
+    return `<a href="${url}">${toSearch}</a>`;
 }
 
 /*
