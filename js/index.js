@@ -207,10 +207,14 @@ function voteQuote(vote) {
     }
 }
 
-let voted = {};
+const voted = {};
 function ratingRequest(vote) { //only call this in voteQuote()
     if (vote !== voted[id]) {
-        voted[id] = vote;
+        if (typeof voted[id] === "undefined") {
+            voted[id] = vote;
+        } else {
+            delete voted[id];
+        }
         $.post(quotesApi + "wrongquotes/" + idJson[id], {
             vote: vote
         }, function (data) {
@@ -218,7 +222,7 @@ function ratingRequest(vote) { //only call this in voteQuote()
             runCode();
         });
     } else {
-        alert("Du hast dieses falsche Zitat bereits mit " + vote + " bewertet");
+        alert(`Du hast dieses falsche Zitat bereits mit ${vote} bewertet`);
     }
 }
 
