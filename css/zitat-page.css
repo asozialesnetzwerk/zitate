@@ -44,11 +44,6 @@ div.quote-container:before {
     .quote-author {
         margin-right: 18rem;
     }
-
-    .rating-image {
-        display: inline-block;
-        position: page;
-    }
 }
 
 
@@ -79,11 +74,6 @@ div.quote-container:before {
 
 .rating-image {
     height: 2.2rem;
-    width: auto;
-}
-
-.rating-text {
-    display: inline-block;
 }
 
 .nicht-witzig {
@@ -106,30 +96,10 @@ div.quote-container:before {
         right: 1px;
     }
 
-    .rating-image {
-        display: inline;
-        position: absolute;
-        left: 2rem;
-    }
-
     .quote-id {
         position: absolute;
         bottom: 0;
         right: 0;
-    }
-
-    .witzig {
-        transform: translateY(-0.1rem);
-    }
-}
-
-@media (orientation: portrait) {
-    .nicht-witzig {
-        transform: translateX(-5rem) translateY(0.5rem);
-    }
-
-    .witzig {
-        transform: translateY(0.75rem);
     }
 }
 

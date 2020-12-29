@@ -71,7 +71,7 @@ function runCode() {
 
     const rating = ratingJson[id] === undefined ? 0 : ratingJson[id];
     if (rating !== oldRating) {
-        quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x   ");
+        quoteRating.text(rating === 0 ? "—" : Math.abs(rating) + " x");
         if ( rating === 0) {
             changeVisibility(witzig, false);
             changeVisibility(nichtWitzig, false);
