@@ -6,13 +6,16 @@
         <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
         <meta id = "meta-description" property="og:description" content="Eine Webapp, die falsche Zitate generiert.">
 
-        <script src='js/jquery.js'></script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
-        <link rel="icon" href="css/WebsiteIcon.svg">
+        <link rel="icon" href="img/WebsiteIcon.svg">
+
         <title>Generator für falsche Zitate</title>
+
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/nice-select.css">
         <link rel="stylesheet" href="css/zitat-page.css">
+
+        <link rel="stylesheet" href="css/nice-select.css">
     </head>
     <body>
         <div>
@@ -21,15 +24,15 @@
                     <div class="quote-id"></div>
                     <div class="buttons" data-html2canvas-ignore="true">
                         <a class="download tooltip">
-                            <img class="download-img button-img" src="css/arrow.svg" alt="Zitat downloaden.">
+                            <img class="download-img button-img" src="img/arrow.svg" alt="Zitat downloaden.">
                             <div class="tooltip-top-text tooltip-text">Downloade das Zitat als Bild.</div>
                         </a>
                         <a class="tweet tooltip" href="">
-                            <img class="tweet-img button-img" src="css/arrow.svg" alt="Zitat teilen.">
+                            <img class="tweet-img button-img" src="img/arrow.svg" alt="Zitat teilen.">
                             <div class="tooltip-top-text  tooltip-text">Teile das Zitat auf Twitter.</div>
                         </a>
                         <a class="get-quote tooltip" href="">
-                            <img class="get-quote-img button-img button-img-no-rotation" alt="Nächstes Zitat" src="css/arrow.svg">
+                            <img class="get-quote-img button-img button-img-no-rotation" alt="Nächstes Zitat" src="img/arrow.svg">
                             <div class="tooltip-top-text  tooltip-text">Gehe zum nächsten Zitat.</div>
                         </a>
                     </div>
@@ -46,10 +49,10 @@
                             <tr>
                                 <th><div class="rating-text"></div></th>
                                 <th>
-                                    <img class="rating-image witzig invisible" src="css/StempelWitzig.svg" alt=">Witzig-Stempel"/>
+                                    <img class="rating-image witzig invisible" src="img/StempelWitzig.svg" alt=">Witzig-Stempel"/>
                                 </th>
                                 <th>
-                                    <img class="rating-image nicht-witzig invisible" src="css/StempelNichtWitzig.svg" alt="Nicht-Witzig-Stempel"/>
+                                    <img class="rating-image nicht-witzig invisible" src="img/StempelNichtWitzig.svg" alt="Nicht-Witzig-Stempel"/>
                                 </th>
                             </tr>
                         </table>
@@ -63,7 +66,7 @@
                 <input id="downvote" class="vote" type="button" onclick="voteQuote(-1)" value="Nicht witzig!">
 
                 <a class="tooltip" href="https://zitate.prapsschnalinen.de/einreichen">
-                    <img class="button-img plus-img" src="css/plus.svg" alt="Zitat hinzufügen.">
+                    <img class="button-img plus-img" src="img/plus.svg" alt="Zitat hinzufügen.">
                     <div class="tooltip-top-text tooltip-text">Füge neues Zitat hinzu.</div>
                 </a>
             </div>
@@ -79,9 +82,9 @@
             <option value="all">Alle</option>
         </select>
 
-        <script src="js/html2canvas.js"></script>
+        <script src="node_modules/html2canvas/dist/html2canvas.min.js"></script>
         <script src="js/jquery.nice-select.js"></script>
-        <script src="js/sammy.js"></script>
+        <script src="node_modules/sammy/lib/min/sammy-latest.min.js"></script>
         <script src="js/util.js"></script>
         <script src="js/index.js"></script>
     </body>

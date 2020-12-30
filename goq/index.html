@@ -6,14 +6,15 @@
         <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
         <meta id = "meta-description" property="og:description" content="Eine Webapp, die dir hilft falsche Zitate zu generieren.">
 
-        <script src='../js/jquery.js'></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="../css/nice-select.css">
-        <link rel="stylesheet" href="../css/select2.css">
         <link rel="stylesheet" href="../css/goq.css">
+        <link rel="stylesheet" href="../css/nice-select.css">
 
-        <link rel="icon" href="../css/WebsiteIcon.svg">
+        <link rel="stylesheet" href="../node_modules/select2/dist/css/select2.min.css">
+
+        <link rel="icon" href="../img/WebsiteIcon.svg">
     </head>
     <body>
         <div id="quote-important" class="quote-container">
@@ -21,11 +22,11 @@
                 <div class="quote-id"></div>
                 <div class="buttons" data-html2canvas-ignore="true">
                     <a href="" class="tweet tooltip">
-                        <img class="tweet-img button-img" src="../css/arrow.svg" alt="Haupseite">
+                        <img class="tweet-img button-img" src="../img/arrow.svg" alt="Haupseite">
                         <div class="tooltip-bottom-text  tooltip-text">Öffne dein Zitat auf der Hauptseite.</div>
                     </a>
                     <a href="" class="get-quote tooltip">
-                        <img class="get-quote-img button-img button-img-no-rotation" src="../css/arrow.svg" alt="Nächste">
+                        <img class="get-quote-img button-img button-img-no-rotation" src="../img/arrow.svg" alt="Nächste">
                         <div class="tooltip-bottom-text tooltip-text">Gehe zur nächsten Vorlage.</div>
                     </a>
                 </div>
@@ -60,8 +61,8 @@
         <footer class="footer">Mit Liebe gebacken <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
 
         <script src="../js/jquery.nice-select.js"></script>
-        <script src="../js/sammy.js"></script>
-        <script src="../js/select2.js"></script>
+        <script src="../node_modules/sammy/lib/min/sammy-latest.min.js"></script>
+        <script src="../node_modules/select2/dist/js/select2.full.min.js"></script>
         <script src="../js/util.js"></script>
         <script src="../js/goq.js"></script>
     </body>
