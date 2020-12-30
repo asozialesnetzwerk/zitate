@@ -6,6 +6,7 @@
   "dependencies": {
     "html2canvas": "^1.0.0-rc.7",
     "jquery": "^3.5.1",
+    "lunr": "^2.3.9",
     "sammy": "^0.7.6",
     "select2": "^4.0.13"
   }
