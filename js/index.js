@@ -164,14 +164,16 @@ function isValidId(val) {
 }
 
 function checkId() {
-    const ids = id.split("-");
-    if (ids[0] === "x") {
-        ids[0] = getRandomQuoteId();
+    if (typeof id === "string") {
+        const ids = id.split("-");
+        if (ids[0] === "x") {
+            ids[0] = getRandomQuoteId();
+        }
+        if (ids[1] === "x") {
+            ids[1] = getRandomAuthorId();
+        }
+        id = ids[0] + "-" + ids[1];
     }
-    if (ids[1] === "x") {
-        ids[1] = getRandomAuthorId();
-    }
-    id = ids[0] + "-" + ids[1];
 
     if (!isValidId(id)) {
         if (id !== undefined && id !== null) {
