@@ -185,4 +185,53 @@ $(document).ready(function() {
     });
 });
 
+function testSearch() {
+    let q = getQuoteById(getRandomQuoteId());
+    console.log(q);
+    getQuotes(q.quote, (data) => console.log(data));
+}
+
+function getQuotes(search, callback) {
+    WikiquoteApi.openSearch(search, (titleArr) => {
+        if (titleArr.length > 0) {
+            const qArr = [];
+            const promises = [];
+            for(const titleObj of titleArr) {
+                promises.push(new Promise(resolve => {
+                    WikiquoteApi.queryTitles(titleObj.title, (pageId) => {
+                        WikiquoteApi.getSectionsForPage(pageId, (sectionObj) => {
+                            for (const section of sectionObj.sections) {
+                                promises.push(new Promise(resolve => {
+                                    WikiquoteApi.getQuotesForSection(pageId, section, (qObj) => {
+                                        qObj.quotes.forEach(q => {
+                                            qArr.push(q);
+                                            resolve();
+                                        });
+                                    }, (e) => {
+                                        console.error(e);
+                                        resolve();
+                                    });
+                                }));
+                            }
+                            resolve();
+                        }, (e) => {
+                            console.error(e);
+                            resolve();
+                        });
+                    }, (e) => {
+                        console.error(e);
+                        resolve();
+                    });
+                }));
+            }
+            Promise.all(promises).then(() => {
+                callback(qArr);
+            });
+        } else {
+            console.log(`Nothing found for query "${search}".`);
+        }
+    }, (e) => {
+        console.error(e);
+    });
+}
 loadFiles();
