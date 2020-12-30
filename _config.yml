@@ -1,3 +1,5 @@
 theme: jekyll-theme-hacker
 
 permalink: /404.html
+
+exclude: []
