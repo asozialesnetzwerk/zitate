@@ -185,10 +185,19 @@ $(document).ready(function() {
     });
 });
 
-function testSearch() {
-    let q = getQuoteById(getRandomQuoteId());
-    console.log(q);
-    getQuotes(q.quote, (data) => console.log(data));
+function testSearch(quote) {
+    getQuotes(quote, (quotesArr) => {
+        console.log(quotesArr);
+        const index = lunr(function () {
+            this.ref("id");
+            this.ref("text");
+            for (let i = 0; i < quotesArr.length; i++) {
+                this.add({text:quotesArr[i], id:i});
+            }
+        });
+        console.log(index);
+        console.log(index.search(quote));
+    });
 }
 
 function getQuotes(search, callback) {
