@@ -1,5 +1,5 @@
 div.quote-container:before {
-    content:url("ZitateBackground.svg");
+    content:url("../img/ZitateBackground.svg");
 }
 
 .quote-container {
@@ -18,7 +18,7 @@ div.quote-container:before {
     }
 
     .quote-container {
-        background: #000000 url("ZitateBackground.svg") no-repeat right top 5px;
+        background: #000000 url("../img/ZitateBackground.svg") no-repeat right top 5px;
 
         /*background-position: right 10px top 5px;*/
         width: 50rem;
