@@ -167,8 +167,6 @@ let WikiquoteApi = (function() {
                 format: "json",
                 action: "query",
                 list: "search",
-                namespace: 0,
-                suggest: "",
                 srsearch: titles
             },
 

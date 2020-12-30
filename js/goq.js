@@ -185,19 +185,40 @@ $(document).ready(function() {
     });
 });
 
-function testSearch(quote) {
+let searchResultArr;
+function testSearch(quote, callback) {
+    let time = window.performance.now();
     getQuotes(quote, (quotesArr) => {
+        searchResultArr = quotesArr;
         console.log(quotesArr);
         const index = lunr(function () {
             this.ref("id");
-            this.ref("text");
-            for (let i = 0; i < quotesArr.length; i++) {
-                this.add({text:quotesArr[i], id:i});
-            }
+            this.field("text");
+            this.use(lunr.multiLanguage("en", "de"))
+
+            strArrToObjArr(quotesArr).forEach(q => {
+                this.add(q);
+            }, this);
         });
         console.log(index);
-        console.log(index.search(quote));
+        const resultArr = [];
+        let s = index.search(quote);
+        for (let i = 0; i < s.length && i < 10; i++) {
+            resultArr.push(quotesArr[s[i].ref]);
+        }
+        callback(resultArr);
+        console.log(resultArr);
+        console.log(window.performance.now() - time);
     });
+}
+
+function strArrToObjArr(arr) {
+    const objArr = [];
+    console.log(arr.length);
+    for (let i = 0; i < arr.length; i++) {
+        objArr.push({text: arr[i], id:i});
+    }
+    return objArr;
 }
 
 function getQuotes(search, callback) {
@@ -205,24 +226,25 @@ function getQuotes(search, callback) {
         if (titleArr.length > 0) {
             const qArr = [];
             const promises = [];
-            for(const titleObj of titleArr) {
+            for (const titleObj of titleArr) {
                 promises.push(new Promise(resolve => {
                     WikiquoteApi.queryTitles(titleObj.title, (pageId) => {
                         WikiquoteApi.getSectionsForPage(pageId, (sectionObj) => {
                             for (const section of sectionObj.sections) {
-                                promises.push(new Promise(resolve => {
+                                promises.push(new Promise(resolve2 => {
                                     WikiquoteApi.getQuotesForSection(pageId, section, (qObj) => {
                                         qObj.quotes.forEach(q => {
                                             qArr.push(q);
                                             resolve();
+                                            resolve2();
                                         });
                                     }, (e) => {
                                         console.error(e);
                                         resolve();
+                                        resolve2();
                                     });
                                 }));
                             }
-                            resolve();
                         }, (e) => {
                             console.error(e);
                             resolve();
