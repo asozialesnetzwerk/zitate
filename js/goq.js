@@ -238,8 +238,9 @@ function testSearch(quote, callback) {
 
 function lunrResultToArr(searched, lunrResult) {
     const resultArr = [];
-    for (let i = 0; i < lunrResult.length && i < 10; i++) {
-        resultArr.push(searched[lunrResult[i].ref]);
+    for (let i = 0; i < lunrResult.length && resultArr.length < 10; i++) {
+        const el = searched[lunrResult[i].ref];
+        if (!resultArr.includes(el)) resultArr.push(el);
     }
     return resultArr;
 }
@@ -259,7 +260,7 @@ function getQuotes(search, callback) {
         if (titleArr.length > 0) {
             const qArr = [];
             const promises = [];
-            for (let i = 0; i < titleArr.length && i < 5; i++) {
+            for (let i = 0; i < titleArr.length && i < 4; i++) {
                 promises.push(new Promise(resolve => {
                     WikiquoteApi.queryTitles(titleArr[i].title, (pageId) => {
                         WikiquoteApi.getSectionsForPage(pageId, (sectionObj) => {
@@ -289,6 +290,7 @@ function getQuotes(search, callback) {
                 }));
             }
             Promise.all(promises).then(() => {
+                console.log(promises.length);
                 callback(qArr);
             });
         } else {

@@ -156,7 +156,7 @@ let WikiquoteApi = (function() {
     };
 
     /**
-     * Search using opensearch api.  Returns an array of search results.
+     * Search not using opensearch api. Returns an array of search results.
      */
     wqa.openSearch = function(titles, success, error) {
         $.ajax({
