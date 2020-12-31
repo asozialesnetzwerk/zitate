@@ -65,10 +65,9 @@ let WikiquoteApi = (function() {
 
             success: function(result, status){
                 let sectionArray = [];
-                console.log(result);
                 let sections = result.parse.sections;
                 for(let s of sections) {
-                    if (s.line !== "Weblinks") {
+                    if (s.line !== "Weblinks" && s.line !== "Quellen") {
                         sectionArray.push(s.index);
                     }
                 }
@@ -171,7 +170,6 @@ let WikiquoteApi = (function() {
             },
 
             success: function(result, status){
-                console.log(result);
                 success(result.query.search);
             },
             error: function(xhr, result, status){

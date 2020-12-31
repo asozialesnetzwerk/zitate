@@ -186,38 +186,71 @@ $(document).ready(function() {
 });
 
 let searchResultArr;
+let index;
 function testSearch(quote, callback) {
     let time = window.performance.now();
     getQuotes(quote, (quotesArr) => {
         searchResultArr = quotesArr;
-        console.log(quotesArr);
-        const index = lunr(function () {
+        const toSearchObjArr = strArrToObjArr(quotesArr);
+        for (const qObj of toSearchObjArr) {
+            if (qObj.text === quote) {
+                if (typeof callback === "function") {
+                    callback([quotesArr[qObj.id]]);
+                } else {
+                    console.log([quotesArr[qObj.id]]);
+                }
+                return;
+            }
+        }
+        index = lunr(function () {
             this.ref("id");
             this.field("text");
-            this.use(lunr.multiLanguage("en", "de"))
 
-            strArrToObjArr(quotesArr).forEach(q => {
+            toSearchObjArr.forEach(q => {
                 this.add(q);
             }, this);
         });
-        console.log(index);
-        const resultArr = [];
-        let s = index.search(quote);
-        for (let i = 0; i < s.length && i < 10; i++) {
-            resultArr.push(quotesArr[s[i].ref]);
+
+        let resultArr = lunrResultToArr(quotesArr, index.search(quote));
+
+        if (resultArr.length < 1) {
+            console.log("not found without stemming");
+            index = lunr(function () {
+                this.ref("id");
+                this.field("text");
+                this.use(lunr.multiLanguage("en", "de"));
+
+                toSearchObjArr.forEach(q => {
+                    this.add(q);
+                }, this);
+            });
+            resultArr = lunrResultToArr(quotesArr, index.search(quote));
         }
-        callback(resultArr);
-        console.log(resultArr);
-        console.log(window.performance.now() - time);
+
+        if (typeof callback === "function") {
+            callback(resultArr);
+        } else {
+            console.log(resultArr);
+        }
+        console.log((window.performance.now() - time) + "ms");
     });
+}
+
+function lunrResultToArr(searched, lunrResult) {
+    const resultArr = [];
+    for (let i = 0; i < lunrResult.length && i < 10; i++) {
+        resultArr.push(searched[lunrResult[i].ref]);
+    }
+    return resultArr;
 }
 
 function strArrToObjArr(arr) {
     const objArr = [];
     console.log(arr.length);
     for (let i = 0; i < arr.length; i++) {
-        objArr.push({text: arr[i], id:i});
+        objArr.push({text: arr[i].split("\" - ")[0].substring(1), id:i});
     }
+    console.log(objArr);
     return objArr;
 }
 
@@ -226,15 +259,15 @@ function getQuotes(search, callback) {
         if (titleArr.length > 0) {
             const qArr = [];
             const promises = [];
-            for (const titleObj of titleArr) {
+            for (let i = 0; i < titleArr.length && i < 5; i++) {
                 promises.push(new Promise(resolve => {
-                    WikiquoteApi.queryTitles(titleObj.title, (pageId) => {
+                    WikiquoteApi.queryTitles(titleArr[i].title, (pageId) => {
                         WikiquoteApi.getSectionsForPage(pageId, (sectionObj) => {
                             for (const section of sectionObj.sections) {
                                 promises.push(new Promise(resolve2 => {
                                     WikiquoteApi.getQuotesForSection(pageId, section, (qObj) => {
                                         qObj.quotes.forEach(q => {
-                                            qArr.push(q);
+                                            qArr.push(q + " - " + titleArr[i].title);
                                             resolve();
                                             resolve2();
                                         });
