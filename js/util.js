@@ -65,6 +65,7 @@ function handleQuoteApiData(data) {
                     return;
                 }
             } else { //is wrong quote
+                console.log(data);
                 const a = data["author"];
                 const q = data["quote"];
 

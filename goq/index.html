@@ -70,5 +70,31 @@
         <script src="../node_modules/lunr-languages/lunr.de.js"></script>
         <script src="../js/util.js"></script>
         <script src="../js/goq.js"></script>
+
+        <!--- nicht notwendig -->
+        <script src="../node_modules/papaparse/papaparse.min.js"></script>
+        <script>
+            let csv;
+            let djihjidhui = [];
+            function f() {
+                fetch("../zitate.csv")
+                    .then(x => x.text())
+                    .then(y => {
+                        csv = Papa.parse(y).data;
+                        for (let i = 0; i < csv.length; i++) {
+                            if (csv[i][2].length > 0) {
+                                //correct
+                            } else if (!djihjidhui.includes(i)) {
+                                djihjidhui.push(i);
+                                testSearch(csv[i][0], (data) => {
+                                    console.log(data);
+                                    csv[i][2] = data[0].split("\" - ")[1].split(" - ")[0];
+                                    console.log(csv[i]);
+                                });
+                            }
+                        }
+                    });
+            }
+        </script>
     </body>
 </html>

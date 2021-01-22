@@ -237,10 +237,13 @@ function testSearch(quote, callback) {
 }
 
 function lunrResultToArr(searched, lunrResult) {
+    console.log(lunrResult);
     const resultArr = [];
     for (let i = 0; i < lunrResult.length && resultArr.length < 10; i++) {
-        const el = searched[lunrResult[i].ref];
-        if (!resultArr.includes(el)) resultArr.push(el);
+        if (lunrResult[i].score > 2.4) {
+            const el = searched[lunrResult[i].ref];
+            if (!resultArr.includes(el)) resultArr.push(el);
+        }
     }
     return resultArr;
 }

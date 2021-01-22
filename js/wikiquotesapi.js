@@ -184,7 +184,7 @@ let WikiquoteApi = (function() {
     wqa.capitalizeString = function(input) {
         let inputArray = input.split(' ');
         let output = [];
-        for(s in inputArray) {
+        for(const s of inputArray) {
             output.push(inputArray[s].charAt(0).toUpperCase() + inputArray[s].slice(1));
         }
         return output.join(' ');
