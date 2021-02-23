@@ -32,7 +32,7 @@ function updateData(after) {
 
     const promises = [];
 
-    promises.push(quotesApiGetRequest("wrongquotes"));
+    promises.push(quotesApiGetRequest("wrongquotes", "&no_text=true"));
     promises.push(quotesApiGetRequest("quotes"));
     promises.push(quotesApiGetRequest("authors"));
 
@@ -165,9 +165,9 @@ function getParamFromURL(param, defaultValue) {
     return isNullOrUndefined(results) ? defaultValue : results[1];
 }
 
-function quotesApiGetRequest(endPoint) {
+function quotesApiGetRequest(endPoint, arg) {
     return new Promise(resolve => {
-        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60000).toString(16)), "", data => {
+        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60000).toString(16)) + (isNullOrUndefined(arg) ? "" : arg), "", data => {
             handleQuoteApiData(data);
             resolve();
         }, "json");
