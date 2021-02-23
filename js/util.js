@@ -139,7 +139,7 @@ function changeVisibility(element, visible) {
 }
 
 function isEmptyOrUndefinedObject(obj) {
-    return isNullOrUndefined(obj) || obj === {} || obj === [];
+    return isNullOrUndefined(obj) || Object.keys(obj).length === 0;
 }
 
 function isNullOrUndefined(obj) {
@@ -198,7 +198,9 @@ function getParamFromURL(param, defaultValue) {
 
 function quotesApiGetRequest(endPoint, arg) {
     return new Promise(resolve => {
-        $.getJSON(quotesApi + endPoint + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60000).toString(16)) + (isNullOrUndefined(arg) ? "" : arg), "", data => {
+        $.getJSON(quotesApi + endPoint
+            + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60 * 60 * 1000).toString(16)) //use different url every hour
+            + (isNullOrUndefined(arg) ? "" : arg), "", data => {
             handleQuoteApiData(data);
             resolve();
         }, "json");
