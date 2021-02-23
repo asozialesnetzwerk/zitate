@@ -37,7 +37,7 @@ function loadFiles() {
 }
 
 function getObjectFromSessionStorageOrDefault(key, defaultVal) {
-    const val = localStorage.getItem(key);
+    const val = localStorage.getItem("zitate:" + key);
     if (isNullOrUndefined(val)) {
         return defaultVal;
     } else {
@@ -46,7 +46,7 @@ function getObjectFromSessionStorageOrDefault(key, defaultVal) {
 }
 
 function putObjectSessionStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem("zitate:" + key, JSON.stringify(value));
 }
 
 function updateData(after) {
