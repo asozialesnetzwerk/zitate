@@ -75,24 +75,36 @@
         <script src="../node_modules/papaparse/papaparse.min.js"></script>
         <script>
             let csv;
-            let djihjidhui = [];
+            let csv_cloud;
+            let new_csv = [];
             function f() {
-                fetch("../zitate.csv")
+                fetch("../zitate2.csv")
                     .then(x => x.text())
                     .then(y => {
-                        csv = Papa.parse(y).data;
-                        for (let i = 0; i < csv.length; i++) {
-                            if (csv[i][2].length > 0) {
-                                //correct
-                            } else if (!djihjidhui.includes(i)) {
-                                djihjidhui.push(i);
-                                testSearch(csv[i][0], (data) => {
-                                    console.log(data);
-                                    csv[i][2] = data[0].split("\" - ")[1].split(" - ")[0];
-                                    console.log(csv[i]);
-                                });
+                        fetch("../zitate-cloud.csv")
+                        .then(x => x.text())
+                        .then(cloud => {
+                            csv_cloud = Papa.parse(cloud).data;
+                            csv = Papa.parse(y).data;
+                            for (let i = 0; i < csv.length; i++) {
+                                for (let j = 0; j < csv_cloud; j++) {
+                                    if (csv[i][0] === csv_cloud[j][0]) {
+                                        csv[i][2] = csv_cloud[j][2];
+                                    }
+                                }
+
+                                /*if (csv[i][2].length > 0) {
+                                    //correct
+                                } else if (!djihjidhui.includes(i)) {
+                                    djihjidhui.push(i);
+                                    //testSearch(csv[i][0], (data) => {
+                                    //    console.log(data);
+                                    //    csv[i][2] = data[0].split("\" - ")[1].split(" - ")[0];
+                                    //    console.log(csv[i]);
+                                    //});
+                                }*/
                             }
-                        }
+                        });
                     });
             }
         </script>
