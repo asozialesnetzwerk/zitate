@@ -10,7 +10,12 @@ $(document).ready(function () {
 });
 
 function hasLoaded() {
-    return !(authorsJson === undefined || quotesJson === undefined || ratingJson === undefined);
+    return !(
+        isEmptyOrUndefinedObject(authorsJson)
+        || isEmptyOrUndefinedObject(quotesJson)
+        || isEmptyOrUndefinedObject(ratingJson)
+        || isEmptyOrUndefinedObject(idJson)
+    );
 }
 
 function loadFiles() {
@@ -19,15 +24,32 @@ function loadFiles() {
         return;
     }
 
+    authorsJson = getObjectFromSessionStorageOrDefault("authorsJson", {});
+    quotesJson = getObjectFromSessionStorageOrDefault("quotesJson", {});
+    ratingJson = getObjectFromSessionStorageOrDefault("ratingJson", {});
+    idJson = getObjectFromSessionStorageOrDefault("idJson", {});
+
+    if (hasLoaded()) {
+        runCode();
+    }
+
     updateData(() => runCode());
 }
 
-function updateData(after) {
-    authorsJson = {};
-    quotesJson = {};
-    ratingJson = {};
-    idJson = {};
+function getObjectFromSessionStorageOrDefault(key, defaultVal) {
+    const val = localStorage.getItem(key);
+    if (isNullOrUndefined(val)) {
+        return defaultVal;
+    } else {
+        return JSON.parse(val);
+    }
+}
 
+function putObjectSessionStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function updateData(after) {
     let time = window.performance.now();
 
     const promises = [];
@@ -37,6 +59,11 @@ function updateData(after) {
     promises.push(quotesApiGetRequest("authors"));
 
     Promise.all(promises).then(() => {
+        putObjectSessionStorage("authorsJson", authorsJson);
+        putObjectSessionStorage("quotesJson", quotesJson);
+        putObjectSessionStorage("ratingJson", ratingJson);
+        putObjectSessionStorage("idJson", idJson);
+
         console.log("requested data from quotes api in " + (window.performance.now() - time) + "ms");
         if (typeof after === "function") {
             after();
@@ -109,6 +136,10 @@ function changeVisibility(element, visible) {
     } else if (!visible && isVisible) {
         element.addClass("invisible");
     }
+}
+
+function isEmptyOrUndefinedObject(obj) {
+    return isNullOrUndefined(obj) || obj === {} || obj === [];
 }
 
 function isNullOrUndefined(obj) {

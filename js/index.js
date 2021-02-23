@@ -153,8 +153,7 @@ function isValidId(val) {
     if (!(isNullOrUndefined(val) || val === "")) {
         if (id_regex.test(val)) {
             if (hasLoaded()) {
-                const ids = val.split("-");
-                return !isNullOrUndefined(getQuoteById(ids[0])) && !isNullOrUndefined(getAuthorById(ids[1]));
+                return !isNullOrUndefined(idJson[id]);
             } else {
                 return true;
             }
@@ -176,7 +175,7 @@ function checkId() {
     }
 
     if (!isValidId(id)) {
-        if (id !== undefined && id !== null) {
+        if (isNullOrUndefined(id)) {
             console.log("Given id (" + id + ") is invalid.");
         }
         openPrivateUrl(getNewZitatUrl(getRatingParamFromURL()));
