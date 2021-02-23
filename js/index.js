@@ -211,6 +211,7 @@ function voteQuote(vote) {
             console.log(data);
             handleQuoteApiData(data);
             ratingRequest(vote);
+            saveToLocalStorage();
         });
     } else {
         ratingRequest(vote);
@@ -230,6 +231,7 @@ function ratingRequest(vote) { //only call this in voteQuote()
         }, function (data) {
             handleQuoteApiData(data); //updates quote data
             runCode();
+            saveToLocalStorage();
         });
     } else {
         alert(`Du hast dieses falsche Zitat bereits mit ${vote} bewertet`);

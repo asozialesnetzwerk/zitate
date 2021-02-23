@@ -24,10 +24,10 @@ function loadFiles() {
         return;
     }
 
-    authorsJson = getObjectFromSessionStorageOrDefault("authorsJson", {});
-    quotesJson = getObjectFromSessionStorageOrDefault("quotesJson", {});
-    ratingJson = getObjectFromSessionStorageOrDefault("ratingJson", {});
-    idJson = getObjectFromSessionStorageOrDefault("idJson", {});
+    authorsJson = getObjectFromLocalStorageOrDefault("authorsJson", {});
+    quotesJson = getObjectFromLocalStorageOrDefault("quotesJson", {});
+    ratingJson = getObjectFromLocalStorageOrDefault("ratingJson", {});
+    idJson = getObjectFromLocalStorageOrDefault("idJson", {});
 
     if (hasLoaded()) {
         runCode();
@@ -36,7 +36,7 @@ function loadFiles() {
     updateData(() => runCode());
 }
 
-function getObjectFromSessionStorageOrDefault(key, defaultVal) {
+function getObjectFromLocalStorageOrDefault(key, defaultVal) {
     const val = localStorage.getItem("zitate:" + key);
     if (isNullOrUndefined(val)) {
         return defaultVal;
@@ -45,8 +45,15 @@ function getObjectFromSessionStorageOrDefault(key, defaultVal) {
     }
 }
 
-function putObjectSessionStorage(key, value) {
+function putObjectLocalStorage(key, value) {
     localStorage.setItem("zitate:" + key, JSON.stringify(value));
+}
+
+function saveToLocalStorage() {
+    putObjectLocalStorage("authorsJson", authorsJson);
+    putObjectLocalStorage("quotesJson", quotesJson);
+    putObjectLocalStorage("ratingJson", ratingJson);
+    putObjectLocalStorage("idJson", idJson);
 }
 
 function updateData(after) {
@@ -59,11 +66,7 @@ function updateData(after) {
     promises.push(quotesApiGetRequest("authors"));
 
     Promise.all(promises).then(() => {
-        putObjectSessionStorage("authorsJson", authorsJson);
-        putObjectSessionStorage("quotesJson", quotesJson);
-        putObjectSessionStorage("ratingJson", ratingJson);
-        putObjectSessionStorage("idJson", idJson);
-
+        saveToLocalStorage();
         console.log("requested data from quotes api in " + (window.performance.now() - time) + "ms");
         if (typeof after === "function") {
             after();
