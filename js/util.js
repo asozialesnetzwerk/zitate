@@ -202,7 +202,7 @@ function getParamFromURL(param, defaultValue) {
 function quotesApiGetRequest(endPoint, arg) {
     return new Promise(resolve => {
         $.getJSON(quotesApi + endPoint
-            + "?r=" + encodeURI(Math.floor(new Date().getTime() / 60 * 60 * 1000).toString(16)) //use different url every hour
+            + "?r=" + encodeURI(Math.floor(new Date().getTime() / (60 * 60 * 1000)).toString(16)) //use different url every hour
             + (isNullOrUndefined(arg) ? "" : arg), "", data => {
             handleQuoteApiData(data);
             resolve();
