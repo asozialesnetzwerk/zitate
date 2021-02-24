@@ -133,12 +133,17 @@ div.quote-container:before {
     background-color: #0e0e0e;
     color: #fdfdfd;
     width: 42%;
+    height: 60px;
 }
 
-.vote:active {
+.already-voted {
+    filter: grayscale(69%);
+}
+
+/*.vote:active {
     border-width: 1px;
     border-color: whitesmoke;
-}
+}*/
 
 #upvote {
     border-color: rgb(0, 200, 0);
