@@ -1,3 +1,3 @@
 # Zitate
 Bewundern Sie falsche Zitate!
-https://asozialesnetzwerk.github.io/zitate/
+https://asozial.org/zitate/
