@@ -162,7 +162,7 @@ function isValidId(val) {
     if (!(isNullOrUndefined(val) || val === "")) {
         if (id_regex.test(val)) {
             if (hasLoaded()) {
-                return !isNullOrUndefined(idJson[id]);
+                return id.indexOf("-") !== -1;
             } else {
                 return true;
             }
