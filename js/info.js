@@ -2,6 +2,7 @@ const duckduckgoApiUrl = "https://api.duckduckgo.com/?format=json&t=FalscheZitat
 
 const list = $(".list");
 const text = $(".info-text");
+const reportButton = $(".report");
 const searchContainer = $(".search-container");
 //const selectType = $(".select");
 const infoContainer = $(".info-container");
@@ -200,6 +201,8 @@ function runCode() {
     }
 
     displayList();
+
+    reportButton.attr("href", generateMailToLink(id.replace("-", ""), isAuthor(id)));
 }
 
 function getSearchHyperLink(toSearch) {

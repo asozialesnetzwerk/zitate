@@ -194,6 +194,27 @@ function openPrivateUrl(url) {
     history.replaceState("", url, url);
 }
 
+function generateMailToLink(id, isAuthor) {
+    let subject;
+    let body = "Wie es zurzeit ist:\n";
+    if (typeof id === "string" && id.indexOf("-") !== -1) { // report whole quote
+        subject = `Falsches Zitat ${id} enthält Fehler.`
+        const ids = id.split("-");
+        body += `»${getQuoteById(ids[0]).quote}« (${ids[0]})\n - ${getAuthorById(ids[1]).author} (${ids[1]})`;
+    } else if (isAuthor) {
+        subject = `Autor ${id} enthält Fehler.`
+        body += getAuthorById(id).author;
+    } else {
+        subject = `Zitat ${id} enthält Fehler.`;
+        const quote = getQuoteById(id);
+        body += `»${quote.quote} (${quote.id})«\n - ${quote.author.author} (${quote.author.id})`;
+    }
+
+    body += "\n\nWie es sein sollte:\n"
+
+    return `mailto:contact@asozial.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
+
 function getParamFromURL(param, defaultValue) {
     let results = new RegExp("[\?&]" + param + "=([^&#]*)").exec(getUrl());
     return isNullOrUndefined(results) ? defaultValue : results[1];
