@@ -207,7 +207,7 @@ function generateMailToLink(id, isAuthor) {
     } else {
         subject = `Zitat ${id} enthält Fehler.`;
         const quote = getQuoteById(id);
-        body += `»${quote.quote} (${quote.id})«\n - ${quote.author.author} (${quote.author.id})`;
+        body += `»${quote.quote}« (${quote.id})\n - ${quote.author.author} (${quote.author.id})`;
     }
 
     body += "\n\nWie es sein sollte:\n"
@@ -230,3 +230,127 @@ function quotesApiGetRequest(endPoint, arg) {
         }, "json");
     });
 }
+
+// some helpful functions if you want to get some information:
+function getAllQuoteObjects() {
+    return Object.values(quotesJson);
+}
+
+function getAllRealQuotes(quoteArr) {
+    const val = [];
+    let quotes;
+    if (quoteArr) {
+        quotes = quoteArr;
+    } else {
+        quotes = getAllQuoteObjects();
+    }
+    for (const quote of quotes) {
+        val.push(`"${quote.quote}" (${quote.id}) - ${quote.author.author} (${quote.author.id})`)
+    }
+    return val;
+}
+
+function getAllRealQuotesAsString() {
+    return getAllRealQuotes().join("\n");
+}
+
+function getAllQuotes() {
+    const val = [];
+    for (const quote of getAllQuoteObjects()) {
+        val.push(quote.quote + " (" + quote.id + ")");
+    }
+    return val;
+}
+
+function getAllQuotesAsString() {
+    return getAllQuotes().join("\n");
+}
+
+function getAllAuthorObjects() {
+    return Object.values(authorsJson);
+}
+
+function getAllAuthors() {
+    const val = [];
+    for (const author of getAllAuthorObjects()) {
+        val.push(author.author + " (" + author.id + ")");
+    }
+    return val;
+}
+
+function getAllAuthorsAsString() {
+    return getAllAuthors().join("\n");
+}
+
+function getQuotesByAuthorId(authorId) {
+    return getAllQuoteObjects().filter(q => q.author.id === authorId);
+}
+
+function searchReplace(str) {
+    return str.toLowerCase()
+        .replace("c", "k")
+        .replace("ä", "ae")
+        .replace("ö", "oe")
+        .replace("ü", "ue")
+        .replace("ß", "ss")
+        .replace("é", "e")
+        .replaceAll(/d\w{2}[^\w]/gm, "der ")
+        //replace everything except letters with spaces:
+        .replaceAll(/[^a-z ]+/gm, "");
+}
+
+function search(str, arr, fieldToSearch, match) {
+    const re = searchReplace(str);
+
+    if (match) {
+        return arr.filter(o => str === o[fieldToSearch] || searchReplace(o[fieldToSearch]) === re);
+    }
+    let result = arr.filter(o => searchReplace(o[fieldToSearch]).indexOf(re) !== -1);
+
+    if (result.length > 0) {
+        return result;
+    }
+
+    const reArr = re.split(" ");
+
+    return arr.filter(o => {
+        const oStr = searchReplace(o[fieldToSearch]);
+        for (const el of reArr) {
+            if (oStr.indexOf(" " + el) === -1) {
+                // an element in the array isn't in the replaced string
+                return false;
+            }
+        }
+        return false;
+    });
+}
+
+function searchQuotes(str) {
+    return search(str, getAllQuoteObjects(), "quote");
+}
+
+function searchAuthors(str) {
+    return search(str, getAllAuthorObjects(), "author");
+}
+
+function findDuplicates(arr, field) {
+    const dupes = [];
+    for (const el of arr) {
+        const duplicates = search(el[field], arr, field, true);
+        if (duplicates.length > 1) {
+           const ids = [];
+           for (const d of duplicates) {
+               ids.push(d.id);
+           }
+           ids.sort();
+           const str = ids.join(" ≙ ");
+           if (!dupes.includes(str)) {
+               dupes.push(str);
+               console.log(duplicates);
+           }
+        }
+    }
+    return dupes;
+}
+
+
