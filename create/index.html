@@ -6,25 +6,78 @@
     <meta id = "meta-id" property="og:title" content="Generator für falsche Zitate">
     <meta id = "meta-description" property="og:description" content="Erstelle eigene falsche Zitate.">
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    
-    <link rel="icon" href="img/WebsiteIcon.svg">
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+    <link rel="icon" href="../img/WebsiteIcon.svg">
 
     <title>Generator für falsche Zitate</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
-    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="../css/nice-select.css">
 </head>
 <body>
 <div id="main-container">
-
+    <table style="width:100%">
+        <tr>
+            <th>Eingabe:</th>
+            <th>Auswahl:</th>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Zitat:<br>
+                    <input id="quote-input" class="text-input input" type="text">
+                </label>
+            </td>
+            <td>
+                <label>
+                    Wähle das gewollte Zitat aus:<br>
+                    <select id="quote-select" class="select-input input"></select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Richtiger Autor:<br>
+                    <input id="real-author-input" class="text-input input" type="text">
+                </label>
+            </td>
+            <td>
+                <label>
+                    Wähle den gewollten <b>richtigen</b> Autoren aus:<br>
+                    <select id="real-author-select" class="select-input input"></select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Falscher Autor:<br>
+                    <input id="fake-author-input" class="text-input input" type="text">
+                </label>
+            </td>
+            <td>
+                <label>
+                    Wähle den gewollten <b>falschen</b> Autoren aus:<br>
+                    <select id="fake-author-select" class="select-input input"></select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input id="submit-button" type="button" value="Ausgewählte Daten einreichen.">
+            </td>
+        </tr>
+    </table>
 </div>
 
 <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
 
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/util.js"></script>
-<script src="js/create.js"></script>
+<script src="../js/jquery.nice-select.js"></script>
+<script src="../js/util.js"></script>
+<script src="../js/create.js"></script>
 </body>
 </html>
