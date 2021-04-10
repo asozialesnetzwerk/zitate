@@ -180,6 +180,10 @@ function getBaseUrl() {
     return url;
 }
 
+function getUrlWithId(zitatId) {
+    return getBaseUrl() + "#/" + zitatId;
+}
+
 function getRandomQuoteId() {
     const keys = Object.keys(quotesJson);
     return keys[Math.floor(keys.length * Math.random())];
@@ -288,22 +292,24 @@ function getQuotesByAuthorId(authorId) {
 
 function searchReplace(str) {
     return str.toLowerCase()
-        .replace("c", "k")
-        .replace("ä", "ae")
-        .replace("ö", "oe")
-        .replace("ü", "ue")
-        .replace("ß", "ss")
-        .replace("é", "e")
+        .replaceAll("c", "k")
+        .replaceAll("ä", "ae")
+        .replaceAll("ö", "oe")
+        .replaceAll("ü", "ue")
+        .replaceAll("ß", "ss")
+        .replaceAll("é", "e")
         .replaceAll(/d\w{2}[^\w]/gm, "der ")
         //replace everything except letters with spaces:
         .replaceAll(/[^a-z ]+/gm, "");
 }
 
 function search(str, arr, fieldToSearch, match) {
-    const re = searchReplace(str);
+    let re = searchReplace(str);
 
     if (match) {
-        return arr.filter(o => str === o[fieldToSearch] || searchReplace(o[fieldToSearch]) === re);
+        re = re.replaceAll(" ", "");
+        console.log(re);
+        return arr.filter(o => str === o[fieldToSearch] || searchReplace(o[fieldToSearch]).replace(" ", "") === re);
     }
     let result = arr.filter(o => searchReplace(o[fieldToSearch]).indexOf(re) !== -1);
 

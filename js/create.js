@@ -34,6 +34,67 @@ function runCode() {
     fakeAuthorSelect.onchange = () => {
         onSelectChange(fakeAuthorSelect, fakeAuthorOutput, getAuthorById, "author", "fa");
     }
+
+    submitButton.onclick = () => {
+        if (!currentSelection.q) {
+            alert("Du musst ein Zitat auswählen.");
+            return;
+        }
+        if (!currentSelection.fa) {
+            alert("Du musst einen falschen Autor auswählen.");
+            return;
+        }
+        if (!currentSelection.q.id && !currentSelection.ra) {
+            alert("Du musst einen richtigen Autor auswählen.");
+            return;
+        }
+        if (currentSelection.q.id && currentSelection.fa.id) {
+            openUrl(getUrlWithId(currentSelection.q.id + "-" + currentSelection.fa.id));
+            return;
+        }
+
+        const ids = []; //[quoteId, authorId]
+        const promises = [];
+
+        if (currentSelection.q.id) {
+            ids[0] = currentSelection.q.id;
+        } else {
+            const options = {quote: currentSelection.q.quote};
+            if (currentSelection.ra.id) {
+                options.author = currentSelection.ra.id;
+                promises.push(createQuoteRequest(ids, options));
+            } else {
+                promises.push(new Promise(resolve => createRequest("authors", {author: currentSelection.ra.author}).then(realAuthor => {
+                    options.author = realAuthor.id;
+                    createQuoteRequest(ids, options).then(() => resolve());
+                })));
+            }
+        }
+        if (currentSelection.fa.id) {
+            ids[1] = currentSelection.fa.id;
+        } else {
+            promises.push(createRequest("authors", {author: currentSelection.fa.author}).then(fakeAuthor => ids[1] = fakeAuthor.id));
+        }
+
+        console.log(promises);
+        Promise.all(promises).then(() => {
+            saveToLocalStorage();
+            openUrl(getUrlWithId(ids[0] + "-" + ids[1]));
+        });
+    }
+}
+
+function createQuoteRequest(ids, options) {
+    return createRequest( "quotes", options).then(quote => ids[0] = quote.id);
+}
+
+function createRequest(endpoint, options) {
+    return new Promise(resolve => {
+        $.post(quotesApi + endpoint, options, data => {
+            handleQuoteApiData(data);
+            resolve(data);
+        }, "json");
+    });
 }
 
 function onInputChange(input, select, funToGetAllObjs, keyToSet) {
@@ -44,11 +105,14 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
     const exactSearchResult = search(inputVal, funToGetAllObjs(), keyToSet, true);
     if (exactSearchResult.length > 0) {
         options.push(createOption(exactSearchResult[0][keyToSet], exactSearchResult[0].id));
+
+        options.push(createInputOption(inputVal));
+        const fixedInputVal = fixInput(inputVal);
+        if (fixedInputVal !== inputVal) {
+            options.push(createInputOption(fixedInputVal));
+        }
     } else {
         const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
-
-        //means no selection
-        options.push(createOption("- - - -", -1));
 
         for (const obj of searchResult) {
             options.push(createOption(obj[keyToSet], obj.id));
@@ -59,10 +123,14 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
         if (fixedInputVal !== inputVal) {
             options.push(createInputOption(fixedInputVal));
         }
+
+        if (options.length > 1) {
+            //means no selection, add it in beginning
+            options.unshift(createOption("- - - -", -1));
+        }
     }
 
     replaceOptionsSelect(select, options);
-    select.selected = -1;
     select.onchange();
 }
 
@@ -83,14 +151,16 @@ function onSelectChange(select, output, funToGetObjById, keyToSet, selectKey) {
 
 function showOutput() {
     displayOutput(quoteOutput, currentSelection.q, "quote", "»%s«");
-
-    if (currentSelection.q && currentSelection.q.id) {
-        displayOutput(realAuthorOutput, currentSelection.q.author, "author", " - %s");
-    } else {
-        displayOutput(realAuthorOutput, currentSelection.ra, "author", " - %s")
-    }
-
+    displayOutput(realAuthorOutput, getSelectedRealAuthor(), "author", " - %s");
     displayOutput(fakeAuthorOutput, currentSelection.fa, "author", "- %s");
+}
+
+function getSelectedRealAuthor() {
+    if (currentSelection.q && currentSelection.q.id) {
+        return currentSelection.q.author;
+    } else {
+        return currentSelection.ra;
+    }
 }
 
 function displayOutput(output, obj, key, basis) {
@@ -111,16 +181,16 @@ function createInputOption(inputVal) {
 
 function fixInput(inputVal) {
     /* TODO:
-        - Add dot in end if missing
-        - Make first char uppercase
+        - Add dot in end if missing and quote
+          Make first char uppercase
         - remove quotation marks if in end and beginning
         - fix: "word ,word"
         - fix: "word  word"
         - fix: "word ."
-        - ...
+        - spellchecking + auto correct
         - ...
      */
-    return inputVal;
+    return inputVal[0].toUpperCase() + inputVal.substring(1);
 }
 
 

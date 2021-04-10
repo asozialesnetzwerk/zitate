@@ -57,8 +57,8 @@ function runCode() {
 
     const ids = id.split("-");
 
-    let theQuote =  "»" + getQuoteById(ids[0])["quote"]  + "«";
-    const theAuthor = getAuthorById(ids[1])["author"];
+    let theQuote =  "»" + getQuoteById(ids[0]).quote  + "«";
+    const theAuthor = getAuthorById(ids[1]).author;
 
     quoteText.text(theQuote);
     quoteText.attr("onClick", "window.location = getBaseUrl().replace('#/', '') + 'info/#/Zitat/' + " + ids[0] + ";");
@@ -98,7 +98,7 @@ function runCode() {
 }
 
 function getUrlWithIdAndRating(value, rating) {
-    return getBaseUrl() + "#/" + value + (rating === "smart" || rating === "" ? "" : "?rating=" + rating);
+    return getUrlWithId(value) + (rating === "smart" || !rating ? "" : "?rating=" + rating);
 }
 
 function getRandomZitatId() {
