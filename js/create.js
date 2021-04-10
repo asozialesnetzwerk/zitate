@@ -168,7 +168,7 @@ function getSelectedRealAuthor() {
 
 function displayOutput(output, obj, key, basis) {
     if (obj) {
-        output.innerHTML = basis.replace("%s", obj[key]);
+        output.innerHTML = basis.replace("%s", obj[key]) + (obj.id ? " (" + obj.id + ")" : "");
     } else {
         output.innerHTML = "";
     }
