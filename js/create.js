@@ -104,12 +104,15 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
 
     const exactSearchResult = search(inputVal, funToGetAllObjs(), keyToSet, true);
     if (exactSearchResult.length > 0) {
-        options.push(createOption(exactSearchResult[0][keyToSet], exactSearchResult[0].id));
+        const resultText = exactSearchResult[0][keyToSet];
+        options.push(createOption(resultText, exactSearchResult[0].id));
 
-        options.push(createInputOption(inputVal));
-        const fixedInputVal = fixInput(inputVal);
-        if (fixedInputVal !== inputVal) {
-            options.push(createInputOption(fixedInputVal));
+        if (resultText !== inputVal) {
+            options.push(createInputOption(inputVal));
+            const fixedInputVal = fixInput(inputVal);
+            if (fixedInputVal !== inputVal) {
+                options.push(createInputOption(fixedInputVal));
+            }
         }
     } else {
         const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
