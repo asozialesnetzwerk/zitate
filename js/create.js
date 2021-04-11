@@ -106,36 +106,44 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
     if (exactSearchResult.length > 0) {
         const resultText = exactSearchResult[0][keyToSet];
         options.push(createOption(resultText, exactSearchResult[0].id));
+    }
 
-        if (resultText !== inputVal) {
-            options.push(createInputOption(inputVal));
-            const fixedInputVal = fixInput(inputVal);
-            if (fixedInputVal !== inputVal) {
-                options.push(createInputOption(fixedInputVal));
+    const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
+
+    for (const obj of searchResult) {
+        options.push(createOption(obj[keyToSet], obj.id));
+    }
+
+    options.push(createInputOption(inputVal));
+    const fixedInputVal = fixInput(inputVal);
+    if (fixedInputVal !== inputVal) {
+        options.push(createInputOption(fixedInputVal));
+    }
+
+    //remove duplicate options:
+    const options2 = [];
+    for (const option of options) {
+        let isIn2 = false;
+        for (const o2 of options2) {
+            if (o2.text === option.text) {
+                isIn2 = true;
+                break;
             }
         }
-    } else {
-        const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
-
-        for (const obj of searchResult) {
-            options.push(createOption(obj[keyToSet], obj.id));
-        }
-
-        options.push(createInputOption(inputVal));
-        const fixedInputVal = fixInput(inputVal);
-        if (fixedInputVal !== inputVal) {
-            options.push(createInputOption(fixedInputVal));
-        }
-
-        if (options.length > 1) {
-            //means no selection, add it in beginning
-            options.unshift(createOption("- - - -", -1));
+        if (!isIn2) {
+            options2.push(option);
         }
     }
 
-    replaceOptionsSelect(select, options);
+    if (exactSearchResult.length === 0 && options2.length > 1) {
+        //means no selection, add it in beginning
+        options2.unshift(createOption("- - - -", -1));
+    }
+
+    replaceOptionsSelect(select, options2);
     select.onchange();
 }
+
 
 function onSelectChange(select, output, funToGetObjById, keyToSet, selectKey) {
     if (select.value === -1 || select.value === "-1") {
