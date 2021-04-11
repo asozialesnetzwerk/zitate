@@ -109,8 +109,12 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
     }
 
     const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
-
     for (const obj of searchResult) {
+        options.push(createOption(obj[keyToSet], obj.id));
+    }
+
+    const lunrResults = lunrSearch(inputVal, keyToSet);
+    for (const obj of lunrResults) {
         options.push(createOption(obj[keyToSet], obj.id));
     }
 
@@ -221,6 +225,53 @@ function addOptionsSelect(select, options) {
         oEl.value = option.value;
         select.add(oEl);
     }
+}
+
+const lunrIndexes = {quote:{},  author:{}};
+function getLunrIndex(type) {
+    let arr;
+    if (type === "quote") {
+        arr = getAllQuoteObjects();
+    } else if (type === "author") {
+        arr = getAllAuthorObjects();
+    } else {
+        console.error(`Invalid argument given. Type should be "quote" or "author" and not ${type}.`)
+        return;
+    }
+    const arrLength = arr.length;
+    let obj = lunrIndexes[type];
+    if (obj[arr.length]) {
+        return obj[arrLength];
+    }
+
+    obj = {};
+    obj[arrLength] = lunr(function () {
+        this.use(lunr.de);
+        this.ref("id");
+        this.field(type);
+
+        for (const doc of arr) {
+            this.add(doc);
+        }
+    })
+    lunrIndexes[type] = obj;
+    return obj[arrLength];
+}
+
+const lunrMaxCount = 4;
+function lunrSearch(searchTerm, type) {
+    const idx = getLunrIndex(type);
+    // replacement allows 1 edit; see: https://lunrjs.com/guides/searching.html
+    const result = idx.search((searchTerm + " ").replaceAll(/(\w+)[^\w~]/g, "$1~1 "));
+
+    const funToGetObjById = type === "quote" ? getQuoteById : getAuthorById;
+    const arrToReturn = [];
+    let count = 0;
+    for (const el of result) {
+        if (el.score < 3.141 || count++ >= lunrMaxCount) break;
+        arrToReturn.push(funToGetObjById(el.ref));
+    }
+    return arrToReturn;
 }
 
 loadFiles();

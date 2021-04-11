@@ -6,7 +6,10 @@ let ratingJson;
 let idJson;
 
 $(document).ready(function () {
-    $(".select").niceSelect();
+    const select = $(".select");
+    if (typeof select.niceSelect === "function") {
+        select.niceSelect();
+    }
 });
 
 function hasLoaded() {
@@ -322,12 +325,12 @@ function search(str, arr, fieldToSearch, match) {
     return arr.filter(o => {
         const oStr = searchReplace(o[fieldToSearch]);
         for (const el of reArr) {
-            if (oStr.indexOf(" " + el) === -1) {
+            if (oStr.indexOf(el) === -1) {
                 // an element in the array isn't in the replaced string
                 return false;
             }
         }
-        return false;
+        return true;
     });
 }
 
