@@ -1,15 +1,45 @@
-.quote-container {
+* {
+    color: #EFEFEF;
+}
+body {
     background: #000000;
-    display: block;
-    margin: 3rem auto;
-    text-align: center;
-    padding: 4rem;
 }
 
-.input {
-    width: 100%;
+input {
+    background: #0a0a0a;
 }
 
 select {
-    display: none;
+    position: absolute;
+    background-color: #0f0f0f;
+    max-width: 30%;
+    overflow-x: scroll;
 }
+
+td {
+    width: 33%;
+    padding: 5px;
+    overflow: hidden;
+    height: 20%;
+    align-content: start;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+tr {
+    width: 32%;
+}
+
+.output {
+    max-width: 30%;
+    text-align: center;
+    height: auto;
+}
+
+option {
+    background-color: #111111;
+}
+
