@@ -1,12 +1,15 @@
 const quoteInput = document.getElementById("quote-input");
+const quoteList = document.getElementById("quote-list");
 const quoteSelect = document.getElementById("quote-select");
 const quoteOutput = document.getElementById("quote");
 
 const realAuthorInput = document.getElementById("real-author-input");
+const realAuthorList = document.getElementById("real-author-list");
 const realAuthorSelect = document.getElementById("real-author-select");
 const realAuthorOutput = document.getElementById("real-author");
 
 const fakeAuthorInput = document.getElementById("fake-author-input");
+const fakeAuthorList = document.getElementById("fake-author-list");
 const fakeAuthorSelect = document.getElementById("fake-author-select");
 const fakeAuthorOutput = document.getElementById("fake-author");
 
@@ -15,13 +18,21 @@ const submitButton = document.getElementById("submit-button");
 const currentSelection = {};
 
 function runCode() {
-    quoteInput.onchange = () => {
+    for (const quote of getAllQuoteObjects()) {
+        quoteList.appendChild(createDatalistOptionElement(quote.quote));
+    }
+    for (const author of getAllAuthorObjects()) {
+        realAuthorList.appendChild(createDatalistOptionElement(author.author));
+        fakeAuthorList.appendChild(createDatalistOptionElement(author.author));
+    }
+
+    quoteInput.onkeyup = () => {
         onInputChange(quoteInput, quoteSelect, getAllQuoteObjects, "quote");
     }
-    realAuthorInput.onchange = () => {
+    realAuthorInput.onkeyup = () => {
         onInputChange(realAuthorInput, realAuthorSelect, getAllAuthorObjects, "author");
     }
-    fakeAuthorInput.onchange = () => {
+    fakeAuthorInput.onkeyup = () => {
         onInputChange(fakeAuthorInput, fakeAuthorSelect, getAllAuthorObjects, "author");
     }
 
@@ -110,12 +121,12 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
 
     const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
     for (const obj of searchResult) {
-        options.push(createOption(obj[keyToSet], obj.id));
+        options.push(createOptionFromObj(obj,keyToSet));
     }
 
     const lunrResults = lunrSearch(inputVal, keyToSet);
     for (const obj of lunrResults) {
-        options.push(createOption(obj[keyToSet], obj.id));
+        options.push(createOptionFromObj(obj,keyToSet));
     }
 
     options.push(createInputOption(inputVal));
@@ -186,6 +197,10 @@ function displayOutput(output, obj, key, basis) {
     }
 }
 
+function createOptionFromObj(obj, textKey) {
+    return {text: obj[textKey], value: obj.id};
+}
+
 function createOption(pText, pValue) {
     return {text: pText, value: pValue};
 }
@@ -218,12 +233,22 @@ function replaceOptionsSelect(select, options) {
     }
 }
 
+function createDatalistOptionElement(text) {
+    const el = document.createElement("option");
+    el.text = text;
+    return el;
+}
+
+function createOptionElement(option) {
+    const oEl = document.createElement("option");
+    oEl.text = option.text;
+    oEl.value = option.value;
+    return oEl;
+}
+
 function addOptionsSelect(select, options) {
     for (const option of options) {
-        const oEl = document.createElement("option");
-        oEl.text = option.text;
-        oEl.value = option.value;
-        select.add(oEl);
+        select.add(createOptionElement(option));
     }
 }
 
