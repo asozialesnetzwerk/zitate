@@ -1,6 +1,8 @@
 * {
     color: #EFEFEF;
+    font-size: 20px;
 }
+
 body {
     background: #000000;
 }
@@ -10,36 +12,86 @@ input {
 }
 
 select {
-    position: absolute;
     background-color: #0f0f0f;
-    max-width: 30%;
-    overflow-x: scroll;
-}
-
-td {
-    width: 33%;
-    padding: 5px;
-    overflow: hidden;
-    height: 20%;
-    align-content: start;
-}
-
-table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-tr {
-    width: 32%;
 }
 
 .output {
-    max-width: 30%;
     text-align: center;
-    height: auto;
 }
 
 option {
     background-color: #111111;
 }
 
+#main-container {
+    text-align: center;
+}
+
+#flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+input, select {
+    border-color: #CD0000;
+    border-radius: 10px;
+    border-width: 2px;
+    padding: 6px;
+    max-width: 100%;
+}
+
+input:disabled, select:disabled {
+    border-color: darkgrey;
+}
+
+@media (orientation:landscape) {
+    .row {
+        flex-direction: row;
+    }
+    .title-column, .info-column {
+        display: none;
+    }
+    .column {
+        width: 30%;
+    }
+
+    hr.thin {
+        display: none;
+    }
+}
+
+@media (orientation:portrait) {
+    .row {
+        flex-direction: column;
+    }
+
+    #title-row {
+        display: none;
+    }
+
+    .column {
+        margin-bottom: 2px;
+        width: 100%;
+    }
+
+    hr.thin {
+        height: 1px;
+        border: 0;
+        color: rgba(139, 0, 0, 0.5);
+        background-color: rgba(139, 0, 0, 0.5);
+        width: 90%;
+    }
+
+    .text-input-label {
+        display: none;
+    }
+}

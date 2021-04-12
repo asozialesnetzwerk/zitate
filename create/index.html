@@ -17,68 +17,77 @@
 </head>
 <body>
 <div id="main-container">
-    <table style="width:100%">
-        <tr>
-            <th>Eingabe:</th>
-            <th>Auswahl:</th>
-            <th>Ergebnis:</th>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    Zitat:<br>
-                    <input list="quote-list" id="quote-input" autocomplete="on" class="text-input input" type="text">
-                    <datalist id="quote-list"></datalist>
-                </label>
-            </td>
-            <td>
-                <label>
-                    Wähle das gewollte Zitat aus:<br>
-                    <select id="quote-select" class="select-input input"></select>
-                </label>
-            </td>
-            <td id="quote" class="output"></td>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    Richtiger Autor:<br>
-                    <input list="real-author-list" id="real-author-input" autocomplete="on" class="text-input input" type="text">
-                    <datalist id="real-author-list"></datalist>
-                </label>
-            </td>
-            <td>
-                <label>
-                    Wähle den gewollten <b>richtigen</b> Autoren aus:<br>
-                    <select id="real-author-select" class="select-input input"></select>
-                </label>
-            </td>
-            <td id="real-author" class="output"></td>
-        </tr>
-        <tr>
-            <td>
-                <label>
-                    Falscher Autor:<br>
-                    <input list="fake-author-list" id="fake-author-input" autocomplete="on" class="text-input input" type="text">
-                    <datalist id="fake-author-list"></datalist>
-                </label>
-            </td>
-            <td>
-                <label>
-                    Wähle den gewollten <b>falschen</b> Autoren aus:<br>
-                    <select id="fake-author-select" class="select-input input"></select>
-                </label>
-            </td>
-            <td id="fake-author" class="output"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>
-                <input id="submit-button" type="button" value="Ausgewählte Daten einreichen.">
-            </td>
-        </tr>
-    </table>
+    <div id="flexbox">
+        <div id="title-row" class="row">
+            <b class="column">Eingabe:</b>
+            <b class="column">Auswahl:</b>
+            <b class="column">Ergebnis:</b>
+        </div>
+
+        <div id="quote-row" class="row">
+            <b class="column title-column">
+                Das Zitat:
+            </b>
+            <div class="column">
+                <label class="text-input-label" for="quote-input">Zitat:<br></label>
+                <input list="quote-list" id="quote-input" autocomplete="on" class="text-input input" type="text">
+                <datalist id="quote-list"></datalist>
+            </div>
+
+            <label class="column">
+                Wähle das gewollte Zitat aus:<br>
+                <select id="quote-select" class="select-input input"></select>
+            </label>
+            <b class="column info-column">
+                Ergebnis:
+            </b>
+            <div id="quote" class="output column"></div>
+        </div>
+
+        <hr class="thin">
+
+        <div id="real-author-row" class="row">
+            <b class="column title-column">
+                Der richtige Autor:
+            </b>
+            <div class="column">
+                <label class="text-input-label" for="real-author-input">Richtiger Autor:<br></label>
+                <input list="real-author-list" id="real-author-input" autocomplete="on" class="text-input input" type="text">
+                <datalist id="real-author-list"></datalist>
+            </div>
+
+            <label class="column">
+                Wähle den gewollten <b>richtigen</b> Autoren aus:<br>
+                <select id="real-author-select" class="select-input input"></select>
+            </label>
+            <b class="column info-column">
+                Ergebnis:
+            </b>
+            <div id="real-author" class="output column"></div>
+        </div>
+
+        <hr class="thin">
+
+        <div id="fake-author-row" class="row">
+            <b class="column title-column">
+                Der falsche Autor:
+            </b>
+            <div class="column">
+                <label class="text-input-label" for="fake-author-input">Falscher Autor:<br></label>
+                <input list="fake-author-list" id="fake-author-input" autocomplete="on" class="text-input input" type="text">
+                <datalist id="fake-author-list"></datalist>
+            </div>
+            <label class="column">
+                Wähle den gewollten <b>falschen</b> Autoren aus:<br>
+                <select id="fake-author-select" class="select-input input"></select>
+            </label>
+            <b class="column info-column">
+                Ergebnis:
+            </b>
+            <div id="fake-author" class="output column"></div>
+        </div>
+    </div>
+    <input id="submit-button" class="button" type="button" value="Ausgewählte Daten einreichen.">
 </div>
 
 <footer>Mit Liebe gebacken 🖤 <a href="https://github.com/asozialesnetzwerk">Asoziales Netzwerk: Sektion GitHub</a></footer>
