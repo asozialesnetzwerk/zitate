@@ -18,13 +18,7 @@ const submitButton = document.getElementById("submit-button");
 const currentSelection = {};
 
 function runCode() {
-    for (const quote of getAllQuoteObjects()) {
-        quoteList.appendChild(createDatalistOptionElement(quote.quote));
-    }
-    for (const author of getAllAuthorObjects()) {
-        realAuthorList.appendChild(createDatalistOptionElement(author.author));
-        fakeAuthorList.appendChild(createDatalistOptionElement(author.author));
-    }
+    addOptionsToDatalists();
 
     quoteInput.onkeyup = () => {
         onInputChange(quoteInput, quoteSelect, getAllQuoteObjects, "quote");
@@ -95,6 +89,20 @@ function runCode() {
     }
 }
 
+function addOptionsToDatalists() {
+    quoteList.innerHTML = "";
+    realAuthorList.innerHTML = "";
+    fakeAuthorList.innerHTML = "";
+
+    for (const quote of getAllQuoteObjects()) {
+        quoteList.appendChild(createDatalistOptionElement(quote.quote));
+    }
+    for (const author of getAllAuthorObjects()) {
+        realAuthorList.appendChild(createDatalistOptionElement(author.author));
+        fakeAuthorList.appendChild(createDatalistOptionElement(author.author));
+    }
+}
+
 function createQuoteRequest(ids, options) {
     return createRequest( "quotes", options).then(quote => ids[0] = quote.id);
 }
@@ -113,13 +121,25 @@ function onInputChange(input, select, funToGetAllObjs, keyToSet) {
 
     const options = [];
 
-    const exactSearchResult = search(inputVal, funToGetAllObjs(), keyToSet, true);
+    const allObjects = funToGetAllObjs();
+
+    // if the input is exactly in the list
+    for (const obj of allObjects) {
+        if (obj[keyToSet] === inputVal) {
+            options.push(createOptionFromObj(obj, keyToSet));
+            replaceOptionsSelect(select, options);
+            select.onchange();
+            return;
+        }
+    }
+
+    const exactSearchResult = search(inputVal, allObjects, keyToSet, true);
     if (exactSearchResult.length > 0) {
         const resultText = exactSearchResult[0][keyToSet];
         options.push(createOption(resultText, exactSearchResult[0].id));
     }
 
-    const searchResult = search(inputVal, funToGetAllObjs(), keyToSet);
+    const searchResult = search(inputVal, allObjects, keyToSet);
     for (const obj of searchResult) {
         options.push(createOptionFromObj(obj,keyToSet));
     }
@@ -172,21 +192,20 @@ function onSelectChange(select, output, funToGetObjById, keyToSet, selectKey) {
         selectedObj[keyToSet] = decodeURIComponent(select.value);
     }
     currentSelection[selectKey] = selectedObj;
+
     showOutput();
 }
 
 function showOutput() {
-    displayOutput(quoteOutput, currentSelection.q, "quote", "»%s«");
-    displayOutput(realAuthorOutput, getSelectedRealAuthor(), "author", " - %s");
-    displayOutput(fakeAuthorOutput, currentSelection.fa, "author", "- %s");
-}
+    const realAuthorDisabled = currentSelection.q && currentSelection.q.id;
+    realAuthorInput.disabled = realAuthorDisabled;
+    realAuthorSelect.disabled = realAuthorDisabled;
 
-function getSelectedRealAuthor() {
-    if (currentSelection.q && currentSelection.q.id) {
-        return currentSelection.q.author;
-    } else {
-        return currentSelection.ra;
-    }
+    displayOutput(quoteOutput, currentSelection.q, "quote", "»%s«");
+    displayOutput(realAuthorOutput,
+        realAuthorDisabled ? currentSelection.q.author : currentSelection.ra,
+        "author", " - %s");
+    displayOutput(fakeAuthorOutput, currentSelection.fa, "author", "- %s");
 }
 
 function displayOutput(output, obj, key, basis) {
