@@ -20,7 +20,6 @@
     <div id="flexbox">
         <div id="title-row" class="row">
             <b class="column">Eingabe:</b>
-            <b class="column">Auswahl:</b>
             <b class="column">Ergebnis:</b>
         </div>
 
@@ -30,14 +29,9 @@
             </b>
             <div class="column">
                 <label class="text-input-label" for="quote-input">Zitat:<br></label>
-                <input list="quote-list" id="quote-input" autocomplete="on" class="text-input input" type="text">
+                <input id="quote-input" class="text-input input" type="text">
                 <datalist id="quote-list"></datalist>
             </div>
-
-            <label class="column">
-                Wähle das gewollte Zitat aus:<br>
-                <select id="quote-select" class="select-input input"></select>
-            </label>
             <b class="column info-column">
                 Ergebnis:
             </b>
@@ -52,14 +46,9 @@
             </b>
             <div class="column">
                 <label class="text-input-label" for="real-author-input">Richtiger Autor:<br></label>
-                <input list="real-author-list" id="real-author-input" autocomplete="on" class="text-input input" type="text">
+                <input id="real-author-input" class="text-input input" type="text">
                 <datalist id="real-author-list"></datalist>
             </div>
-
-            <label class="column">
-                Wähle den gewollten <b>richtigen</b> Autoren aus:<br>
-                <select id="real-author-select" class="select-input input"></select>
-            </label>
             <b class="column info-column">
                 Ergebnis:
             </b>
@@ -74,13 +63,9 @@
             </b>
             <div class="column">
                 <label class="text-input-label" for="fake-author-input">Falscher Autor:<br></label>
-                <input list="fake-author-list" id="fake-author-input" autocomplete="on" class="text-input input" type="text">
+                <input id="fake-author-input" class="text-input input" type="text">
                 <datalist id="fake-author-list"></datalist>
             </div>
-            <label class="column">
-                Wähle den gewollten <b>falschen</b> Autoren aus:<br>
-                <select id="fake-author-select" class="select-input input"></select>
-            </label>
             <b class="column info-column">
                 Ergebnis:
             </b>

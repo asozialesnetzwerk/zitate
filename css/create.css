@@ -11,10 +11,6 @@ input {
     background: #0a0a0a;
 }
 
-select {
-    background-color: #0f0f0f;
-}
-
 .output {
     text-align: center;
 }
@@ -41,7 +37,7 @@ option {
     margin-bottom: 30px;
 }
 
-input, select {
+input {
     border-color: #CD0000;
     border-radius: 10px;
     border-width: 2px;
@@ -49,9 +45,24 @@ input, select {
     max-width: 100%;
 }
 
-input:disabled, select:disabled {
+input:disabled {
     border-color: darkgrey;
 }
+
+datalist {
+    position: absolute;
+    background-color: #1b1b1b;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+}
+
+option {
+    background-color: #2b2b2b;
+    padding: 4px;
+    margin-bottom: 1px;
+    cursor: pointer;
+}
+
 
 @media (orientation:landscape) {
     .row {
@@ -61,7 +72,7 @@ input:disabled, select:disabled {
         display: none;
     }
     .column {
-        width: 30%;
+        width: 47%;
     }
 
     hr.thin {
