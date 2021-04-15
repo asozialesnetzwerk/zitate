@@ -29,6 +29,15 @@ function runCode() {
     fakeAuthorInput.onkeyup = () => {
         onInputChange(fakeAuthorInput, fakeAuthorSelect, getAllAuthorObjects, "author");
     }
+    quoteInput.onchange = () => {
+        onInputChange(quoteInput, quoteSelect, getAllQuoteObjects, "quote");
+    }
+    realAuthorInput.onchange = () => {
+        onInputChange(realAuthorInput, realAuthorSelect, getAllAuthorObjects, "author");
+    }
+    fakeAuthorInput.onchange = () => {
+        onInputChange(fakeAuthorInput, fakeAuthorSelect, getAllAuthorObjects, "author");
+    }
 
     quoteSelect.onchange = () => {
         onSelectChange(quoteSelect, quoteOutput, getQuoteById, "quote", "q");
