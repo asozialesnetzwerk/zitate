@@ -126,7 +126,7 @@ function createRequest(endpoint, options) {
 }
 
 function onInputChange(input, select, funToGetAllObjs, keyToSet) {
-    const inputVal = input.value.trim();
+    const inputVal = sanitizeInput(input.value);
 
     const options = [];
 
@@ -219,7 +219,7 @@ function showOutput() {
 
 function displayOutput(output, obj, key, basis) {
     if (obj) {
-        output.innerHTML = basis.replace("%s", obj[key]) + (obj.id ? " (" + obj.id + ")" : "");
+        output.innerHTML = getSearchHyperLink(basis.replace("%s", obj[key])) + (obj.id ? " (" + obj.id + ")" : "");
     } else {
         output.innerHTML = "";
     }
@@ -235,6 +235,13 @@ function createOption(pText, pValue) {
 
 function createInputOption(inputVal) {
     return createOption(inputVal, encodeURIComponent(inputVal));
+}
+
+function sanitizeInput(inputVal) {
+    /* TODO:
+        - replace html tags
+     */
+    return inputVal.trim();
 }
 
 function fixInput(inputVal) {

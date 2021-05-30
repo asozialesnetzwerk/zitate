@@ -222,6 +222,17 @@ function generateMailToLink(id, isAuthor) {
     return `mailto:contact@asozial.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
+function getHyperLink(url, toSearch) {
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.innerText = toSearch; // prevents xss
+    return anchor.outerHTML;
+}
+
+function getSearchHyperLink(toSearch) {
+    return getHyperLink("https://duckduckgo.com/?q=" + encodeURIComponent(toSearch), toSearch);
+}
+
 function getParamFromURL(param, defaultValue) {
     let results = new RegExp("[\?&]" + param + "=([^&#]*)").exec(getUrl());
     return isNullOrUndefined(results) ? defaultValue : results[1];

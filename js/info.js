@@ -79,7 +79,7 @@ function searchAndDisplayResult(searchParam) {
                 }
             } else {
                 const elementPoweredBy = document.createElement("strong");
-                elementPoweredBy.innerHTML = `Folgender Text ist präsentiert von <a href="https://ddg.gg/${searchParam}">DuckDuckGo <img alt="DuckDuckGo Logo" width="21px" height="21px" src="https://duckduckgo.com/assets/common/dax-logo.svg"</a>:<br>`;
+                elementPoweredBy.innerHTML = `Folgender Text ist präsentiert von <a href="https://ddg.gg/${encodeURIComponent(searchParam)}">DuckDuckGo <img alt="DuckDuckGo Logo" width="21px" height="21px" src="https://duckduckgo.com/assets/common/dax-logo.svg"</a>:<br>`;
                 searchContainer.append(elementPoweredBy);
 
                 const element = document.createElement("p");
@@ -203,14 +203,6 @@ function runCode() {
     displayList();
 
     reportButton.attr("href", generateMailToLink(id.replace("-", ""), isAuthor(id)));
-}
-
-function getSearchHyperLink(toSearch) {
-    return getHyperLink("https://ddg.gg/" + encodeURI(toSearch), toSearch);
-}
-
-function getHyperLink(url, toSearch) {
-    return `<a href="${url}">${toSearch}</a>`;
 }
 
 /*
