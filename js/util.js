@@ -219,7 +219,7 @@ function generateMailToLink(id, isAuthor) {
 
     body += "\n\nWie es sein sollte:\n"
 
-    return `mailto:contact@asozial.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    return `mailto:contact@archuser.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 function getHyperLink(url, toSearch) {
